@@ -137,3 +137,75 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+
+# ===================================================== PYTHON IGNORE FILE ==========================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.egg-info/
+.Python
+build/
+dist/
+
+# Installer logs
+*.log
+pip-log.txt
+pip-delete-this-file.txt
+
+# Editors
+.vscode/           # VS Code (si vous ne voulez pas partager les settings spécifiques au projet)
+.idea/             # IntelliJ / PyCharm
+*.sublime-project
+*.sublime-workspace
+.DS_Store          # macOS specific
+Thumbs.db          # Windows specific
+
+# Virtual environments
+.venv/             # Dossier conventionnel pour les environnements virtuels
+venv/
+env/
+/bin/              # Pour certaines configs de venv (ex: poetry)
+/lib/
+/include/
+
+# Testing
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Python specific build artifacts
+*.egg
+*.whl
+*.bak
+
+# Documentation
+docs/_build/
+
+# Jupyter Notebook files
+.ipynb_checkpoints/
+*.ipynb
+
+# Environment variables
+.env               # Fichier .env pour les variables d'environnement (très important !)
+.flaskenv
+
+# Database files
+*.sqlite3
+*.db
+*.bak
+
+# Uploaded files
+/media/            # Pour les fichiers uploadés par l'utilisateur (Django, Flask)
+
+# Miscellaneous
+*~
+*.swp
+*.swo
+.ropeproject/
+.tox/
+coverage/

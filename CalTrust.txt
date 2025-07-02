@@ -1,0 +1,121 @@
+On va partir sur du Vue pour le Frontend et du Django
+pour le Backend
+
+# Frontend
+└── Plateforme de Notation  
+    ├── Profil Entreprise  
+    │   ├── Vérification  
+    │   └── Analytics (notes, comparaison)  
+    ├── Dépôt Produits/Services  
+    │   ├── Ajout manuel/CSV  
+    │   └── Catégorisation IA  
+    ├── Gestion Avis  
+    │   ├── Notation multi-critères  
+    │   ├── Modération  
+    │   └── Réponse aux avis  
+    ├── Engagement Clients  
+    │   ├── Avis vérifiés  
+    │   └── Récompenses  
+    └── Monetisation  
+        ├── Abonnements  
+        └── Publicité  
+
+# Backend
+└── Auth
+    ├── /register (entreprise + utilisateurs)
+    ├── /login (email, SSO Google/LinkedIn)
+    ├── /verify (vérification email/SMS)
+    └── /password-reset
+└── Companies
+    ├── /create (CRUD entreprises)
+    ├── /verify (admin manual/automatique)
+    └── /stats (note moyenne, nb avis)
+└── Reviews
+    ├── /add (POST avis + notation multi-critères)
+    ├── /report (signalement faux avis)
+    ├── /reply (réponse de l'entreprise)
+    └── /search?product=XXX (Elasticsearch)
+└── Moderation
+    ├── /pending (file d'attente avis)
+    ├── /ban (utilisateur/entreprise)
+    └── /ai-check (détection langage toxique)
+
+#Frontend
+css/
+├── base/
+│   ├── _reset.scss               # Réinitialisation des styles (Normalize.css ou reset personnalisé)
+│   ├── _typography.scss          # Styles de typographie globaux (polices, tailles, line-height, couleurs)
+│   ├── _base.scss                # Styles globaux pour le body, les liens, les sélections, etc.
+│   └── _variables.scss           # Définition des CSS Custom Properties (--color-primary, --font-size-base, etc.)
+├── components/
+│   ├── _button.scss              # .button, .button--primary, .button__icon
+│   ├── _card.scss                # .card, .card__header, .card__body, .card--highlight
+│   ├── _modal.scss               # .modal, .modal__header, .modal__content, .modal--large
+│   ├── _navigation.scss          # .navbar, .navbar__item, .navbar--dark
+│   ├── _form.scss                # .form, .form__group, .form__input, .form--inline
+│   ├── _star-rating.scss         # .star-rating, .star-rating__star, .star-rating--editable
+│   └── _pagination.scss          # .pagination, .pagination__item, .pagination--active
+├── layout/
+│   ├── _header.scss              # .header, .header__logo, .header__nav
+│   ├── _footer.scss              # .footer, .footer__links
+│   ├── _sidebar.scss             # .sidebar, .sidebar__item
+│   ├── _grid.scss                # Système de grille (si spécifique et non un framework)
+│   └── _container.scss           # Classes de conteneur (ex: .container, .container--fluid)
+├── pages/
+│   ├── _home.scss                # Styles spécifiques à la page d'accueil (ex: .home-hero, .home-section)
+│   ├── _product-detail.scss      # Styles pour la page de détail d'un produit/service avec avis
+│   └── _profile.scss             # Styles pour la page de profil utilisateur
+├── utilities/
+│   ├── _mixins.scss              # Mixins SASS/LESS pour des réutilisations complexes
+│   ├── _functions.scss           # Fonctions SASS/LESS (ex: calculs de tailles)
+│   ├── _spacing.scss             # Classes utilitaires pour les espacements (ex: .u-margin-bottom-md)
+│   ├── _typography-helpers.scss  # Classes utilitaires pour le texte (ex: .u-text-center, .u-font-bold)
+│   └── _visibility.scss          # Classes pour masquer/afficher (ex: .u-hidden-mobile)
+├── vendors/
+│   ├── _external-datepicker.scss # Styles pour une bibliothèque tierce (si non gérée par npm/CDN)
+│   └── _swiper-carousel.scss     # Styles pour un slider/carrousel externe
+└── main.scss                     # Fichier principal qui importe tous les autres
+
+js/
+├── components/
+│   ├── auth/
+│   │   ├── LoginForm.js      # Composant de formulaire de connexion
+│   │   └── RegisterForm.js   # Composant de formulaire d'inscription
+│   ├── common/
+│   │   ├── Button.js         # Composant de bouton réutilisable
+│   │   ├── Modal.js          # Composant de modale générique
+│   │   └── StarRating.js     # Composant d'affichage/saisie de notation par étoiles
+│   ├── reviews/
+│   │   ├── ReviewCard.js     # Composant pour afficher une seule carte d'avis
+│   │   ├── ReviewForm.js     # Composant de formulaire pour soumettre un avis
+│   │   ├── ReviewList.js     # Composant pour afficher une liste d'avis
+│   │   └── AverageRating.js  # Composant pour afficher la note moyenne
+│   └── users/
+│       └── UserProfile.js    # Composant pour afficher le profil utilisateur
+├── services/
+│   ├── api.js                # Fonctions génériques pour les appels API (fetch, axios)
+│   ├── authService.js        # Fonctions spécifiques à l'authentification (login, register, logout)
+│   ├── reviewService.js      # Fonctions spécifiques à la gestion des avis (fetch, create, update, delete)
+│   └── userService.js        # Fonctions spécifiques à la gestion des utilisateurs
+├── utils/
+│   ├── constants.js          # Constantes de l'application (API_URL, messages d'erreur, etc.)
+│   ├── helpers.js            # Fonctions utilitaires génériques (formatage de date, validation, etc.)
+│   └── validation.js         # Fonctions de validation de formulaire
+├── store/                    # Pour la gestion d'état global (ex: Redux, Vuex, Context API)
+│   ├── index.js              # Point d'entrée du store
+│   ├── actions/              # Actions qui déclenchent des changements d'état
+│   │   ├── authActions.js
+│   │   └── reviewActions.js
+│   ├── reducers/             # Fonctions qui modifient l'état (si Redux)
+│   │   ├── authReducer.js
+│   │   └── reviewReducer.js
+│   └── selectors/            # Fonctions pour récupérer des données du store
+│       ├── authSelectors.js
+│       └── reviewSelectors.js
+├── views/                    # Si vous avez des "pages" ou "vues" distinctes
+│   ├── HomePage.js
+│   ├── ProductDetailPage.js  # Page affichant les avis pour un produit/service spécifique
+│   ├── UserDashboardPage.js
+│   └── LoginPage.js
+├── app.js                    # Point d'entrée principal de l'application (initialisation, routage)
+└── index.js                  # Fichier de bootstrapping (montage de l'app dans le DOM)

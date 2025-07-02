@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; // Très important pour un modèle de boîte prévisible
+  font-family: 'Inter', sans-serif;
+}
+
+html {
+  line-height: 1.15; // Ajustement de la hauteur de ligne pour une meilleure lisibilité
+  -webkit-text-size-adjust: 100%; // Empêche l'ajustement automatique de la taille du texte sur iOS
+}
+
+body {
+  margin: 0; // S'assure que le corps n'a pas de marge par défaut
+}
+
+article,
+aside,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section {
+  display: block;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; // Hérise la police de caractères
+  font-size: 100%; // Taille de police par défaut
+  line-height: 1.15;
+  margin: 0; // Corrige les marges sur Firefox
+}
+
+button,
+input {
+  overflow: visible; // Rend l'overflow visible pour les boutons et inputs
+}
+
+button,
+select {
+  text-transform: none; // Empêche la transformation du texte en majuscules sur certains navigateurs
+}
+
+button::-moz-focus-inner,
+[type='button']::-moz-focus-inner,
+[type='reset']::-moz-focus-inner,
+[type='submit']::-moz-focus-inner {
+  border-style: none; // Supprime la bordure de focus sur Firefox
+  padding: 0;
+}
+
+button:-moz-focusring,
+[type='button']:-moz-focusring,
+[type='reset']:-moz-focusring,
+[type='submit']:-moz-focusring {
+  outline: 1px dotted ButtonText; // Ajoute un contour de focus par défaut sur Firefox
+}
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em; // Padding par défaut
+}
+
+legend {
+  box-sizing: border-box; // S'assure que la boîte de légende n'est pas cassée par le padding
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  padding: 0;
+  white-space: normal;
+}
+
+progress {
+  vertical-align: baseline; // Alignement vertical par défaut
+}
+
+textarea {
+  overflow: auto; // Rends le défilement automatique
+}
+
+[type='checkbox'],
+[type='radio'] {
+  box-sizing: border-box; // Boîte de modèle cohérente
+  padding: 0;
+}
+
+[type='number']::-webkit-inner-spin-button,
+[type='number']::-webkit-outer-spin-button {
+  height: auto; // Corrige l'apparence des spinners
+}
+
+[type='search']::-webkit-search-decoration {
+  -webkit-appearance: none; // Supprime la décoration de recherche
+}
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; // Apparence par défaut pour le bouton d'upload
+  font: inherit;
+}
+
+summary {
+  display: list-item; // Rend l'élément résumé comme un élément de liste
+}
+
+template {
+  display: none; // Masque les templates par défaut
+}
+
+[hidden] {
+  display: none; // S'assure que les éléments avec l'attribut hidden sont masqués
+}
