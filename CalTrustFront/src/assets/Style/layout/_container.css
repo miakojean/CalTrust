@@ -1,0 +1,8 @@
+/* Main__container*/
+.main__container{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 1rem;
+}

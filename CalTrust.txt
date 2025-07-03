@@ -43,38 +43,38 @@ pour le Backend
 #Frontend
 css/
 ├── base/
-│   ├── _reset.scss               # Réinitialisation des styles (Normalize.css ou reset personnalisé)
-│   ├── _typography.scss          # Styles de typographie globaux (polices, tailles, line-height, couleurs)
-│   ├── _base.scss                # Styles globaux pour le body, les liens, les sélections, etc.
-│   └── _variables.scss           # Définition des CSS Custom Properties (--color-primary, --font-size-base, etc.)
+│   ├── _reset.css               # Réinitialisation des styles (Normalize.css ou reset personnalisé)
+│   ├── _typography.css          # Styles de typographie globaux (polices, tailles, line-height, couleurs)
+│   ├── _base.css                # Styles globaux pour le body, les liens, les sélections, etc.
+│   └── _variables.css           # Définition des CSS Custom Properties (--color-primary, --font-size-base, etc.)
 ├── components/
-│   ├── _button.scss              # .button, .button--primary, .button__icon
-│   ├── _card.scss                # .card, .card__header, .card__body, .card--highlight
-│   ├── _modal.scss               # .modal, .modal__header, .modal__content, .modal--large
-│   ├── _navigation.scss          # .navbar, .navbar__item, .navbar--dark
-│   ├── _form.scss                # .form, .form__group, .form__input, .form--inline
-│   ├── _star-rating.scss         # .star-rating, .star-rating__star, .star-rating--editable
-│   └── _pagination.scss          # .pagination, .pagination__item, .pagination--active
+│   ├── _button.css              # .button, .button--primary, .button__icon
+│   ├── _card.css                # .card, .card__header, .card__body, .card--highlight
+│   ├── _modal.css               # .modal, .modal__header, .modal__content, .modal--large
+│   ├── _navigation.css          # .navbar, .navbar__item, .navbar--dark
+│   ├── _form.css                # .form, .form__group, .form__input, .form--inline
+│   ├── _star-rating.css         # .star-rating, .star-rating__star, .star-rating--editable
+│   └── _pagination.css          # .pagination, .pagination__item, .pagination--active
 ├── layout/
-│   ├── _header.scss              # .header, .header__logo, .header__nav
-│   ├── _footer.scss              # .footer, .footer__links
-│   ├── _sidebar.scss             # .sidebar, .sidebar__item
-│   ├── _grid.scss                # Système de grille (si spécifique et non un framework)
-│   └── _container.scss           # Classes de conteneur (ex: .container, .container--fluid)
+│   ├── _header.css              # .header, .header__logo, .header__nav
+│   ├── _footer.css              # .footer, .footer__links
+│   ├── _sidebar.css             # .sidebar, .sidebar__item
+│   ├── _grid.css                # Système de grille (si spécifique et non un framework)
+│   └── _container.css           # Classes de conteneur (ex: .container, .container--fluid)
 ├── pages/
-│   ├── _home.scss                # Styles spécifiques à la page d'accueil (ex: .home-hero, .home-section)
-│   ├── _product-detail.scss      # Styles pour la page de détail d'un produit/service avec avis
-│   └── _profile.scss             # Styles pour la page de profil utilisateur
+│   ├── _home.css                # Styles spécifiques à la page d'accueil (ex: .home-hero, .home-section)
+│   ├── _product-detail.css      # Styles pour la page de détail d'un produit/service avec avis
+│   └── _profile.css             # Styles pour la page de profil utilisateur
 ├── utilities/
-│   ├── _mixins.scss              # Mixins SASS/LESS pour des réutilisations complexes
-│   ├── _functions.scss           # Fonctions SASS/LESS (ex: calculs de tailles)
-│   ├── _spacing.scss             # Classes utilitaires pour les espacements (ex: .u-margin-bottom-md)
-│   ├── _typography-helpers.scss  # Classes utilitaires pour le texte (ex: .u-text-center, .u-font-bold)
-│   └── _visibility.scss          # Classes pour masquer/afficher (ex: .u-hidden-mobile)
+│   ├── _mixins.css              # Mixins SASS/LESS pour des réutilisations complexes
+│   ├── _functions.css           # Fonctions SASS/LESS (ex: calculs de tailles)
+│   ├── _spacing.css             # Classes utilitaires pour les espacements (ex: .u-margin-bottom-md)
+│   ├── _typography-helpers.css  # Classes utilitaires pour le texte (ex: .u-text-center, .u-font-bold)
+│   └── _visibility.css          # Classes pour masquer/afficher (ex: .u-hidden-mobile)
 ├── vendors/
-│   ├── _external-datepicker.scss # Styles pour une bibliothèque tierce (si non gérée par npm/CDN)
-│   └── _swiper-carousel.scss     # Styles pour un slider/carrousel externe
-└── main.scss                     # Fichier principal qui importe tous les autres
+│   ├── _external-datepicker.css # Styles pour une bibliothèque tierce (si non gérée par npm/CDN)
+│   └── _swiper-carousel.css     # Styles pour un slider/carrousel externe
+└── main.css                     # Fichier principal qui importe tous les autres
 
 js/
 ├── components/

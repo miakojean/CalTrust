@@ -1,5 +1,5 @@
 <template>
-  <h1>Bienvenu</h1>
+  <h1>Bienvenu Chez vous</h1>
 </template>
 
 <script>
@@ -8,6 +8,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped>
 
 </style>
