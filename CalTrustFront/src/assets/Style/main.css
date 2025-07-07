@@ -3,7 +3,7 @@
 @import './base/_typography.css';
 @import './layout/_container.css';
 @import './components/_button.css';
-
+@import './components/_pictures.css';
 #app {
   max-width: 1280px;
   margin: 0 auto;

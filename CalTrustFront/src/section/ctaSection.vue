@@ -16,6 +16,10 @@
             </div>
         </div>
         <div class="pic__container">
+            <img class="seven" src="@/assets/Pictures/picture_seven.jpg" alt="Reunion of people" />
+            <img class="six" src="@/assets/Pictures/picture_six.jpg" alt="Reunion of people" />
+            <img class="one" src="@/assets/Pictures/picture_one.jpg" alt="Reunion of people" />
+            <img class="four" src="@/assets/Pictures/picture_four.jpg" alt="Reunion of people" />
             
         </div>
     </section>
@@ -31,6 +35,18 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.pic__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start; /* Alignement en haut par défaut */
+    gap: 20px;
+    height: auto;
+}
 
+/* Cible les images paires (2e, 4e) pour les aligner en bas */
+.pic__container img:nth-child(even) {
+    align-self: flex-end; /* Pousse vers le bas */
+}
 </style>
