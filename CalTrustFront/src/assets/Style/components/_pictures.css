@@ -8,8 +8,8 @@ img{
 
 @media (min-width: 766px) {
     img{
-        width: 150px;
-        height: 300px;
+        width: 200px;
+        height: 400px;
         object-fit: cover;
         background-size: cover;
         border-radius: 10px;
