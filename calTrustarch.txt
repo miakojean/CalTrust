@@ -1,0 +1,35 @@
+📁 /
+├── 🏠 Accueil
+├── 🔍 Recherche
+│   ├── Liste des résultats
+│   └── Filtres (note, catégorie, localisation)
+│
+├── 🏢 Fiche Entreprise
+│   ├── 📊 Résumé (note moyenne, infos)
+│   ├── 📝 Liste des avis
+│   ├── ✏️ Formulaire d’avis (si connecté)
+│   └── 🗺️ Localisation (Google Maps)
+│
+├── ✍️ Soumettre un avis
+│   ├── Notation (étoiles)
+│   ├── Texte + photos
+│   └── Prévisualisation
+│
+├── 👤 Profil Utilisateur
+│   ├── Mes avis
+│   ├── Paramètres
+│   └── Badges
+│
+├── 🔐 Authentification
+│   ├── Connexion
+│   └── Inscription
+│
+├── 🛠️ Tableau de bord (Entreprises)
+│   ├── Statistiques
+│   ├── Réponses aux avis
+│   └── Vérification
+│
+└── ⚙️ Admin (Modération)
+    ├── Signalements
+    ├── Gestion entreprises
+    └── Outils anti-fraude
