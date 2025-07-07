@@ -1,0 +1,18 @@
+# Homeview
+└── CTA Hero section  
+    ├── Profil Entreprise  
+    │   ├── Vérification  
+    │   └── Analytics (notes, comparaison)  
+    ├── Dépôt Produits/Services  
+    │   ├── Ajout manuel/CSV  
+    │   └── Catégorisation IA  
+    ├── Gestion Avis  
+    │   ├── Notation multi-critères  
+    │   ├── Modération  
+    │   └── Réponse aux avis  
+    ├── Engagement Clients  
+    │   ├── Avis vérifiés  
+    │   └── Récompenses  
+    └── Monetisation  
+        ├── Abonnements  
+        └── Publicité  
