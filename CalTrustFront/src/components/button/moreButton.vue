@@ -1,0 +1,32 @@
+<template>
+  <button class="more__button">
+    {{ label }}
+    <i class="ri-arrow-right-line"></i>
+  </button>
+</template>
+
+<script>
+export default {
+
+    props:{
+        label:{
+            type: String,
+            default: 'Get More'
+        }
+    }
+
+}
+</script>
+
+<style scoped>
+.more__button{
+    background: #f3f3f3;
+    color: #111;
+    transition: 0.5s;
+}
+
+.more__button:hover{
+    background: #d6d6d6;
+    transition: ease-in-out 0.3s;
+}
+</style>

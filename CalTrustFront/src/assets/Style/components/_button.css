@@ -1,0 +1,14 @@
+button{
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 0.4rem;
+    border: none;
+    cursor: pointer;
+}
+
+.btn__flex{
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}

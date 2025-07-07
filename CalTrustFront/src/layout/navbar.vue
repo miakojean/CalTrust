@@ -113,7 +113,7 @@ export default {
   padding: 1rem 2rem;
   background-color: transparent;
   transition: all 0.5s ease;
-  color: #f3f3f3;
+  color: #111;
   position: fixed;
   top: 0;
   left: 0;
@@ -131,7 +131,7 @@ export default {
 .div__logo h3 {
   font-weight: 500;
   font-size: 1.5rem;
-  color: #f3f3f3;
+  color: #111;
   margin: 0;
   transition: transform 0.3s ease;
 }
@@ -158,7 +158,7 @@ export default {
 
 .div__menu a {
   text-decoration: none;
-  color: #f3f3f3;
+  color: #111;
   font-weight: 400;
   transition: all 0.3s ease;
   position: relative;
@@ -201,7 +201,7 @@ export default {
   display: block;
   width: 25px;
   height: 3px;
-  background-color: #f3f3f3;
+  background-color: #111;
   margin: 5px 0;
   transition: all 0.3s ease;
   border-radius: 3px;
@@ -223,7 +223,7 @@ export default {
     left: 0;
     width: 100%;
     height: calc(100vh - 70px);
-    background-color: #1a1a1aee;
+    background-color: #f3f3f3;
     backdrop-filter: blur(10px);
     padding: 2rem 1rem;
     transform: translateX(-100%);
