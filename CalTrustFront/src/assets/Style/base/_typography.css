@@ -1,10 +1,21 @@
+
 h1 {
-  font-size: 3rem;
+  font-size: 2.75rem;
+  font-weight: 700;
   margin: 0.67rem 0;
+  color: var(--dark-slate-gray);
+
 }
 
 h2{
   font-size: 1.8rem;
+}
+
+p{
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: gray;
+  line-height: 1.5;
 }
 
 hr {
@@ -61,3 +72,5 @@ sub {
 sup {
   top: -0.5rem;
 }
+
+/* Media quieries*/

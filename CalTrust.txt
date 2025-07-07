@@ -1,5 +1,7 @@
 On va partir sur du Vue pour le Frontend et du Django
-pour le Backend
+pour le Backend.
+
+La base de données sera Postgresql.
 
 # Frontend
 └── Plateforme de Notation  
@@ -119,3 +121,29 @@ js/
 │   └── LoginPage.js
 ├── app.js                    # Point d'entrée principal de l'application (initialisation, routage)
 └── index.js                  # Fichier de bootstrapping (montage de l'app dans le DOM)
+
+
+Résumé : Quand utiliser quoi ? 🧠
+Le contenu principal et unique de la page ?
+
+✅ Utilisez <main>.
+
+Un groupe de liens pour se déplacer dans le site ?
+
+✅ Utilisez <nav>.
+
+Un contenu autonome qui pourrait être partagé seul ?
+
+✅ Utilisez <article>.
+
+Une partie thématique de votre contenu principal ?
+
+✅ Utilisez <section>.
+
+Un contenu complémentaire, un peu à part (comme une barre latérale) ?
+
+✅ Utilisez <aside>.
+
+Vous avez besoin de regrouper des éléments juste pour les styliser en CSS ?
+
+✅ Utilisez <div>.
