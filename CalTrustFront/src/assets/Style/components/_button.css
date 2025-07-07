@@ -10,5 +10,16 @@ button{
 .btn__flex{
     width: 100%;
     display: flex;
+    justify-content: start;
     gap: 1rem;
+}
+
+/* Media quieries*/
+@media (min-width: 766px) {
+  .btn__flex{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

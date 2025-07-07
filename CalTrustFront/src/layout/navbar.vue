@@ -123,7 +123,7 @@ export default {
 }
 
 .nav__container.scrolled {
-  background-color: #252525f8;
+  background-color: #f3f3f3;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
 }

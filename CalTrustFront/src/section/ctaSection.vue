@@ -16,11 +16,10 @@
             </div>
         </div>
         <div class="pic__container">
-            <img class="seven" src="@/assets/Pictures/picture_seven.jpg" alt="Reunion of people" />
-            <img class="six" src="@/assets/Pictures/picture_six.jpg" alt="Reunion of people" />
-            <img class="one" src="@/assets/Pictures/picture_one.jpg" alt="Reunion of people" />
-            <img class="four" src="@/assets/Pictures/picture_four.jpg" alt="Reunion of people" />
-            
+            <img class="pair" src="@/assets/Pictures/picture_seven.jpg" alt="Reunion of people" />
+            <img class="impair" src="@/assets/Pictures/picture_six.jpg" alt="Reunion of people" />
+            <img class="pair" src="@/assets/Pictures/picture_one.jpg" alt="Reunion of people" />
+            <img class="impair" src="@/assets/Pictures/picture_four.jpg" alt="Reunion of people" /> 
         </div>
     </section>
 </template>
@@ -37,16 +36,55 @@ export default {
 
 <style scoped>
 .pic__container {
+    min-height: 100vh;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: flex-start; /* Alignement en haut par défaut */
-    gap: 20px;
+    gap: 0.5rem;
     height: auto;
 }
 
 /* Cible les images paires (2e, 4e) pour les aligner en bas */
 .pic__container img:nth-child(even) {
     align-self: flex-end; /* Pousse vers le bas */
+}
+
+@media (min-width: 766px) {
+    .pic__container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start; /* Alignement en haut par défaut */
+        gap: 0.5rem;
+    }
+
+    .main__container{
+        padding-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .pic__container {
+        min-height: 50vh;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start; /* Alignement en haut par défaut */
+        gap: 0.5rem;
+        height: auto;
+    }
+
+        /* Cible les images paires (2e, 4e) pour les aligner en bas */
+    .pic__container img:nth-child(even) {
+        align-self: flex-end; /* Pousse vers le bas */
+    }
+
+    .pair{
+        margin-top: 2rem;
+    }
 }
 </style>
