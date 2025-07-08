@@ -15,3 +15,13 @@ img{
         border-radius: 10px;
     }
 }
+
+@media (min-width: 1024px) {
+    img{
+        width: 140px;
+        height: 300px;
+        object-fit: cover;
+        background-size: cover;
+        border-radius: 10px;
+    }
+}

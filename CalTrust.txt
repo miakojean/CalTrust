@@ -123,27 +123,64 @@ js/
 └── index.js                  # Fichier de bootstrapping (montage de l'app dans le DOM)
 
 
-Résumé : Quand utiliser quoi ? 🧠
-Le contenu principal et unique de la page ?
+1. Header (Entête)
 
-✅ Utilisez <main>.
+Logo + Nom de l'application
 
-Un groupe de liens pour se déplacer dans le site ?
+Menu : Accueil | Entreprises | Catégories | Tarifs | Blog
 
-✅ Utilisez <nav>.
+Boutons : Connexion / Inscription (CTA principal)
 
-Un contenu autonome qui pourrait être partagé seul ?
+2. Hero Section (Bannière principale)
 
-✅ Utilisez <article>.
+Titre accrocheur ("Donnez votre avis, Aidez les autres à choisir")
 
-Une partie thématique de votre contenu principal ?
+Sous-titre explicatif
 
-✅ Utilisez <section>.
+Champ de recherche (pour trouver des entreprises)
 
-Un contenu complémentaire, un peu à part (comme une barre latérale) ?
+Bouton CTA ("Donnez votre avis" ou "Rechercher")
 
-✅ Utilisez <aside>.
+3. Fonctionnalités clés (3-4 points)
 
-Vous avez besoin de regrouper des éléments juste pour les styliser en CSS ?
+Icônes + textes courts ("Avis vérifiés", "Entreprises notées", "Communauté transparente")
 
-✅ Utilisez <div>.
+4. Entreprises populaires / Derniers avis
+
+Carrousel ou grille d'entreprises notées
+
+Avis récents avec étoiles
+
+5. Comment ça marche ? (Étapes)
+
+Recherchez une entreprise
+
+Donnez votre avis
+
+Aidez la communauté
+
+6. Témoignages utilisateurs
+
+Citations + photos de profils
+
+7. Zone d'inscription (CTA final)
+
+"Rejoignez notre communauté dès maintenant !"
+
+Formulaire court ou bouton d'inscription
+
+8. Footer (Pied de page)
+
+Liens utiles (CGU, Confidentialité, À propos)
+
+Réseaux sociaux
+
+Copyright
+
+Variantes possibles :
+
+Ajouter une section "Presse" si médias en parlent
+
+Intégrer un blog avec derniers articles
+
+Pop-up de newsletter

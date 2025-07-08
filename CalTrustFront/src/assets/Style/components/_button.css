@@ -8,10 +8,10 @@ button{
 }
 
 .btn__flex{
-    width: 100%;
-    display: flex;
-    justify-content: start;
-    gap: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  gap: 1rem;
 }
 
 /* Media quieries*/
