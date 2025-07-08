@@ -42,6 +42,7 @@ La base de données sera Postgresql.
     ├── /ban (utilisateur/entreprise)
     └── /ai-check (détection langage toxique)
 
+
 #Frontend
 css/
 ├── base/

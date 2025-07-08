@@ -5,6 +5,8 @@
 @import './components/_button.css';
 @import './components/_pictures.css';
 @import './components/_form.css';
+@import './components/_card.css';
+
 #app {
   max-width: 1280px;
   margin: 0 auto;
