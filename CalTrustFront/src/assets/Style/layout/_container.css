@@ -38,6 +38,11 @@
 }
 
 @media (min-width: 1024px) {
+
+    main{
+        width: 90%;
+    }
+
     .main__section{
         padding: 1rem 0;
         display: flex;
@@ -46,6 +51,7 @@
         justify-content: space-around;
         gap: 3rem;
         min-height: 100vh;
+        min-width: 90%;
     }
 
     .main__container{
@@ -55,5 +61,11 @@
         align-items: center;
         justify-content: center;
         gap: 1rem;
+    }
+
+    #features__section{
+        background: #2199de;
+        background: linear-gradient(90deg,rgba(33, 153, 222, 1) 0%, rgba(186, 186, 186, 1) 50%, rgba(252, 252, 250, 1) 100%);
+        border-radius: 2rem;
     }
 }

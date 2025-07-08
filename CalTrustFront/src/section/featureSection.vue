@@ -1,5 +1,5 @@
 <template>
-  <section class="main__section">
+  <section id="features__section" class="main__section">
     <div class="main__container">
       <h2>
         Donnez votre avis, Aidez les autres à choisir
@@ -11,13 +11,15 @@
         cumque nostrum laborum quibusdam?
       </p>
     </div>
+    
     <div class="features__container">
+      
       <div class="features__cards">
         <span>
           <i class="ri-delete-bin-6-line"> </i>
         </span>
         <h3 class="features__title">Spam report</h3>
-        <p>
+        <p class="features__subtitle">
           Lorem ipsum dolor sit, amet consectetur 
           adipisicing elit. Laudantium maxime 
           consectetur sapiente.
@@ -29,7 +31,7 @@
           <i class="ri-delete-bin-6-line"> </i>
         </span>
         <h3 class="features__title">Spam report</h3>
-        <p>
+        <p class="features__subtitle">
           Lorem ipsum dolor sit, amet consectetur 
           adipisicing elit. Laudantium maxime 
           consectetur sapiente.
@@ -41,7 +43,7 @@
           <i class="ri-delete-bin-6-line"> </i>
         </span>
         <h3 class="features__title">Spam report</h3>
-        <p>
+        <p class="features__subtitle">
           Lorem ipsum dolor sit, amet consectetur 
           adipisicing elit. Laudantium maxime 
           consectetur sapiente.
@@ -53,7 +55,7 @@
           <i class="ri-delete-bin-6-line"> </i>
         </span>
         <h3 class="features__title">Spam report</h3>
-        <p>
+        <p class="features__subtitle">
           Lorem ipsum dolor sit, amet consectetur 
           adipisicing elit. Laudantium maxime 
           consectetur sapiente.
@@ -69,10 +71,24 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .features__container{
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+@media(min-width: 766px){
+
+  .features__container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .features__cards{
+    
+    width: 100%;
+  }
 }
 </style>

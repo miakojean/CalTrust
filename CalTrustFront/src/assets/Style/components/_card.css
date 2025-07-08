@@ -10,3 +10,19 @@
     justify-content: start;
     gap: 1rem;
 }
+
+.features__subtitle{
+    font-size: 1rem;
+    text-align: left;
+}
+
+@media(min-width: 766px){
+  .features__container{
+    display: flex;
+    gap: 1rem;
+  }
+
+  .features__cards{
+    width: 50%;
+  }
+}
