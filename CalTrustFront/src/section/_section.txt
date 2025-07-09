@@ -1,0 +1,8 @@
+CTASection (1/3)
+FeatureSection(1/3)
+Testimonial (1/3)
+firmsCaroussel(){
+    Au lieu de chercher à mettre des logo je pourrai par exemple mettre diférents
+    type de catégories; d'entreprises qui pourraient faire l'objet d'une évalution
+    par les individus.
+}

@@ -1,6 +1,7 @@
 :root{
     /* CSS HEX */
-    --pink-lavender: #e0bad7ff;
+    --primary-color:#1B3C53;
+    --secondary-color: #456882;
     --emerald: #61d095ff;
     --emerald-2: #48bf84ff;
     --zomp: #439775ff;

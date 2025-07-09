@@ -1,2 +1,0 @@
-CTASection (1/3)
-FeatureSection()

@@ -1,19 +1,19 @@
 .features__title{
-    font-weight: 600;
-    font-size: 1.2rem;
-    color: #0a9aee;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #0a9aee;
 }
 
 .features__cards{
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 1rem;
 }
 
 .features__subtitle{
-    font-size: 1rem;
-    text-align: left;
+  font-size: 1rem;
+  text-align: left;
 }
 
 @media(min-width: 766px){

@@ -124,7 +124,7 @@ js/
 └── index.js                  # Fichier de bootstrapping (montage de l'app dans le DOM)
 
 
-1. Header (Entête)
+1. Header (Entête) (Done)
 
 Logo + Nom de l'application
 
@@ -132,7 +132,7 @@ Menu : Accueil | Entreprises | Catégories | Tarifs | Blog
 
 Boutons : Connexion / Inscription (CTA principal)
 
-2. Hero Section (Bannière principale)
+2. Hero Section (Bannière principale) (Done)
 
 Titre accrocheur ("Donnez votre avis, Aidez les autres à choisir")
 
@@ -142,7 +142,7 @@ Champ de recherche (pour trouver des entreprises)
 
 Bouton CTA ("Donnez votre avis" ou "Rechercher")
 
-3. Fonctionnalités clés (3-4 points)
+3. Fonctionnalités clés (3-4 points) (Done)
 
 Icônes + textes courts ("Avis vérifiés", "Entreprises notées", "Communauté transparente")
 
@@ -160,7 +160,7 @@ Donnez votre avis
 
 Aidez la communauté
 
-6. Témoignages utilisateurs
+6. Témoignages utilisateurs (Done)
 
 Citations + photos de profils
 
