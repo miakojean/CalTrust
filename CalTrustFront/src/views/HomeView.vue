@@ -5,8 +5,8 @@
     <stepper/>
     <featureSection/>
     <testimonials/>
-    <stepper title="Améliorer certains biens et services"/>
     <firmsSection/>
+    <stepper title="Améliorer certains biens et services"/>
   </main>
 </template>
 
@@ -24,7 +24,7 @@ export default {
       featureSection,
       testimonials,
       firmsSection,
-      stepper
+      stepper,
     },
 
     setup(){

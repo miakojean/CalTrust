@@ -164,7 +164,7 @@ Aidez la communauté
 
 Citations + photos de profils
 
-7. Zone d'inscription (CTA final)
+7. Zone d'inscription (CTA final) (Done)
 
 "Rejoignez notre communauté dès maintenant !"
 

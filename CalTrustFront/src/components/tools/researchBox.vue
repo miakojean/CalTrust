@@ -42,7 +42,7 @@ export default {
     padding: 1rem;
     border-radius: 50%;
     height: 100%;
-    background: #358cd3;
+    background: var(--primary-color);
     color: #fff;
     font-size: 1.1rem;
     transition: ease-in-out 1.2s;

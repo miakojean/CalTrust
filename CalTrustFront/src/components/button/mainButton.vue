@@ -23,6 +23,8 @@ export default {
     color: #fff;
     transition: 0.5s;
     border-radius: 1rem;
+    width: 60%;
+    max-width: 300px;
 }
 
 .main__button:hover{

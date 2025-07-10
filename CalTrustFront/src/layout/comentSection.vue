@@ -1,6 +1,6 @@
 <template>
   <div class="box__connexion">
-    <h2>Rejoignez notre communauté dès maintenant !</h2>
+    <h2>Ouvrez votre compte dès maintenant</h2>
     <mainButton label="j'ouvre mon compte"/>
   </div>
 </template>

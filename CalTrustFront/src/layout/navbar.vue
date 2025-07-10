@@ -4,7 +4,6 @@
       <h3><router-link to="/">CalTrust</router-link></h3>
     </div>
     
-    <!-- Bouton Hamburger -->
     <button 
       class="hamburger"
       :class="{ active: isMenuOpen }"
@@ -17,7 +16,6 @@
       <span class="hamburger__line"></span>
     </button>
     
-    <!-- Menu Navigation -->
     <div 
       class="div__menu"
       :class="{ active: isMenuOpen }"
@@ -57,7 +55,7 @@ export default {
       { path: '/about', name: 'A propos' },
       { path: '/services', name: 'Services' },
       { path: '/contact', name: 'Contact' },
-      { path: '/newsletter', name: 'Newsletter' },
+      { path: '/entreprises', name: 'entreprises' },
     ];
 
     const isActive = (link) => {
@@ -123,7 +121,7 @@ export default {
 }
 
 .nav__container.scrolled {
-  background-color: #f3f3f3;
+  background-color: var(--primary-color);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
 }
@@ -134,6 +132,10 @@ export default {
   color: #111;
   margin: 0;
   transition: transform 0.3s ease;
+}
+
+.div__logo h3.scrolled{
+  color: #f3f3f3;
 }
 
 .div__logo h3:hover {
@@ -166,11 +168,11 @@ export default {
 }
 
 .div__menu a:hover {
-  color: #4dabf7;
+  color: var(--primary-color);
 }
 
 .div__menu a.active {
-  color: #4dabf7;
+  color: var(--primary-color);
   font-weight: 500;
 }
 
@@ -181,10 +183,32 @@ export default {
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #4dabf7;
+  background-color: var(--primary-color);
   transform: scaleX(1);
   transform-origin: left;
   transition: transform 0.3s ease;
+}
+
+/* Ajoutez ces règles */
+.nav__container.scrolled .div__menu a {
+  color: white !important;
+}
+
+.nav__container.scrolled .div__menu a:hover,
+.nav__container.scrolled .div__menu a.active {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.nav__container.scrolled .div__menu a.active::after {
+  background-color: white;
+}
+
+.nav__container.scrolled .div__logo h3 {
+  color: white;
+}
+
+.nav__container.scrolled .hamburger__line {
+  background-color: white;
 }
 
 /* Bouton Hamburger */
@@ -201,7 +225,7 @@ export default {
   display: block;
   width: 25px;
   height: 3px;
-  background-color: #111;
+  background-color: var(--primary-color);
   margin: 5px 0;
   transition: all 0.3s ease;
   border-radius: 3px;
