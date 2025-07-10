@@ -99,6 +99,10 @@ span i{
   max-width: 50px;
 }
 
+li{
+  list-style: none;
+}
+
 /* Media quieries*/
 @media (min-width: 766px) {
   
