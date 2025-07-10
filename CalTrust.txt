@@ -146,7 +146,7 @@ Bouton CTA ("Donnez votre avis" ou "Rechercher")
 
 Icônes + textes courts ("Avis vérifiés", "Entreprises notées", "Communauté transparente")
 
-4. Entreprises populaires / Derniers avis
+4. Entreprises populaires / Derniers avis (Viendra après)
 
 Carrousel ou grille d'entreprises notées
 

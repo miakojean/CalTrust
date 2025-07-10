@@ -10,7 +10,7 @@ h1 {
 h2{
   font-size: 2rem;
   font-weight: 600;
-  color: var(--dark-slate-gray);
+  color: var(--primary-color);
   line-height: 1.5;
 }
 

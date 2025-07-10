@@ -19,9 +19,10 @@ export default {
 
 <style scoped>
 .main__button{
-    background: #358cd3;
+    background: var(--primary-color);
     color: #fff;
     transition: 0.5s;
+    border-radius: 1rem;
 }
 
 .main__button:hover{
