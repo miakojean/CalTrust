@@ -9,8 +9,29 @@
 @import './components/_card.css';
 
 #app {
-  width: calc(100% - 8rem); /* 100% moins les marges (4rem x2) */
-  margin: 0 4rem; /* Marges gauche/droite augmentées */
-  padding: 2rem;
+  width: calc(100% - 2rem); /* 1rem de marge à gauche + 1rem à droite = 2rem */
+  margin: 0 1rem;
+  padding: 1rem;
   font-weight: normal;
+  box-sizing: border-box;
+}
+
+@media (min-width: 766px) {
+  #app {
+    width: calc(100% - 4rem); /* 2rem de marge à gauche + 2rem à droite = 4rem */
+    padding: 1rem;
+    margin: 0 2rem;
+    box-sizing: border-box;
+  }
+}
+
+@media (min-width: 1024px) {
+  #app {
+    /* Calcule la largeur en soustrayant les marges latérales (2rem + 2rem = 4rem) */
+    width: calc(100% - 4rem);
+    padding: 1rem;
+    margin: 0 auto; /* Centre l'élément horizontalement */
+    max-width: 1680px; /* Limite la largeur maximale */
+    box-sizing: border-box;
+  }
 }

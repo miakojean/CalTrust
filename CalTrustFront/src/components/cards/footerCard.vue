@@ -33,7 +33,20 @@ export default {
 }
 
 li{
-    padding-bottom: 1rem;
-    font-size: 0.8rem;
+  padding-bottom: 1rem;
+  font-size: 0.8rem;
+  transition: ease-in-out 0.65s;
+  cursor: pointer;
+}
+
+li:hover{
+  transition: ease-in-out 0.5s;
+  transform: scale(1.05, 1.15);
+}
+
+@media(min-width: 1024px){
+  li{
+    font-size: 1rem;
+  }
 }
 </style>

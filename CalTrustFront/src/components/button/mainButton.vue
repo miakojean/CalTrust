@@ -23,7 +23,7 @@ export default {
     color: #fff;
     transition: 0.5s;
     border-radius: 0.4rem;
-    width: 50%;
+    width: 70%;
     max-width: 200px;
 }
 
