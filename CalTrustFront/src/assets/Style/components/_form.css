@@ -5,10 +5,11 @@ form{
 
 input{
     width: 100%;
+    max-width: 400px;
     padding: 1rem;
     background: #f3f3f3;
     border: none;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     font-size: 1rem;
     font-weight: 600;
     color: #383838;

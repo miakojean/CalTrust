@@ -21,9 +21,8 @@
 
 @media(min-width:1024px){
     .flex__center{
-        padding: 2rem;
-        gap:2rem;
-        height:100vh
+        gap:1rem;
+        padding-top: 1rem;
     }
    .grid__two_and_four__fr{
         display: grid;

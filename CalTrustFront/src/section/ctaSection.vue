@@ -5,10 +5,8 @@
                 Donnez votre avis, Aidez les autres à choisir
             </h1>
             <p>
-                Lorem ipsum dolor sit amet consectetur 
-                adipisicing elit. Pariatur impedit eaque 
-                ipsa culpa recusandae temporibus, non 
-                cumque nostrum laborum quibusdam?
+                Contribuez à la première plateforme ivoirienne de référencement collaboratif. 
+                Partagez vos expériences pour guider les consommateurs et aider les entreprises à s'améliorer.
             </p>
             <research-box/>
         </div>

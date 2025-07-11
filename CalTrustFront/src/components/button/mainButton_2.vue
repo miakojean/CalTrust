@@ -19,16 +19,18 @@ export default {
 
 <style scoped>
 .main__button{
-    background: var(--primary-color);
-    color: #fff;
+    background: var(--tertiary-color);
+    color: var(--primary-color);
     transition: 0.5s;
     border-radius: 0.4rem;
     width: 50%;
     max-width: 200px;
+    font-weight: 600;
+    transition: ease-in-out 0.3s;
 }
 
 .main__button:hover{
-    background: #1e5179;
+    background: #f5bb94;;
     transition: ease-in-out 0.3s;
 }
 </style>

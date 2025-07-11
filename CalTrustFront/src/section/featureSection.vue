@@ -2,13 +2,10 @@
   <section id="features__section" class="main__section">
     <div class="main__container">
       <h2 class="main__feat__title">
-        Donnez votre avis, Aidez les autres à choisir
+        Votre opinion éclaire les choix de toute la Côte d'Ivoire
       </h2>
       <p class="paragraph__feat">
-        Lorem ipsum dolor sit amet consectetur 
-        adipisicing elit. Pariatur impedit eaque 
-        ipsa culpa recusandae temporibus, non 
-        cumque nostrum laborum quibusdam?
+        Partagez vos expériences et consultez les avis vérifiés pour trouver les meilleures entreprises ivoiriennes.
       </p>
     </div>
     

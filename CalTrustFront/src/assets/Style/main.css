@@ -9,8 +9,8 @@
 @import './components/_card.css';
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
+  width: calc(100% - 4rem); /* Compense les marges */
+  margin: 0 2rem;           /* Marges gauche/droite */
   padding: 2rem;
   font-weight: normal;
 }

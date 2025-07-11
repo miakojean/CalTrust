@@ -1,43 +1,46 @@
 <template>
-    <div class="carousel-container">
-        <button class="nav-btn prev" @click="prevSlide" aria-label="Previous">
-        <i class="fas fa-chevron-left"></i>
-        </button>
-        
-        <div class="carousel-track" :style="trackStyle" ref="track">
+  <div class="carousel-container">
+    <button class="nav-btn prev" @click="prevSlide" aria-label="Previous">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    
+    <div class="carousel-viewport">
         <div 
-            v-for="(logo, index) in logos" 
-            :key="index" 
-            class="carousel-slide"
-            :class="{ active: currentIndex === index }"
+            class="carousel-track" 
+            :style="trackStyle" 
+            ref="track"
+            @mouseenter="pauseAutoplay"
+            @mouseleave="resumeAutoplay"
         >
-            <div class="logo-container">
+        <div 
+          v-for="(logo, index) in visibleLogos" 
+          :key="`${index}-${logo.name}`" 
+          class="carousel-slide"
+          :class="{ active: centerIndex === index }"
+        >
+          <div class="logo-container">
             <i v-if="!logo.image" :class="logo.icon || 'fas fa-building'"></i>
             <img v-else :src="logo.image" :alt="logo.name || 'Company logo'">
             <span v-if="logo.name" class="logo-name">{{ logo.name }}</span>
-            </div>
+          </div>
         </div>
-        </div>
-        
-        <button class="nav-btn next" @click="nextSlide" aria-label="Next">
-        <i class="fas fa-chevron-right"></i>
-        </button>
+      </div>
     </div>
+    
+    <button class="nav-btn next" @click="nextSlide" aria-label="Next">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue' // 1. Importer 'computed'
+import { ref, onMounted, computed, onUnmounted } from 'vue'
 
 export default {
   props: {
     items: {
       type: Array,
       default: () => [
-        { name: "TechCorp", icon: "fas fa-microchip" },
-        { name: "DesignCo", icon: "fas fa-paint-brush" },
-        { name: "FoodExpress", icon: "fas fa-utensils" },
-        { name: "EcoWorld", icon: "fas fa-leaf" },
-        { name: "FinancePlus", icon: "fas fa-chart-line" },
         { name: "TechCorp", icon: "fas fa-microchip" },
         { name: "DesignCo", icon: "fas fa-paint-brush" },
         { name: "FoodExpress", icon: "fas fa-utensils" },
@@ -52,17 +55,28 @@ export default {
     interval: {
       type: Number,
       default: 3000
+    },
+    visibleSlides: {
+      type: Number,
+      default: 5
     }
   },
 
   setup(props) {
     const currentIndex = ref(0)
+    const centerIndex = ref(Math.floor(props.visibleSlides / 2))
     const track = ref(null)
     let autoplayInterval = null
 
-    // 2. Définir les dimensions pour le calcul du décalage
-    const slideWidth = 120 // La largeur de .logo-container
-    const slideGap = 30   // Le gap dans .carousel-track
+    // Duplique les éléments pour créer l'illusion d'infinite loop
+    const visibleLogos = computed(() => {
+      const tripleItems = [...props.items, ...props.items, ...props.items]
+      const start = currentIndex.value % props.items.length
+      return tripleItems.slice(start, start + props.visibleSlides)
+    })
+
+    const slideWidth = 120
+    const slideGap = 30
     
     const nextSlide = () => {
       currentIndex.value = (currentIndex.value + 1) % props.items.length
@@ -72,37 +86,52 @@ export default {
       currentIndex.value = (currentIndex.value - 1 + props.items.length) % props.items.length
     }
     
-    // 3. Créer une propriété calculée pour le style du 'track'
     const trackStyle = computed(() => {
-      // Calcule le décalage total : index * (largeur + espacement)
-      const offset = currentIndex.value * (slideWidth + slideGap)
+      const centerOffset = (props.visibleSlides % 2 === 0) 
+        ? (slideWidth + slideGap) / 2 
+        : 0
       return {
-        transform: `translateX(-${offset}px)`
+        transform: `translateX(calc(50% - ${centerOffset}px - ${centerIndex.value * (slideWidth + slideGap)}px))`
       }
     })
 
-    const startAutoplay = () => {
+    const pauseAutoplay = () => {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval)
+      }
+    }
+
+    const resumeAutoplay = () => {
       if (props.autoplay) {
         autoplayInterval = setInterval(nextSlide, props.interval)
       }
     }
 
     onMounted(() => {
-      startAutoplay()
+      if (props.autoplay) {
+        autoplayInterval = setInterval(nextSlide, props.interval)
+      }
+    })
+
+    onUnmounted(() => {
+      pauseAutoplay()
     })
 
     return {
       currentIndex,
+      centerIndex,
       track,
       nextSlide,
       prevSlide,
-      logos: props.items,
-      trackStyle // 4. Exposer la propriété calculée au template
+      visibleLogos,
+      trackStyle,
+      pauseAutoplay,
+      resumeAutoplay
     }
   }
 }
-
 </script>
+
 <style scoped>
 .carousel-container {
   display: flex;
@@ -111,14 +140,19 @@ export default {
   gap: 20px;
   margin: 2rem auto;
   width: 100%;
+  position: relative;
+}
+
+.carousel-viewport {
+  width: 100%;
   overflow: hidden;
 }
 
 .carousel-track {
-  width: 65%;
   display: flex;
-  transition: transform 0.5s ease;
   gap: 30px;
+  transition: transform 0.5s ease;
+  will-change: transform;
 }
 
 .logo-container {
@@ -133,6 +167,12 @@ export default {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   padding: 15px;
   transition: all 0.3s ease;
+}
+
+.carousel-slide.active .logo-container {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  border: 2px solid var(--primary-color);
 }
 
 .logo-container:hover {
@@ -191,4 +231,6 @@ export default {
     align-items: center;
   }
 }
+
+/* Reste du CSS inchangé... */
 </style>
