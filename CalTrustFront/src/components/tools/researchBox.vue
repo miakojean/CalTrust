@@ -33,7 +33,7 @@ export default {
 .input__family{
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     gap: 1rem;
 }
 

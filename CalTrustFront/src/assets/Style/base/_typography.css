@@ -147,6 +147,36 @@ li{
 @media (min-width: 1024px) {
   
   h1{
+    font-size: 3rem;
+  }
+  
+  h1, h2 {
+    width: 100%;
+    text-align: center;
+  }
+
+  p{
+    width: 100%;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  span i{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    padding: 0.8rem;
+    background: #0f1e2b;
+    border-radius: 1rem;
+    color: #fff;
+    max-width: 50px;
+  }
+}
+
+@media (min-width: 1450px) {
+  
+  h1{
     font-size: 4rem;
   }
   
