@@ -9,8 +9,8 @@
 @import './components/_card.css';
 
 #app {
-  width: calc(100% - 4rem); /* Compense les marges */
-  margin: 0 2rem;           /* Marges gauche/droite */
+  width: calc(100% - 8rem); /* 100% moins les marges (4rem x2) */
+  margin: 0 4rem; /* Marges gauche/droite augmentées */
   padding: 2rem;
   font-weight: normal;
 }
