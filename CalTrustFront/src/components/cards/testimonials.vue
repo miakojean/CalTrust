@@ -8,6 +8,7 @@
             doloremque earum illo facilis accusamus!
         </p>
     </div>
+    <rating />
     <div class="divider"></div>
     <div class="profile">
         <img class="pp" :src="pic" alt="fake profile picture">
@@ -16,10 +17,12 @@
             <p class="message__body">@{{username}}</p>
         </div>
     </div>
+
   </article>
 </template>
 
 <script>
+import rating from '../tools/rating.vue';
 import { computed } from 'vue';
 
 const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
@@ -41,6 +44,10 @@ export default {
             type: String,
             default: defaultPic
         }
+    },
+
+    components:{
+        rating
     },
 
     setup(props) {
@@ -103,6 +110,13 @@ export default {
 @media (min-width: 766px) {
     .message__body{
         font-size: 1.1rem;
+        text-align: start;
+    }
+}
+
+@media (min-width: 1260px) {
+    .message__body{
+        font-size: 1rem;
         text-align: start;
     }
 }
