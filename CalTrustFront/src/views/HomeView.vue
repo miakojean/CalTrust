@@ -13,6 +13,7 @@
 
 <script>
 import navbar from '@/layout/navbar.vue';
+import newNavbar from '@/layout/newNavbar.vue';
 import ctaSection from '@/section/ctaSection.vue';
 import featureSection from '@/section/featureSection.vue';
 import testimonials from '@/section/testimonials.vue';
@@ -22,6 +23,7 @@ import footerSection from '@/layout/footerSection.vue';
 export default {
     components:{
       navbar,
+      newNavbar,
       ctaSection,
       featureSection,
       testimonials,

@@ -8,7 +8,12 @@
             doloremque earum illo facilis accusamus!
         </p>
     </div>
-    <rating />
+    <fake-rating 
+        :value="4" 
+        :max="5"
+        color="#1B3C53"
+        size="large"
+    />
     <div class="divider"></div>
     <div class="profile">
         <img class="pp" :src="pic" alt="fake profile picture">
@@ -22,7 +27,7 @@
 </template>
 
 <script>
-import rating from '../tools/rating.vue';
+import fakeRating from '../tools/fakeRating.vue';
 import { computed } from 'vue';
 
 const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
@@ -47,7 +52,7 @@ export default {
     },
 
     components:{
-        rating
+        fakeRating
     },
 
     setup(props) {

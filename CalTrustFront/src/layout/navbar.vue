@@ -52,10 +52,10 @@ export default {
 
     const navLinks = [
       { path: '/', name: 'Accueil', exact: true },
+      { path: '/avis', name: 'avis' },
       { path: '/about', name: 'A propos' },
-      { path: '/services', name: 'Services' },
       { path: '/contact', name: 'Contact' },
-      { path: '/entreprises', name: 'entreprises' },
+      { path: '/entreprises', name: 'entreprises' }
     ];
 
     const isActive = (link) => {
