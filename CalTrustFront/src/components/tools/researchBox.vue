@@ -34,12 +34,12 @@ export default {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 1rem; 
 }
 
 input,label{
     width: 90%;
-    max-width: 400px;
+    max-width: 600px;
 }
 
 .research__button{
