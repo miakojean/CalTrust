@@ -33,7 +33,7 @@
     </div>
 
     <div class="btn__started">
-      <startButton label="Commencer" @click="navigateToServices"/>
+      <mainButton label="Connexion" @click="navigateToServices"/>
     </div>
   </nav>
 </template>
@@ -41,9 +41,13 @@
 <script>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import mainButton from '@/components/button/mainButton.vue';
 
 export default {
   name: 'Navbar',
+  components: {
+    mainButton
+  },
   setup() {
     const route = useRoute();
     const router = useRouter();
@@ -52,10 +56,10 @@ export default {
 
     const navLinks = [
       { path: '/', name: 'Accueil', exact: true },
-      { path: '/avis', name: 'avis' },
+      { path: '/avis', name: 'Avis' },
       { path: '/about', name: 'A propos' },
       { path: '/contact', name: 'Contact' },
-      { path: '/entreprises', name: 'entreprises' }
+      { path: '/entreprises', name: 'Entreprises' }
     ];
 
     const isActive = (link) => {
@@ -232,7 +236,7 @@ export default {
 }
 
 /* Responsive Design */
-@media (max-width: 1150px) {
+@media (min-width: 1150px) {
   .nav__container {
     padding: 1rem;
   }
@@ -292,12 +296,13 @@ export default {
   }
 
   .btn__started {
-    display: none;
+    display: flex;
+    min-width: 100%;
   }
 }
 
 /* Animation du menu mobile */
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .div__menu {
     top: 60px;
     height: calc(100vh - 60px);

@@ -45,7 +45,14 @@ export default {
 .pic__container img:nth-child(even) {
     align-self: flex-end; /* Pousse vers le bas */
 }
+.pair, .impair {
+    transition: 0.7s ease-in-out;
+}
 
+.pair:hover, .impair:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
 @media (min-width: 766px) {
     .pic__container {
         display: flex;
