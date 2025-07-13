@@ -137,3 +137,71 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+
+# Fichiers et dossiers généraux à ignorer
+.DS_Store
+*.pyc
+*.sqlite3
+*.log
+.env
+venv/
+env/
+/media
+/static
+node_modules/
+
+# Django
+__pycache__/
+*.pot
+*.mo
+db.sqlite3
+media/
+static_collected/ # Si vous collectez vos fichiers statiques ici
+local_settings.py # Si vous avez un fichier de paramètres locaux non versionné
+
+# Environnements virtuels
+.venv/
+bin/
+include/
+lib/
+lib64/
+share/
+
+# Données secrètes et sensibles
+*.key
+*.pem
+*.json # Attention : n'ignorez pas tous les JSON si vous en avez besoin pour la configuration versionnée
+!package.json # N'ignorez pas package.json si vous utilisez Node.js
+!package-lock.json # N'ignorez pas package-lock.json si vous utilisez Node.js
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.bak
+*.swo
+
+# Tests
+.coverage
+.pytest_cache/
+
+# Docker
+.dockerignore
+
+# Build artefacts
+dist/
+build/
+*.egg-info/
+
+# MacOS specific
+.DS_Store
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows specific
+desktop.ini
+
+# Linux specific
+*.py~

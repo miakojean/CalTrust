@@ -1,0 +1,132 @@
+caltrust_backend/
+├── caltrust/                          # Project principal
+│   ├── __init__.py
+│   ├── settings/                      # Configuration multi-environnement
+│   │   ├── __init__.py
+│   │   ├── base.py                    # Paramètres de base
+│   │   ├── development.py             # Config dev
+│   │   └── production.py              # Config prod
+│   ├── urls.py                        # URLs racine
+│   └── wsgi.py
+│
+├── reviews/                           # App principale des avis
+│   ├── migrations/
+│   │   └── __init__.py
+│   ├── __init__.py
+│   ├── admin.py                       # Configuration admin
+│   ├── apps.py
+│   ├── models.py                      # Modèles principaux
+│   │   # (Company, Review, Rating, etc.)
+│   ├── serializers.py                 # Serializers pour l'API
+│   ├── tests/
+│   │   ├── __init__.py
+│   │   ├── test_models.py
+│   │   └── test_views.py
+│   ├── urls.py                        # URLs de l'app
+│   ├── utils/                         # Utilities spécifiques
+│   │   ├── __init__.py
+│   │   ├── rating_calculator.py       # Calcul des moyennes
+│   │   └── verification.py           # Vérification des avis
+│   └── views/                         # Vues (ou viewsets)
+│       ├── __init__.py
+│       ├── api_views.py               # Vues API
+│       └── web_views.py               # Vues Web (si front intégré)
+│
+├── users/                             # Gestion des utilisateurs
+│   ├── migrations/
+│   ├── __init__.py
+│   ├── models.py                      # Custom User model
+│   ├── serializers.py
+│   ├── views/             # Vues séparées
+│       ├── clients.py
+│       └── business.py
+│
+├── companies/                         # Gestion des entreprises
+│   ├── migrations/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── serializers.py
+│   └── views.py
+│
+├── api/                               # Configuration API globale
+│   ├── __init__.py
+│   ├── routers.py                     # Routers DRF
+│   └── permissions.py                 # Permissions globales
+│
+├── templates/                         # Si front intégré
+│   ├── base.html
+│   ├── reviews/
+│   └── users/
+│
+├── static/                            # Assets statiques
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+├── manage.py
+├── requirements.txt                   # Dépendances
+└── README.md
+
+from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+class Company(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+    website = models.URLField()
+    verified = models.BooleanField(default=False)
+    
+class Review(models.Model):
+    RATING_CHOICES = [(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')]
+    
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    user = models.ForeignKey('users.User', on_delete=models.SET_NULL, null=True)
+    rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES)
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    verified_purchase = models.BooleanField(default=False)
+    ip_address = models.GenericIPAddressField()
+    
+    class Meta:
+        ordering = ['-created_at']
+
+
+Bonnes pratiques à implémenter :
+Système de vérification: {
+    - Vérification email pour les avis
+    - Détection de doublons
+    - Modération des contenus
+}
+
+Calcul de ratings : {
+    - Moyenne dynamique pour chaque entreprise
+    - Détection de fraudes
+}
+
+API :
+RESTful avec DRF
+
+Pagination
+
+Filtres (par date, rating, etc.)
+
+Throttling pour éviter le spam
+
+Sécurité :
+
+Protection contre le XSS
+
+Rate limiting
+
+Authentification JWT
+
+Performance :
+
+Cache pour les ratings
+
+Index DB optimaux
+
+Select related/prefetch pour les queries
+
+Vous voulez que je détaille une partie spécifique (modèles, API, système de vérification) ?
