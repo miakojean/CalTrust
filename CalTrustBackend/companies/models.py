@@ -8,8 +8,9 @@ class Company(models.Model):
         ("Alimentation", "Alimentation"),
         ("Immobilier", "Immobilier")
     ]
-    name = models.CharField(max_length=100, blank=False)
+    name = models.CharField(max_length=100, blank=False, unique=True)
     category = models.CharField(max_length=100, choices=CATEGORY)
+    description = models.TextField(blank=True)
 
     def __str__(self):
-        return f'entreprise {self.name} de la catégorie {self.category}'
+        return f'entreprise {self.name}'

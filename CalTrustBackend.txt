@@ -32,7 +32,7 @@ caltrust_backend/
 │       ├── api_views.py               # Vues API
 │       └── web_views.py               # Vues Web (si front intégré)
 │
-├── users/                             # Gestion des utilisateurs
+├── account/                             # Gestion des utilisateurs
 │   ├── migrations/
 │   ├── __init__.py
 │   ├── models.py                      # Custom User model

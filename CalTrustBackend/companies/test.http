@@ -1,7 +1,7 @@
-POST http://127.0.0.1:8000/companies/companies/
+POST http://127.0.0.1:8000/companies/
 Content-Type: application/json
 
 {
-  "name": "CALADRIUS",
-  "category": "CM"
+  "name": "",
+  "category": "Commerce"
 }
