@@ -1,10 +1,11 @@
 <template>
   <button class="main__button">
-    {{ label }}
+    <loader/>
   </button>
 </template>
 
 <script>
+import loader from '../tools/loader.vue';
 export default {
 
     props:{
@@ -12,6 +13,9 @@ export default {
             type: String,
             default: 'Get Started'
         }
+    },
+    components:{
+        loader
     }
 
 }
@@ -27,6 +31,9 @@ export default {
     max-width: 200px;
     font-weight: 600;
     transition: ease-in-out 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .main__button:hover{

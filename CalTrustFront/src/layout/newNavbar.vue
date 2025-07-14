@@ -36,7 +36,8 @@ import mainButton from '@/components/button/mainButton.vue';
 const isMenuOpen = ref(false);
 const isFixed = ref(false);
 const isVisible = ref(false);
-const scrollThreshold = 50; // Pixels to scroll before the navbar becomes fixed
+const isDesktop = ref(window.innerWidth >= 768); // Nouvelle référence pour le mode desktop
+const scrollThreshold = 50;
 let lastScrollY = window.scrollY;
 
 const toggleMenu = () => {
@@ -44,33 +45,48 @@ const toggleMenu = () => {
 };
 
 const handleScroll = () => {
-  const currentScrollY = window.scrollY;
-  
-  // Toujours visible en haut de page ou si le menu est ouvert
-  if (currentScrollY <= scrollThreshold || isMenuOpen.value) {
+  // Ne pas appliquer le scroll effect sur mobile
+  if (!isDesktop.value) {
+    isFixed.value = false;
     isVisible.value = true;
-    isFixed.value = currentScrollY > scrollThreshold;
-    lastScrollY.value = currentScrollY;
     return;
   }
 
-  // Détermine la direction du scroll
-  const scrollingDown = currentScrollY > lastScrollY.value;
+  const currentScrollY = window.scrollY;
+  
+  if (currentScrollY <= scrollThreshold || isMenuOpen.value) {
+    isVisible.value = true;
+    isFixed.value = currentScrollY > scrollThreshold;
+    lastScrollY = currentScrollY;
+    return;
+  }
+
+  const scrollingDown = currentScrollY > lastScrollY;
   
   isFixed.value = true;
   isVisible.value = !scrollingDown;
   
-  lastScrollY.value = currentScrollY;
+  lastScrollY = currentScrollY;
 };
 
-// Add and remove the scroll event listener
+const handleResize = () => {
+  isDesktop.value = window.innerWidth >= 768;
+  // Réinitialiser l'état de la navbar lors du changement de taille
+  if (!isDesktop.value) {
+    isFixed.value = false;
+    isVisible.value = true;
+  }
+};
+
 onMounted(() => {
-  isVisible.value = true; // Ensure navbar is visible on initial load
+  isVisible.value = true;
   window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('resize', handleResize);
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('resize', handleResize);
 });
 </script>
 
@@ -78,36 +94,37 @@ onUnmounted(() => {
 .nav {
   position: relative;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   padding: 1rem;
   z-index: 1000;
-  /* Add transition for smooth effect */
+  /* Transition seulement sur desktop */
   transition: transform 0.4s ease-in-out, background-color 0.4s ease;
-  transform: translateY(0); /* Start visible */
-}
-
-/* This class applies when the user has scrolled past the threshold */
-.nav--fixed-scrolled {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: white; /* Or your desired background */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  /* Initially hide the navbar when it becomes fixed and user is scrolling down */
-  transform: translateY(-100%); 
-}
-
-/* This class makes the fixed navbar slide into view */
-.nav--fixed-scrolled.nav--visible {
   transform: translateY(0);
 }
 
+/* Ces styles ne s'appliquent que sur desktop */
+@media (min-width: 768px) {
+  .nav--fixed-scrolled {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-100%);
+  }
+
+  .nav--fixed-scrolled.nav--visible {
+    transform: translateY(0);
+  }
+}
+
+/* Le reste de votre CSS reste inchangé */
 .nav__links {
   position: fixed;
   top: 0;
-  left: 0;
+  left: -10%;
   width: 100%;
   height: 100vh;
   background: #f3f3f3;
@@ -136,8 +153,12 @@ onUnmounted(() => {
   display: none;
 }
 
-/* --- Desktop Styles --- */
 @media (min-width: 768px) {
+  nav {
+    display: flex;
+    justify-content: space-around;
+  }
+
   .nav__links {
     position: static;
     flex-direction: row;
@@ -159,6 +180,4 @@ onUnmounted(() => {
     gap: 1rem;
   }
 }
-
-/* Redundant media query removed for clarity, as 768px covers it */
 </style>

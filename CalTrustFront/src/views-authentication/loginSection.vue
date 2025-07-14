@@ -1,14 +1,19 @@
 <template>
-  <div class="main__container">
-    <ourForm/>
-  </div>
+  <section class="section__container">
+    <div class="main__container">
+      <h3>Se connecter</h3>
+      <ourForm/>
+      <stepper title="Pas de compte?"/>
+    </div>
+  </section>
 </template>
 
 <script>
-import ourForm from '@/components/tools/ourForm.vue';
+import ourForm from '@/components/tools/ourSigninForm.vue';
+import stepper from '@/components/cards/stepper.vue';
 export default {
     components:{
-        ourForm
+      ourForm, stepper
     }
 }
 </script>
