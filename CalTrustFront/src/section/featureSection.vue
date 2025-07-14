@@ -81,7 +81,7 @@ export default {
   }
 
   #features__section{
-    height: 60vh;
+    min-height: 60vh;
     padding: 0.5rem;
     background: linear-gradient(179deg,rgba(27, 60, 83, 1) 0%, rgba(186, 186, 186, 1) 89%, rgba(252, 252, 250, 1) 100%);
   }
