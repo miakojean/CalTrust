@@ -2,29 +2,39 @@ from django.shortcuts import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializer import MyUserSerializer
-from .models import My_User
+from .serializer import UserRegistrationSerializer
+from .models import *
+
 # Create your views here.
 def index (request):
     return HttpResponse("Bienvenu au pays ")
 
-class UserRegistration(APIView):
-
-    def get(self, request, format = None):
-        user = My_User.objects.all()
-        serializer = MyUserSerializer(user, many = True)
-        return Response(serializer.data)
-    
-    def post(self, request, format=None):
-        """
-        Create a new user with profile
-        """
-        serializer = MyUserSerializer(data=request.data)
+class UserRegistrationView(APIView):
+    """
+    API endpoint for user registration (customer or firm).
+    """
+    def post(self, request, *args, **kwargs):
+        serializer = UserRegistrationSerializer(data=request.data)
+        
         if serializer.is_valid():
-            serializer.save()
-            return Response({
-                'id': serializer.data['id'],
-                'user_type': serializer.data['user_type'],
-                'message': 'User created successfully'
-            }, status=status.HTTP_201_CREATED)
+            user_profile = serializer.save() 
+            
+            response_data = {
+                "message": "User and profile created successfully!",
+                "username": user_profile.user.username,
+                "email": user_profile.user.email,
+                "user_type": "customer" if isinstance(user_profile, CustomerProfile) else "firm"
+            }
+            
+            # Add company details to response if it's a firm
+            if isinstance(user_profile, FirmProfile) and user_profile.company:
+                response_data["company_details"] = {
+                    "name": user_profile.company.name,
+                    "category": user_profile.company.category,
+                    "siret": user_profile.company.siret,
+                    "address": user_profile.company.address
+                }
+            
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

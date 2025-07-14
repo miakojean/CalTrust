@@ -10,7 +10,7 @@ psycopg2
 # REST API
 djangorestframework
 django-cors-headers  # Important pour les API frontend
-
+djangorestframework-simplejwt # Pour l'authentification
 # Media
 Pillow  # Essentiel pour le traitement d'images
 

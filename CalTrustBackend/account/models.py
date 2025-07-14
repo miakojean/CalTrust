@@ -1,26 +1,27 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
 
-
-class My_User(models.Model):
-    USER_TYPE = [
-        ("CUSTOMER", "CUSTOMER"),
-        ("FIRMS", "FIRMS")
-    ]
-    user = models.OneToOneField(to=User, on_delete=models.CASCADE)
-    user_type = models.CharField(max_length=100, choices=USER_TYPE, blank=False)
-
-    def __str__(self):
-        return f'utilisateur de type {self.user_type}'
-    
 class CustomerProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='customer_profile')
+    # Le lien One-to-One vers le modèle User de Django
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True,
+                              related_name='account_customer_profile')
+
+    # Champs spécifiques aux clients
     phone = models.CharField(max_length=20, blank=True)
     birth_date = models.DateField(null=True, blank=True)
 
+    def __str__(self):
+        return f"Profil Client de {self.user.username}"
+
 class FirmProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='firm_profile')
+    # Le lien One-to-One vers le modèle User de Django
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='firm_profile')
+
+    # Champs spécifiques aux entreprises
     company_name = models.CharField(max_length=255)
     siret = models.CharField(max_length=14, unique=True)
     address = models.TextField()
+    is_verified = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Profil Entreprise de {self.user.username}"

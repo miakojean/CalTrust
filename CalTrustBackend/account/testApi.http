@@ -2,8 +2,31 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "caladrius",
-  "email": "caladrius@gmail.com",
-  "password": "Jeanyves123456@",
-  "user_type": "FIRMS"
+  "username": "new_customer_user",
+  "email": "customer@example.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0123456789",
+  "birth_date": "1990-05-20"
+}
+
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "new_firm",
+  "email": "firm@business.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Tech Solutions Inc.",
+  "siret": "12345678901234",
+  "address": "123 Tech Park, Innovation City"
+}
+
+POST http://127.0.0.1:8000/account/token/
+Content-Type: application/json
+
+{
+  "username": "new_firm",
+  "password": "supersecurepassword"
 }

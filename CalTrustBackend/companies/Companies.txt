@@ -1,0 +1,6 @@
+Ici l'idée c'est qu'une compagnie a:
+- Un nom
+- Une catégorie
+- Une description
+
+Mais elle appartient à un utilisateur d'ou la relation
