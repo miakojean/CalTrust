@@ -1,244 +1,164 @@
 <template>
-  <nav class="navbar" :class="{ scrolled: isScrolled }">
-    <div class="logo">
-      <router-link to="/">CalTrust</router-link>
+  <nav class="nav" :class="{ 'nav--fixed-scrolled': isFixed, 'nav--visible': isVisible }">
+    <div class="nav__logo">
+      <h3>Caltrust</h3>
     </div>
-    
-    <button 
-      class="menu-toggle"
-      @click="toggleMenu"
-      :aria-expanded="isMenuOpen"
-    >
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </button>
-    
-    <div class="nav-links" :class="{ active: isMenuOpen }">
-      <router-link 
-        v-for="link in links"
-        :key="link.path"
-        :to="link.path"
-        @click="closeMenu"
-        :class="{ active: isActive(link) }"
-      >
-        {{ link.name }}
-      </router-link>
-      
-      <div class="auth-buttons">
-        <button @click="navigateTo('/login')" class="btn-login">Connexion</button>
-        <button @click="navigateTo('/register')" class="btn-register">Inscription</button>
-      </div>
+
+    <ul class="nav__links" :class="{ 'nav__links--open': isMenuOpen }">
+      <li><a href="#">accueil</a></li>
+      <li><a href="#">entreprises</a></li>
+      <li><a href="#">avis</a></li>
+      <li><a href="#">à propos</a></li>
+      <li><a href="#">contact</a></li>
+    </ul>
+
+    <div class="nav__btn">
+      <hamburger 
+        :is-active="isMenuOpen" 
+        @toggle="toggleMenu" 
+        aria-controls="nav-menu"
+      />
+    </div>
+
+    <div class="auth__btn">
+      <secondButton/>
+      <mainButton label = "connexion"/>
     </div>
   </nav>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import hamburger from '@/components/button/hamburger.vue';
+import secondButton from '@/components/button/secondButton.vue';
+import mainButton from '@/components/button/mainButton.vue';
 
-const route = useRoute();
-const router = useRouter();
 const isMenuOpen = ref(false);
-const isScrolled = ref(false);
+const isFixed = ref(false);
+const isVisible = ref(false);
+const scrollThreshold = 50; // Pixels to scroll before the navbar becomes fixed
+let lastScrollY = window.scrollY;
 
-const links = [
-  { path: '/', name: 'Accueil', exact: true },
-  { path: '/avis', name: 'Avis' },
-  { path: '/about', name: 'À propos' },
-  { path: '/entreprises', name: 'Entreprises' }
-];
-
-const isActive = (link) => {
-  return link.exact ? route.path === link.path : route.path.startsWith(link.path);
-};
-
-const toggleMenu = () => isMenuOpen.value = !isMenuOpen.value;
-const closeMenu = () => isMenuOpen.value = false;
-const navigateTo = (path) => {
-  closeMenu();
-  router.push(path);
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
 };
 
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 10;
+  const currentScrollY = window.scrollY;
+  
+  // Toujours visible en haut de page ou si le menu est ouvert
+  if (currentScrollY <= scrollThreshold || isMenuOpen.value) {
+    isVisible.value = true;
+    isFixed.value = currentScrollY > scrollThreshold;
+    lastScrollY.value = currentScrollY;
+    return;
+  }
+
+  // Détermine la direction du scroll
+  const scrollingDown = currentScrollY > lastScrollY.value;
+  
+  isFixed.value = true;
+  isVisible.value = !scrollingDown;
+  
+  lastScrollY.value = currentScrollY;
 };
 
-onMounted(() => window.addEventListener('scroll', handleScroll));
-onUnmounted(() => window.removeEventListener('scroll', handleScroll));
+// Add and remove the scroll event listener
+onMounted(() => {
+  isVisible.value = true; // Ensure navbar is visible on initial load
+  window.addEventListener('scroll', handleScroll, { passive: true });
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <style scoped>
-.navbar {
+.nav {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem;
+  z-index: 1000;
+  /* Add transition for smooth effect */
+  transition: transform 0.4s ease-in-out, background-color 0.4s ease;
+  transform: translateY(0); /* Start visible */
+}
+
+/* This class applies when the user has scrolled past the threshold */
+.nav--fixed-scrolled {
   position: fixed;
   top: 0;
-  width: 100%;
-  z-index: 1000;
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-}
-
-.navbar.scrolled {
-  background: rgba(0, 0, 0, 0.9);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.logo a {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1B3C53;
-  text-decoration: none;
-}
-
-.navbar.scrolled .logo a {
-  color: white;
-}
-
-.menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-
-.bar {
-  display: block;
-  width: 25px;
-  height: 3px;
-  margin: 5px 0;
-  background: #1B3C53;
-  transition: all 0.3s ease;
-}
-
-.navbar.scrolled .bar {
-  background: white;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.nav-links a {
-  color: #333;
-  text-decoration: none;
-  font-weight: 500;
-  padding: 0.5rem 0;
-  position: relative;
-}
-
-.nav-links a.active {
-  color: #2F6B8E;
-  font-weight: 600;
-}
-
-.nav-links a.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
   left: 0;
   width: 100%;
-  height: 2px;
-  background: #2F6B8E;
+  background-color: white; /* Or your desired background */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* Initially hide the navbar when it becomes fixed and user is scrolling down */
+  transform: translateY(-100%); 
 }
 
-.navbar.scrolled .nav-links a {
-  color: white;
+/* This class makes the fixed navbar slide into view */
+.nav--fixed-scrolled.nav--visible {
+  transform: translateY(0);
 }
 
-.navbar.scrolled .nav-links a.active {
-  color: #4A8CAF;
-}
-
-.auth-buttons {
+.nav__links {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #f3f3f3;
   display: flex;
-  gap: 1rem;
-  margin-left: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 90;
+  margin: 0;
+  padding: 0;
+  font-size: 0.9rem;
 }
 
-.btn-login, .btn-register {
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.nav__links--open {
+  transform: translateX(0);
 }
 
-.btn-login {
-  background: transparent;
-  border: 1px solid #2F6B8E;
-  color: #2F6B8E;
+.nav__btn {
+  z-index: 100;
 }
 
-.btn-register {
-  background: #2F6B8E;
-  border: 1px solid #2F6B8E;
-  color: white;
+.auth__btn {
+  display: none;
 }
 
-.navbar.scrolled .btn-login {
-  border-color: white;
-  color: white;
-}
-
-.navbar.scrolled .btn-register {
-  background: white;
-  color: #1B3C53;
-  border-color: white;
-}
-
+/* --- Desktop Styles --- */
 @media (min-width: 768px) {
-  .menu-toggle {
-    display: block;
-    z-index: 1001;
+  .nav__links {
+    position: static;
+    flex-direction: row;
+    height: auto;
+    width: auto;
+    background: transparent;
+    transform: none !important;
+  }
+  
+  .nav__btn {
+    display: none;
   }
 
-  .menu-toggle.active .bar:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-  }
-
-  .menu-toggle.active .bar:nth-child(2) {
-    opacity: 0;
-  }
-
-  .menu-toggle.active .bar:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
-  }
-
-  .nav-links {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    flex-direction: column;
-    justify-content: center;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    gap: 2rem;
-  }
-
-  .nav-links.active {
-    transform: translateX(0);
-  }
-
-  .auth-buttons {
-    flex-direction: column;
-    margin-left: 0;
-    width: 200px;
-  }
-
-  .navbar.scrolled .nav-links {
-    background: rgba(0, 0, 0, 0.95);
+  .auth__btn {
+    width: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1rem;
   }
 }
+
+/* Redundant media query removed for clarity, as 768px covers it */
 </style>

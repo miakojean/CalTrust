@@ -236,7 +236,7 @@ export default {
 }
 
 /* Responsive Design */
-@media (min-width: 1150px) {
+@media (max-width: 1150px) {
   .nav__container {
     padding: 1rem;
   }
@@ -302,7 +302,7 @@ export default {
 }
 
 /* Animation du menu mobile */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .div__menu {
     top: 60px;
     height: calc(100vh - 60px);

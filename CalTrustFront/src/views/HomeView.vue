@@ -1,6 +1,6 @@
 <template>
   <main>
-    <navbar/>
+    <newNavbar/>
     <ctaSection></ctaSection>
     <stepper/>
     <featureSection/>
