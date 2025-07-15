@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
     'account',
     'companies',
     'reviews',
@@ -90,6 +91,7 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # Add this line, place it very high
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -169,3 +171,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173", # Your Vue.js dev server URL
+    "http://192.168.1.3:5173", # Sometimes browsers use 127.0.0.1 instead of localhost
+    # Add your production frontend URL(s) when deploying, e.g.:
+    # "https://yourfrontenddomain.com",
+]
+
+# If you're allowing credentials (like cookies or authentication tokens in headers),
+# you might also need this:
+CORS_ALLOW_CREDENTIALS = True

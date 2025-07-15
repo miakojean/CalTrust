@@ -19,6 +19,7 @@ Content-Type: application/json
   "password": "supersecurepassword",
   "user_type": "firm",
   "company_name": "Tech Solutions Inc.",
+  "company_category": "Commerce",
   "siret": "12345678901234",
   "address": "123 Tech Park, Innovation City"
 }
@@ -27,6 +28,6 @@ POST http://127.0.0.1:8000/account/token/
 Content-Type: application/json
 
 {
-  "username": "new_firm",
-  "password": "supersecurepassword"
+  "username": "johndoe",
+  "password": "Jeanyves123456@"
 }

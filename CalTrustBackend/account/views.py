@@ -2,6 +2,7 @@ from django.shortcuts import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import AllowAny
 from .serializer import UserRegistrationSerializer
 from .models import *
 
@@ -13,6 +14,8 @@ class UserRegistrationView(APIView):
     """
     API endpoint for user registration (customer or firm).
     """
+    authentication_classes = [] # No authentication required
+    permission_classes = [AllowAny] # Allow any user (authenticated or not) to access
     def post(self, request, *args, **kwargs):
         serializer = UserRegistrationSerializer(data=request.data)
         
