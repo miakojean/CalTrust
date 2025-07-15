@@ -24,7 +24,7 @@ defineProps({
 <style scoped>
 .section-divider {
   width: 100%;
-  margin: 3rem 0; /* Espace au-dessus et en-dessous du bloc entier */
+  margin: 1rem 0; /* Espace au-dessus et en-dessous du bloc entier */
 }
 
 .divider-title {
@@ -44,7 +44,7 @@ defineProps({
 /* Le texte au milieu */
 .text {
   padding: 0 1rem; /* Espace entre le texte et les lignes */
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.5px;
 }

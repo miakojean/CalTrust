@@ -54,13 +54,6 @@ export default {
     transition: transform 0.3s ease;
 }
 @media (min-width: 766px) {
-    .pic__container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: flex-start; /* Alignement en haut par défaut */
-        gap: 0.5rem;
-    }
 
     .pic__container {
         min-height: 50vh;

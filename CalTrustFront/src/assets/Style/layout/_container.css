@@ -12,6 +12,7 @@ main{
     flex-direction: column;
     align-items: center;
     gap: 1.1rem;
+    width: 100%;
 }
 
 /* Main__container*/
@@ -21,7 +22,7 @@ main{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 @media (min-width: 766px) {

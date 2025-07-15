@@ -5,12 +5,14 @@ form{
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
+    border: 1px solid #eeeeee;
+    border-radius: 0.5rem;
 }
 
 input{
     width: 100%;
     max-width: 400px;
-    padding: 1rem;
+    padding: 0.8rem;
     background: #f3f3f3;
     border: none;
     border-radius: 0.5rem;
@@ -25,4 +27,5 @@ input:focus{
 
 input::placeholder{
     font-weight: 400;
+    font-size: 0.8rem;
 }

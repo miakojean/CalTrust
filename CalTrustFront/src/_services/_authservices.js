@@ -1,11 +1,12 @@
-import { config } from "@vue/test-utils";
+// src/plugins/axios.js
 import axios from "axios";
 
-const apiClient = axios.create({
-    baseURL: 'http://localhost:8000/accout/',
-    withCredentials: true,
+const api = axios.create({
+    baseURL: 'http://localhost:8000', // Or 'http://127.0.0.1:8000'
+    timeout: 10000,
+    headers: {
+        'Content-Type': 'application/json', // Often good to explicitly set for POST
+    }
 });
 
-let accesToken = null;
-let isRefreshing = false;
-let failedQueue = [];
+export default api;

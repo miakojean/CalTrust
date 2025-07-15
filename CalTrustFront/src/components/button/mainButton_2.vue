@@ -1,24 +1,23 @@
 <template>
-  <button class="main__button">
-    <loader/>
+  <button class="main__button" :disabled="isLoading">
+    <template v-if="isLoading">
+      <loader aria-label="Chargement"/>
+    </template>
+    <template v-else>
+      {{ label }}
+    </template>
   </button>
 </template>
 
 <script>
 import loader from '../tools/loader.vue';
 export default {
-
-    props:{
-        label:{
-            type: String,
-            default: 'Get Started'
-        }
-    },
-    components:{
-        loader
-    }
-
-}
+  props: {
+    label: { type: String, default: 'Get Started' },
+    isLoading: { type: Boolean, default: false }
+  },
+  components: { loader }
+};
 </script>
 
 <style scoped>
@@ -29,6 +28,7 @@ export default {
     border-radius: 0.4rem;
     width: 50%;
     max-width: 200px;
+    font-size: 0.9rem;
     font-weight: 600;
     transition: ease-in-out 0.3s;
     display: flex;
