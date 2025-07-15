@@ -62,4 +62,12 @@ img{
         background-size: cover;
         border-radius: 10px;
     }
+
+    .login__pictures{
+        width: 350px;
+        height: 350px;
+        object-fit: cover;
+        background-size: cover;
+        border-radius: 10px;
+    }
 }

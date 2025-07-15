@@ -23,6 +23,7 @@ main{
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    width: 100%;
 }
 
 @media (min-width: 766px) {
@@ -59,12 +60,13 @@ main{
     }
 
     .main__container{
-        padding-top: 2rem;
+        padding-top: 1rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 1rem;
+        width: 50%;
     }
 
     #features__section{
