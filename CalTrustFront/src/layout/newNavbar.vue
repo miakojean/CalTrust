@@ -5,11 +5,11 @@
     </div>
 
     <ul class="nav__links" :class="{ 'nav__links--open': isMenuOpen }">
-      <li><a href="#">accueil</a></li>
-      <li><a href="#">entreprises</a></li>
-      <li><a href="#">avis</a></li>
-      <li><a href="#">à propos</a></li>
-      <li><a href="#">contact</a></li>
+      <li><a href="#">Accueil</a></li>
+      <li><a href="#">Entreprises</a></li>
+      <li><a href="#">Avis</a></li>
+      <li><a href="#">À propos</a></li>
+      <li><a href="#">Contact</a></li>
     </ul>
 
     <div class="nav__btn">
