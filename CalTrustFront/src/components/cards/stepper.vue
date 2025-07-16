@@ -51,6 +51,6 @@ defineProps({
 
 /* Le conteneur pour votre contenu */
 .content {
-  margin-top: 1rem; /* Espace entre le séparateur et le contenu en-dessous */
+  margin-top: 0.5rem; /* Espace entre le séparateur et le contenu en-dessous */
 }
 </style>

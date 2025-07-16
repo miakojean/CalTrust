@@ -49,4 +49,11 @@ input{
     font-weight: 500;
 }
 
+@media (min-width: 1024px) {
+    label{
+        font-size: 0.8rem;
+        width: 100%;
+    }
+}
+
 </style>

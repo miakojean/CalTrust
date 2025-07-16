@@ -1,5 +1,6 @@
 <template>
   <form @submit.prevent="submitForm" action="">
+    <p class="form__label">Je me connecte</p>
     <Transition>
       <p v-if="message.emptyfields">{{ message.emptyfields }}</p>
     </Transition>
@@ -19,17 +20,15 @@
       label="Connexion"
       type="submit" :isLoading="isLoading"
     />
-
-    <Transition>
-      <p v-if="attempt > 0">Mot de passe oublié? <a href="#">Cliquer ici</a></p>
-    </Transition>
-
     <stepper
       title="Pas de compte?"
     />
     <a href="#">J'ouvre mon compte <i class="ri-contract-right-line"></i></a>
     <Transition>
       <p v-if="message.errorMessages" style="color: red;">{{ message.errorMessages }}</p>
+    </Transition>
+    <Transition>
+      <p v-if="attempt > 0">Mot de passe oublié? <a href="#">Cliquer ici</a></p>
     </Transition>
   </form>
 </template>
@@ -129,8 +128,18 @@ export default {
 
 <style scoped>
 
-p{
-  color: #e04a4a;
+.form__label{
+  color: gray;
+  font-weight: 400;
+}
+
+p, a{
+  color: red;
+  font-size: 0.8rem;
+}
+
+a{
+  color: var(--primary-color);
   font-size: 0.8rem;
 }
 

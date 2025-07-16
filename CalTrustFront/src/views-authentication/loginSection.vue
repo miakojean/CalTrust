@@ -1,15 +1,8 @@
 <template>
   <section class="login__section">
     <div class="main__container">
-      <p>Se connecter</p>
       <ourForm/>
     </div>
-    <div class="pic__container">
-        <img class="pair" src="@/assets/Pictures/picture_seven.jpg" alt="Reunion of people" />
-        <img class="impair" src="@/assets/Pictures/picture_six.jpg" alt="Reunion of people" />
-        <img class="pair" src="@/assets/Pictures/picture_one.jpg" alt="Reunion of people" />
-        <img class="impair" src="@/assets/Pictures/picture_four.jpg" alt="Reunion of people" /> 
-        </div>
   </section>
 </template>
 
@@ -25,34 +18,38 @@ export default {
 
 <style scoped>
 .login__section{
-  min-height: 100vh;
   width: 100%;
 }
 
 .main__container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
   width: 100%;
 }
 
-.pic__container{
-  display: none;
+.login__label{
+  text-align: center;
+  width: 100%;
 }
 
 @media (min-width: 1024px) {
 
-  .login__section{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    gap: 2rem;
-  }
-
   .main__container{
-    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
   }
 
-  .pic__container{
-    display: flex;
-    width: 45%;
+  .login__label {
+    font-size: 0.8rem;
+    text-align: center;
+    width: 100%;
   }
 }
 </style>
