@@ -4,7 +4,7 @@ form{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 1rem;
     border: 1px solid #eeeeee;
     border-radius: 0.5rem;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -45,6 +45,18 @@ input::placeholder{
         font-weight: 600;
         color: #383838;
     }
+
+    form{
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    border: 1px solid #eeeeee;
+    border-radius: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
 }
 
 /* For laptop*/

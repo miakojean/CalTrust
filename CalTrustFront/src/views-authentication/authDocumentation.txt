@@ -16,3 +16,15 @@
     └── Monetisation  
         ├── Abonnements  
         └── Publicité  
+
+Our JSON file expected:
+{
+  "username": "new_firm",
+  "email": "firm@business.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Tech Solutions Inc.",
+  "company_category": "Commerce",
+  "siret": "12345678901234",
+  "address": "123 Tech Park, Innovation City"
+}
