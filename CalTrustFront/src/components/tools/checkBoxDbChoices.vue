@@ -38,7 +38,7 @@
         <h4 class="label__">
           {{ labelTwo }}
         </h4>
-        <p class="sub__label">{{ description }}</p>
+        <p class="sub__label">{{ descriptionTwo }}</p>
       </div>
     </label>
   </div>
@@ -60,6 +60,10 @@ export default {
     description: {
       type: String,
       default: "Compte utilisateur juste pour des avis"
+    },
+    descriptionTwo: {
+      type: String,
+      default: "Compte business pour collecter des avis avec plus de features"
     }
   },
   emits: ['selection-changed'], // Bonne pratique : déclarer les événements émis
@@ -89,7 +93,7 @@ export default {
   padding: 1rem 0;
   background: #f8f8f8;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   border-radius: 0.5rem;
   gap: 1rem;
@@ -121,7 +125,7 @@ span{
   background: #2f4b66;
   display: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: 1rem;
   padding: 0.6rem;
 }
 

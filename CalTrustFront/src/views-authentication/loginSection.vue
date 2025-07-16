@@ -2,8 +2,7 @@
   <section class="login__section">
     <div class="main__container">
       <h2 class="text__illus">
-        Toujours
-        ravis de vous compter parmis nous
+        Connexion
       </h2>
       <p class="text__illus">
         Nous ferons pleine de belles choses ensemble

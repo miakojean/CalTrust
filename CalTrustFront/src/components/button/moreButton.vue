@@ -1,5 +1,5 @@
 <template>
-  <button class="more__button">
+  <button class="more__button" :style="{ width: width }">
     {{ label }}
     <i class="ri-arrow-right-line"></i>
   </button>
@@ -12,6 +12,10 @@ export default {
         label:{
             type: String,
             default: 'Get More'
+        },
+        width: {
+            type: String,
+            default: 'auto'
         }
     }
 

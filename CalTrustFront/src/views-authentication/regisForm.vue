@@ -9,12 +9,16 @@
             <inputFamily__2 label="nom d'utilisateur"/>
         </div>
         <div class="regis__btn">
-            <prevButton 
+            <prevButton
                 label="Précédent" 
                 @click="prev"
                 v-if="step > 1"
             />
-            <moreButton label="Suivant" @click="next"/>
+            <moreButton 
+                label="Suivant" 
+                @click="next"
+                width="100%"
+            />
         </div>
     </form>
 </template>
