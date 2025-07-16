@@ -1,0 +1,18 @@
+# Authentication
+└── Views-Authentication  
+    ├── login.vue  
+    │   ├── Vérification  
+    │   └── Analytics (notes, comparaison)  
+    ├── Registration  
+    │   ├── Ajout manuel/CSV  
+    │   └── Catégorisation IA  
+    ├── Gestion Avis  
+    │   ├── Notation multi-critères  
+    │   ├── Modération  
+    │   └── Réponse aux avis  
+    ├── Engagement Clients  
+    │   ├── Avis vérifiés  
+    │   └── Récompenses  
+    └── Monetisation  
+        ├── Abonnements  
+        └── Publicité  
