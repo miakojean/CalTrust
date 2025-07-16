@@ -153,7 +153,7 @@ onUnmounted(() => {
   display: none;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 890px) {
   nav {
     display: flex;
     justify-content: space-around;

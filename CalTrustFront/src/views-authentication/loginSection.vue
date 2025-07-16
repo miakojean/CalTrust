@@ -1,7 +1,17 @@
 <template>
   <section class="login__section">
     <div class="main__container">
+      <h2 class="text__illus">
+        Toujours
+        ravis de vous compter parmis nous
+      </h2>
+      <p class="text__illus">
+        Nous ferons pleine de belles choses ensemble
+      </p>
       <ourForm/>
+    </div>
+    <div class="illustrations__container">
+      <img class="svg" src="../assets/svg/undraw_reviews_ukai.svg" alt="">
     </div>
   </section>
 </template>
@@ -19,31 +29,48 @@ export default {
 <style scoped>
 .login__section{
   width: 100%;
+  min-height: 100vh;
 }
 
 .main__container{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding-top: 1rem;
   gap: 0.5rem;
   width: 100%;
 }
 
-.login__label{
-  text-align: center;
-  width: 100%;
+.illustrations__container{
+  display: none;
 }
 
 @media (min-width: 1024px) {
 
-  .main__container{
+  .login__section{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
+    min-height: 100vh;
+    gap: 2rem;
+  }
+
+  .illustrations__container{
+    display: flex;
+  }
+
+  .svg{
     width: 100%;
+    height: 100%;
+  }
+
+  .main__container{
+    padding-top: 1rem;
+    gap: 1rem;
+    width: 70%;
+  }
+
+  .text__illus{
+    width: 70%;
+    text-align: center;
   }
 
   .login__label {

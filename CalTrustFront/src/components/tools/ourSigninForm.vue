@@ -23,7 +23,10 @@
     <stepper
       title="Pas de compte?"
     />
-    <a href="#">J'ouvre mon compte <i class="ri-contract-right-line"></i></a>
+    <RouterLink to="/registration">
+      J'ouvre mon compte
+      <i class="ri-contract-right-line"></i>
+    </RouterLink>
     <Transition>
       <p v-if="message.errorMessages" style="color: red;">{{ message.errorMessages }}</p>
     </Transition>

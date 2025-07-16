@@ -40,6 +40,7 @@ export default {
 <style scoped>
 label{
     color: var(--primary-color);
+    font-size: 0.8rem;
 }
 
 input{
