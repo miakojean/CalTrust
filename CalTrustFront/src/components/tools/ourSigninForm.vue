@@ -92,12 +92,12 @@ export default {
         }
 
       } catch (error) {
-        attempt.value++; // Increment attempt on each submission
         console.error("❌ Erreur de connexion:", error);
         if (error.response) {
           // Server responded with an error status (e.g., 400, 401, 403)
           if (error.response.status === 401 || error.response.status === 400) {
             // Common errors for wrong credentials
+            attempt.value++; // Increment attempt on each submission
             message.value.errorMessages = error.response.data.detail || "Email ou mot de passe incorrect.";
           } else {
             message.value.errorMessages = error.response.data.detail || "Une erreur est survenue lors de la connexion.";

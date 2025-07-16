@@ -53,4 +53,6 @@ defineProps({
 .content {
   margin-top: 0.5rem; /* Espace entre le séparateur et le contenu en-dessous */
 }
+
+
 </style>
