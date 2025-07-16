@@ -4,9 +4,10 @@ form{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 1rem;
+    gap: 0.5rem;
     border: 1px solid #eeeeee;
     border-radius: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 input{
@@ -30,6 +31,8 @@ input::placeholder{
     font-size: 0.8rem;
 }
 
+/* For tablet*/
+
 @media (min-width: 766px) {
     input{
         width: 100%;
@@ -44,16 +47,29 @@ input::placeholder{
     }
 }
 
+/* For laptop*/
+
 @media (min-width: 1024px) {
     input{
         width: 100%;
         max-width: 700px;
-        padding: 1rem;
+        padding: 0.8rem;
         background: #f3f3f3;
         border: none;
-        border-radius: 0.5rem;
-        font-size: 1rem;
-        font-weight: 600;
+        border-radius: 0.3rem;
+        font-size: 0.8rem;
+        font-weight: 500;
         color: #383838;
     }
+
+    form{
+        width: 50%;
+        height: 100%;
+        max-width: 400px;
+        max-height: 500px;
+        border-radius: 1rem;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    }
 }
+
+/*for desktop*/
