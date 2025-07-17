@@ -73,7 +73,7 @@ export default {
   setup(props, { emit }) {
     // 1. On crée une variable réactive pour stocker la sélection
     // 'consumer' est la valeur par défaut.
-    const selectedOption = ref('consumer');
+    const selectedOption = ref('');
 
     // 2. On observe les changements de la variable pour émettre un événement
     watch(selectedOption, (newValue) => {

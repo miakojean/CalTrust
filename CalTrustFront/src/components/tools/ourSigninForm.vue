@@ -135,7 +135,6 @@ export default {
   color: gray;
   font-weight: 400;
 }
-
 p, a{
   color: red;
   font-size: 0.8rem;

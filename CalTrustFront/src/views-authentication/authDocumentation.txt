@@ -28,3 +28,12 @@ Our JSON file expected:
   "siret": "12345678901234",
   "address": "123 Tech Park, Innovation City"
 }
+
+{
+  "username": "new_customer_user",
+  "email": "customer@example.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0123456789",
+  "birth_date": "1990-05-20"
+}

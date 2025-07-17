@@ -48,6 +48,7 @@ input{
     border: 1px solid var(--primary-color);
     color: var(--primary-color);
     font-weight: 500;
+    font-size: 0.8rem;
 }
 
 @media (min-width: 1024px) {
