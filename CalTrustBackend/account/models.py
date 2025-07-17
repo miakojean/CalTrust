@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
+import uuid 
+from django.utils import timezone
 
 class CustomerProfile(models.Model):
     # Le lien One-to-One vers le modèle User de Django
@@ -25,3 +28,15 @@ class FirmProfile(models.Model):
 
     def __str__(self):
         return f"Profil Entreprise de {self.user.username}"
+    
+class PasswordResetToken(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+
+    def is_valid(self):
+        return self.expires_at > timezone.now()
+
+    def __str__(self):
+        return f"Token for {self.user.username}"

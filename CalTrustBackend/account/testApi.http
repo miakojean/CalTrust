@@ -2,7 +2,7 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "new_customer_user",
+  "username": "second_customer_user",
   "email": "customer@example.com",
   "password": "securepassword123",
   "user_type": "customer",
