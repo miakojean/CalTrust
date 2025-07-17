@@ -1,5 +1,7 @@
 <template>
   <div class="checkbox__comp flex__center">
+
+    <p>Qui êtes-vous?</p>
     <label 
       for="consumer" 
       class="checkbox__family" 
