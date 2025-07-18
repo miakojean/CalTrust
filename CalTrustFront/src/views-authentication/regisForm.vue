@@ -3,6 +3,9 @@
         <Transition>
             <p class="errorMessage" v-if="message.errorMessage">{{ message.errorMessage }}</p>
         </Transition>
+        <Transition>
+            <p class="succesMessage" v-if="message.successMessage">{{ message.successMessage }}</p>
+        </Transition>
         <checkBoxDbChoices v-if="step === 1"
             @selection-changed="onUserTypeChange"
         />
@@ -11,18 +14,18 @@
             <div class="fims__form flex__center" v-if="step === 2 && userTypeSelected === 'consumer'">
                 <inputFamily__2 
                     label="nom d'utilisateur"
-                    v-model="user.username"
+                    v-model="formData.username"
                 />
                 <inputFamily__2 
                     label="email"
                     type="email"
-                    v-model="user.email"
+                    v-model="formData.email"
                     placeholder="Entrer votre email"
                 />
                 <inputFamily__2 
                     label="Mot de pase"
                     type="password"
-                    v-model="user.password"
+                    v-model="formData.password"
                     placeholder="Entrer votre mot de passe"
                 />
             </div>
@@ -30,20 +33,20 @@
         <Transition>
             <div class="fims__form flex__center" v-if="step === 2 && userTypeSelected === 'company'">
                 <inputFamily__2 
-                    label="nom d'entrprise"
-                    v-model="user.username"
+                    label="nom d'entreprise"
+                    
                     placeholder="Entrer le nom de votre entreprise"
                 />
                 <inputFamily__2 
                     label="email"
                     type="email"
-                    v-model="user.email"
+                    
                     placeholder="Entrer votre email"
                 />
                 <inputFamily__2 
                     label="Mot de pase"
                     type="password"
-                    v-model="user.password"
+                    
                     placeholder="Entrer votre mot de passe"
                 />
             </div>
@@ -58,6 +61,13 @@
                 label="Suivant" 
                 @click="next"
                 width="100%"
+                v-if="step < 2"
+            />
+            <mainButton
+                label="Inscription" 
+                @click="submitForm"
+                v-if="step === 2"
+                :isLoading = isLoading
             />
         </div>
         <stepper
@@ -72,11 +82,15 @@ import checkBoxDbChoices from '../components/tools/checkBoxDbChoices.vue';
 import moreButton from '../components/button/moreButton.vue';
 import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
 import prevButton from '@/components/button/prevButton.vue';
+import mainButton from '@/components/button/mainButton.vue';
+import stepper from '@/components/cards/stepper.vue';
+import api from '@/_services/_authservices';
+import axios from 'axios';
 
 export default {
     components:{ 
         checkBoxDbChoices, moreButton, 
-        inputFamily__2, prevButton 
+        inputFamily__2, prevButton, mainButton, stepper
     },
 
     setup(){
@@ -107,32 +121,86 @@ export default {
             step.value--
         }
 
-        const user = ref ({
+        const isLoading = ref(false)
+
+        // Données utilisateur
+        const formData = ref({
             username: "",
             email: "",
             password: "",
-            user_type: "customer"
+            user_type: "customer", // Valeur par défaut
+            phone: "",
+            birth_date: null
         })
 
-        const company = {
-            user_type : "firm",
-            username : "",
-            email: "",
-            password: "",
-            company_name: "",
-            company_category: "",
-            siret: "12345678901234",
-            adress: ""
+        // Nouvelle méthode submitForm optimisée
+        const submitForm = async () => {
+            // Validation basique
+            if (!formData.value.username || !formData.value.email || !formData.value.password) {
+                message.value.errorMessage = "Veuillez remplir tous les champs obligatoires"
+                return
+            }
 
+            isLoading.value = true
+            message.value.errorMessage = ""
+
+            try {
+                const payload = { 
+                    ...formData.value,
+                    username: formData.value.username.trim(),
+                    email: formData.value.email.trim().toLowerCase()
+                }
+
+                const response = await api.post('/account/', payload, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+
+                // Gestion de la réponse
+                if (response.status === 201) {
+                    message.value.successMessage = "Inscription réussie !"
+                    // Réinitialisation du formulaire
+                    formData.value = {
+                        username: "",
+                        email: "",
+                        password: "",
+                        user_type: "customer",
+                        phone: "",
+                        birth_date: null
+                    }
+                    setTimeout(() => {
+                        message.value.successMessage = "";
+                        step.value = 1 // Renvoie à la première étape après 2s
+                    }, 2000);
+                    
+                }
+
+            } catch (error) {
+                // Gestion d'erreur améliorée
+                if (error.response?.status === 400) {
+                    message.value.errorMessage = "Données invalides : " + 
+                        (error.response.data?.username?.[0] || "Vérifiez les champs")
+                } else if (error.response?.status === 500) {
+                    message.value.errorMessage = "Erreur serveur. Veuillez réessayer plus tard."
+                } else {
+                    message.value.errorMessage = "Erreur de connexion. Vérifiez votre réseau."
+                }
+            } finally {
+                isLoading.value = false
+            }
         }
 
+        
+        
         return {
             userTypeSelected, onUserTypeChange,
-            message, 
-            step, next, prev, user, company
+            message, step, next, prev,isLoading,
+            formData, submitForm
         }
     }
 }
+
 </script>
 
 <style scoped>
@@ -163,5 +231,10 @@ form p{
 .errorMessage{
   color: red;
   font-size: 0.8rem;
+}
+
+.succesMessage{
+    color: var(--primary-color);
+    font-size: 0.8rem;
 }
 </style>
