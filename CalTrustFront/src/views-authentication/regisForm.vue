@@ -85,7 +85,6 @@ import prevButton from '@/components/button/prevButton.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import stepper from '@/components/cards/stepper.vue';
 import api from '@/_services/_authservices';
-import axios from 'axios';
 
 export default {
     components:{ 
