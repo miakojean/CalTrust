@@ -1,21 +1,23 @@
 # Authentication
-└── Views-Authentication  
-    ├── login.vue  
-    │   ├── Vérification  
-    │   └── Analytics (notes, comparaison)  
-    ├── Registration  
-    │   ├── Ajout manuel/CSV  
-    │   └── Catégorisation IA  
-    ├── Gestion Avis  
-    │   ├── Notation multi-critères  
-    │   ├── Modération  
-    │   └── Réponse aux avis  
-    ├── Engagement Clients  
-    │   ├── Avis vérifiés  
-    │   └── Récompenses  
-    └── Monetisation  
-        ├── Abonnements  
-        └── Publicité  
+└── Views-Authentication 
+    ├── authtools
+    |  ├── Ajout manuel/CSV  
+    │  └── Catégorisation IA
+    ├── composant
+    |  ├── customerForm.vue
+    │  └── firms.vue   
+    ├── login.vue
+    ├── loginSection.vue
+    ├── regisForm.vue
+    ├── registration.vue
+    ├── registrationSection.vue   
+
+How authentication has to work? 
+
+Firstly, there are two choices:
+-I'm a customer
+-I'm a firm
+Once choice is done, we go on another url()
 
 Our JSON file expected:
 {
