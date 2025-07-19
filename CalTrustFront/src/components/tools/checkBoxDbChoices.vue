@@ -32,7 +32,7 @@
         type="radio" 
         name="userType" 
         id="company" 
-        value="company"
+        value="firms"
         v-model="selectedOption"
       >
       <span><i class="fa-solid fa-building"></i></span>

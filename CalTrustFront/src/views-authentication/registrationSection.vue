@@ -1,7 +1,6 @@
 <template>
   <section class="login__section">
     <div class="main__container">
-      <p>Bienvenu chez nous</p>
       <h2 class="text__illus">
         Inscription
       </h2>

@@ -1,78 +1,18 @@
 <template>
-    <form @submit.prevent="submitForm" action="">
+    <form @submit.prevent="next" action="">
         <Transition>
             <p class="errorMessage" v-if="message.errorMessage">{{ message.errorMessage }}</p>
         </Transition>
         <Transition>
             <p class="succesMessage" v-if="message.successMessage">{{ message.successMessage }}</p>
         </Transition>
-        <checkBoxDbChoices v-if="step === 1"
+        <checkBoxDbChoices
             @selection-changed="onUserTypeChange"
         />
-
-        <Transition>
-            <div class="fims__form flex__center" v-if="step === 2 && userTypeSelected === 'consumer'">
-                <inputFamily__2 
-                    label="nom d'utilisateur"
-                    v-model="formData.username"
-                />
-                <inputFamily__2 
-                    label="email"
-                    type="email"
-                    v-model="formData.email"
-                    placeholder="Entrer votre email"
-                />
-                <inputFamily__2 
-                    label="Mot de pase"
-                    type="password"
-                    v-model="formData.password"
-                    placeholder="Entrer votre mot de passe"
-                />
-            </div>
-        </Transition>
-        <Transition>
-            <div class="fims__form flex__center" v-if="step === 2 && userTypeSelected === 'company'">
-                <inputFamily__2 
-                    label="nom d'entreprise"
-                    
-                    placeholder="Entrer le nom de votre entreprise"
-                />
-                <inputFamily__2 
-                    label="email"
-                    type="email"
-                    
-                    placeholder="Entrer votre email"
-                />
-                <inputFamily__2 
-                    label="Mot de pase"
-                    type="password"
-                    
-                    placeholder="Entrer votre mot de passe"
-                />
-            </div>
-        </Transition>
-        <div class="regis__btn">
-            <prevButton
-                label="Précédent" 
-                @click="prev"
-                v-if="step > 1"
-            />
-            <moreButton 
-                label="Suivant" 
-                @click="next"
-                width="100%"
-                v-if="step < 2"
-            />
-            <mainButton
-                label="Inscription" 
-                @click="submitForm"
-                v-if="step === 2"
-                :isLoading = isLoading
-            />
-        </div>
         <stepper
             title="Conditions d'utilisations appliquées"
         />
+        <mainButton @click="next"/>
     </form>
 </template>
 
@@ -84,7 +24,7 @@ import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
 import prevButton from '@/components/button/prevButton.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import stepper from '@/components/cards/stepper.vue';
-import api from '@/_services/_authservices';
+import { useRouter } from 'vue-router';
 
 export default {
     components:{ 
@@ -100,102 +40,25 @@ export default {
         console.log(`Choix reçu de l'enfant : ${optionRecue}`);
         userTypeSelected.value = optionRecue;
         }
-        
-        const step = ref (1)
         const message = ref({
             errorMessage : "",
             successMessage: ""
         })
+        const router = useRouter();
         const next = () => {
             if(userTypeSelected.value === ""){
-                message.value.errorMessage = "Veuillez cocher une option"
+                message.value.errorMessage = "Veuillez choisir une option"
                 return
             }
             message.value.errorMessage= ""
-            step.value++
+            router.push(`/registration/${userTypeSelected.value}`); 
         }
         
-        const prev = () => {
-            userTypeSelected.value = ""
-            step.value--
-        }
-
         const isLoading = ref(false)
 
-        // Données utilisateur
-        const formData = ref({
-            username: "",
-            email: "",
-            password: "",
-            user_type: "customer", // Valeur par défaut
-            phone: "",
-            birth_date: null
-        })
-
-        // Nouvelle méthode submitForm optimisée
-        const submitForm = async () => {
-            // Validation basique
-            if (!formData.value.username || !formData.value.email || !formData.value.password) {
-                message.value.errorMessage = "Veuillez remplir tous les champs obligatoires"
-                return
-            }
-
-            isLoading.value = true
-            message.value.errorMessage = ""
-
-            try {
-                const payload = { 
-                    ...formData.value,
-                    username: formData.value.username.trim(),
-                    email: formData.value.email.trim().toLowerCase()
-                }
-
-                const response = await api.post('/account/', payload, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-
-                // Gestion de la réponse
-                if (response.status === 201) {
-                    message.value.successMessage = "Inscription réussie !"
-                    // Réinitialisation du formulaire
-                    formData.value = {
-                        username: "",
-                        email: "",
-                        password: "",
-                        user_type: "customer",
-                        phone: "",
-                        birth_date: null
-                    }
-                    setTimeout(() => {
-                        message.value.successMessage = "";
-                        step.value = 1 // Renvoie à la première étape après 2s
-                    }, 2000);
-                    
-                }
-
-            } catch (error) {
-                // Gestion d'erreur améliorée
-                if (error.response?.status === 400) {
-                    message.value.errorMessage = "Données invalides : " + 
-                        (error.response.data?.username?.[0] || "Vérifiez les champs")
-                } else if (error.response?.status === 500) {
-                    message.value.errorMessage = "Erreur serveur. Veuillez réessayer plus tard."
-                } else {
-                    message.value.errorMessage = "Erreur de connexion. Vérifiez votre réseau."
-                }
-            } finally {
-                isLoading.value = false
-            }
-        }
-
-        
-        
         return {
             userTypeSelected, onUserTypeChange,
-            message, step, next, prev,isLoading,
-            formData, submitForm
+            message, next,isLoading, router
         }
     }
 }

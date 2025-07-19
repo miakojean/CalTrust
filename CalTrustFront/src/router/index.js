@@ -40,8 +40,18 @@ const router = createRouter({
       path:"/registration",
       name:"registration",
       component: () => import('../views-authentication/registration.vue')
-    }
-  ],
-})
+    },
+    {
+      path:'/registration/firms',
+      name: 'registrationFirms',
+      component: () => import('@/views-authentication/composant/firms.vue')
+    },
+    {
+      path:'/registration/consumer',
+      name: 'registrationCustomer',
+      component: () => import('@/views-authentication/composant/customerform.vue')
+    },
+  ]
+  })
 
 export default router
