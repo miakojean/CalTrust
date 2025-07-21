@@ -1,50 +1,71 @@
 <template>
-  <form action="" @submit.prevent="submitForm" class="regis__form">
-    <h2>Inscription</h2>
-    <Transition>
+  <form @submit.prevent="submitForm" class="regis__form">
+    <h2>Inscription Professionnelle</h2>
+    
+    <Transition name="fade">
       <p class="errorMessage" v-if="message.errorMessage">
         {{ message.errorMessage }}
       </p>
     </Transition>
-    <Transition>
+    
+    <Transition name="fade">
       <p class="succesMessage" v-if="message.successMessage">
         {{ message.successMessage }}
       </p>
     </Transition>
+
     <div class="form__flex__center">
       <inputFamily__2
-        label="nom d'entreprise"
-        placeholder="Entre votre nom d'entrprise"
-        v-model="formData.username"
+        label="Nom de l'entreprise*"
+        placeholder="Votre raison sociale"
+        v-model="formData.company_name"
+        required
       />
       <inputFamily__2
-        label="addresse"
-        placeholder="entrer votre adresse"
-        v-model="formData.address"
+        label="SIRET*"
+        placeholder="14 chiffres (ex: 12345678901234)"
+        v-model="formData.siret"
+        maxlength="14"
+        required
       />
     </div>
+
     <inputFamily__2
-      label="email"
-      placeholder="enter votre email"
+      label="Email professionnel*"
+      placeholder="email@votre-entreprise.com"
+      type="email"
       v-model="formData.email"
+      required
     />
+
+    <inputFamily__2
+      label="Adresse*"
+      placeholder="Adresse complète de l'entreprise"
+      v-model="formData.address"
+      required
+    />
+
     <div class="form__flex__center">
       <inputFamily__2
-        label="Mot de passe"
-        placeholder="Entrer un mot de passe"
+        label="Mot de passe*"
+        placeholder="8 caractères minimum"
         type="password"
         v-model="firstPassword"
+        required
+        minlength="8"
       />
       <inputFamily__2
-        label="Confirmer mot de passe"
-        placeholder="Confirmer le mot de passe"
+        label="Confirmation*"
+        placeholder="Identique au mot de passe"
         type="password"
         v-model="formData.password"
+        required
       />
     </div>
+
     <mainButton
-      label="Inscription"
-      @click="submitForm"
+      label="Créer mon compte professionnel"
+      type="submit"
       :isLoading="isLoading"
     />
   </form>
@@ -52,92 +73,98 @@
 
 <script>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import api from '@/_services/_authservices';
+
 export default {
+  components: { inputFamily__2, mainButton },
+  setup() {
+    const router = useRouter();
+    const firstPassword = ref('');
+    const isLoading = ref(false);
+    const message = ref({ errorMessage: '', successMessage: '' });
 
-    components:{
-        inputFamily__2, mainButton
-    },
-    setup(){
-        const step = ref(1)
+    const formData = ref({
+      username: '', // Généré automatiquement plus tard
+      email: '',
+      password: '',
+      user_type: 'firm',
+      company_name: '',
+      company_category: "Commerce", // Valeur par défaut
+      siret: '',
+      address: ''
+    });
 
-        const firstPassword = ref("")
+    const generateUsername = (email, companyName) => {
+      const prefix = companyName.toLowerCase()
+        .replace(/\s+/g, '_')
+        .replace(/[^a-z0-9_]/g, '');
+      const suffix = email.split('@')[0];
+      return `${prefix}_${suffix}`.substring(0, 150);
+    };
 
-        const message = ref({
-            errorMessage: "",
-            successMessage: ""
-        })
+    async function submitForm() {
+      isLoading.value = true;
+      message.value = { errorMessage: '', successMessage: '' };
 
-        const formData = ref({
-            username :"",
-            email:"",
-            password:"",
-            user_type:"firm",
-            company_name:"",
-            company_category:"Commerce",
-            siret: "12345678901234",
-            address: "123 Tech Park, Innovation City"
-        })
+      // Validation
+      if (formData.value.company_name === "") {
+        message.value.errorMessage = "Entrer le nom de votre entreprise"
+      }
 
-        async function submitForm() {
-            // Validation basique
-          if (!formData.value.username || !formData.value.email || !formData.value.password) {
-              message.value.errorMessage = "Veuillez remplir tous les champs obligatoires"
-              return
-          }
-          message.value.errorMessage = ""
-          
-          try {
-          const payload = { 
-            ...formData.value,
-            username: formData.value.username.trim(),
-            email: formData.value.email.trim().toLowerCase()
-            }
+      if (firstPassword.value !== formData.value.password) {
+        message.value.errorMessage = 'Les mots de passe ne correspondent pas';
+        isLoading.value = false;
+        return;
+      }
 
-          const response = await api.post('/account/', payload, {
-            headers: {
-                'Content-Type' : 'application/json',
-            }
-          })
+      if (!formData.value.siret || !/^\d{14}$/.test(formData.value.siret)) {
+        message.value.errorMessage = 'Le SIRET doit comporter 14 chiffres';
+        isLoading.value = false;
+        return;
+      }
 
-          if (response.status === 201) {
-            message.value.successMessage = "Inscription réussie"
-            formData.value = {
-                username :"",
-                email:"",
-                password:"",
-                user_type:"",
-                company_name:"",
-                company_category:"",
-                siret: "12345678901234",
-                address: ""
-            }
-            setTimeout(() => {
-                message.value.successMessage = "";
-                step.value = 1 // Renvoie à la première étape après 2s
-            }, 2000);
-            router.push('/signin')
-            }}
-             catch (error) {
-                if (error.response?.status === 400) {
-                  message.value.errorMessage = "Données invalides : " + 
-                      (error.response.data?.username?.[0] || "Vérifiez les champs")
-              } else if (error.response?.status === 500) {
-                  message.value.errorMessage = "Erreur serveur. Veuillez réessayer plus tard."
-              } else {
-                  message.value.errorMessage = "Erreur de connexion. Vérifiez votre réseau."
-              }
-            } finally {
-              isLoading.value = false
-          }
+      // Génération automatique du username
+      formData.value.username = generateUsername(
+        formData.value.email, 
+        formData.value.company_name
+      );
 
+      try {
+        const payload = { 
+          ...formData.value,
+          email: formData.value.email.trim().toLowerCase()
+        };
+
+        const response = await api.post('/account/', payload);
+
+        if (response.status === 201) {
+          message.value.successMessage = 'Compte créé avec succès! Redirection...';
+          setTimeout(() => router.push('/signin'), 2000);
         }
-
-        return {step, firstPassword, message, formData, submitForm}
+      } catch (error) {
+        handleApiError(error);
+      } finally {
+        isLoading.value = false;
+      }
     }
-}
+
+    const handleApiError = (error) => {
+      if (error.response?.data) {
+        const errors = Object.entries(error.response.data)
+          .map(([field, messages]) => `${field}: ${messages.join(', ')}`)
+          .join(' | ');
+        message.value.errorMessage = `Erreur: ${errors}`;
+      } else {
+        message.value.errorMessage = 'Erreur réseau. Veuillez réessayer.';
+      }
+    };
+
+    return { firstPassword, message, isLoading, formData, submitForm };
+  }
+};
 </script>
 
 <style>

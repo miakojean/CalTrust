@@ -12,7 +12,6 @@ form{
 
 input{
     width: 100%;
-    max-width: 300px;
     padding: 0.8rem;
     background: #f3f3f3;
     border: none;
@@ -36,7 +35,6 @@ input::placeholder{
 @media (min-width: 766px) {
     input{
         width: 100%;
-        max-width: 700px;
         padding: 0.8rem;
         background: #f3f3f3;
         border: none;
@@ -64,7 +62,6 @@ input::placeholder{
 @media (min-width: 1024px) {
     input{
         width: 100%;
-        max-width: 400px;
         padding: 0.8rem;
         background: #f3f3f3;
         border: none;
