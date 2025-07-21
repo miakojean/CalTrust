@@ -65,7 +65,7 @@ export default {
     },
     descriptionTwo: {
       type: String,
-      default: "Compte business pour collecter des avis avec plus de features"
+      default: "Compte business pour collecte d'avis"
     }
   },
   emits: ['selection-changed'], // Bonne pratique : déclarer les événements émis
@@ -125,7 +125,8 @@ input{
 
 span{
   background: #2f4b66;
-  display: center;
+  display: flex;
+  align-items: center;
   justify-content: center;
   border-radius: 1rem;
   padding: 0.6rem;
@@ -135,5 +136,18 @@ i{
   background: none;
   font-size: 1.5rem;
   color: #f3f3f3;
+}
+
+@media(min-width: 1032px){
+  .checkbox__family{
+    padding: 0.3rem;
+    border-radius: 3rem;
+  }
+
+  span{
+    height: 2rem;
+    padding: 0.5rem;
+    width: 2rem;
+  }
 }
 </style>

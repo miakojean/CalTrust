@@ -12,7 +12,7 @@ form{
 
 input{
     width: 100%;
-    max-width: 400px;
+    max-width: 300px;
     padding: 0.8rem;
     background: #f3f3f3;
     border: none;
@@ -64,7 +64,7 @@ input::placeholder{
 @media (min-width: 1024px) {
     input{
         width: 100%;
-        max-width: 700px;
+        max-width: 400px;
         padding: 0.8rem;
         background: #f3f3f3;
         border: none;
@@ -80,6 +80,15 @@ input::placeholder{
         max-width: 600px;
         border-radius: 1rem;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    }
+
+    .regis__form{
+        width:100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
     }
 }
 

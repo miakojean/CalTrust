@@ -9,27 +9,24 @@
         <checkBoxDbChoices
             @selection-changed="onUserTypeChange"
         />
+        <mainButton @click="next"/>
         <stepper
             title="Conditions d'utilisations appliquées"
         />
-        <mainButton @click="next"/>
     </form>
 </template>
 
 <script>
 import { ref } from 'vue';
-import checkBoxDbChoices from '../components/tools/checkBoxDbChoices.vue';
-import moreButton from '../components/button/moreButton.vue';
-import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
-import prevButton from '@/components/button/prevButton.vue';
-import mainButton from '@/components/button/mainButton.vue';
+import checkBoxDbChoices from '@/components/tools/checkBoxDbChoices.vue';
 import stepper from '@/components/cards/stepper.vue';
+import footerSection from '@/layout/footerSection.vue';
 import { useRouter } from 'vue-router';
 
 export default {
     components:{ 
-        checkBoxDbChoices, moreButton, 
-        inputFamily__2, prevButton, mainButton, stepper
+        checkBoxDbChoices, stepper,
+        footerSection
     },
 
     setup(){

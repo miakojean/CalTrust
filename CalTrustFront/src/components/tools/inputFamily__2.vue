@@ -38,6 +38,10 @@ export default {
 </script>
 
 <style scoped>
+.input__family{
+    width:100%;
+}
+
 label{
     color: var(--primary-color);
     font-size: 0.8rem;
@@ -45,15 +49,20 @@ label{
 
 input{
     background: none;
-    border: 1px solid var(--primary-color);
     color: var(--primary-color);
     font-weight: 500;
     font-size: 0.8rem;
+    background: #eeeeee;
+
 }
 
 @media (min-width: 1024px) {
     label{
         font-size: 0.8rem;
+        width: 100%;
+    }
+
+    .input__family{
         width: 100%;
     }
 }

@@ -1,91 +1,26 @@
 <template>
     <main>
-      <newNavbar />
-      <h1>Inscription</h1>
-      <form @submit.prevent="submitForm" action="">
-        <Transition>
-            <p class="errorMessage" v-if="message.errorMessage">{{ message.errorMessage }}</p>
-        </Transition>
-        <Transition>
-            <p class="succesMessage" v-if="message.successMessage">{{ message.successMessage }}</p>
-        </Transition>
-  
-        <Transition>
-            <div class="fims__form flex__center">
-                <inputFamily__2 
-                    label="nom d'utilisateur"
-                    v-model="formData.username"
-                />
-                <inputFamily__2
-                    label="nom de l'entreprise"
-                    v-model="formData.company_name"
-                    placeholder="Entrer le nom de votre entreprise"
-                />
-                <inputFamily__2 
-                    label="adresse"
-                    v-model="formData.address"
-                    placeholder="Entrer l'adresse de votre entreprise"
-                />
-                <inputFamily__2
-                    label="numéro de siret"
-                    type="tel"
-                    v-model="formData.siret"
-                    placeholder="Entrer votre numéro de siret"
-                />
-                <inputFamily__2 
-                    label="email professionnel"
-                    type="email"
-                    v-model="formData.email"
-                    placeholder="Entrer votre email"
-                />
-                <inputFamily__2 
-                    label="Mot de pase"
-                    type="password"
-                    v-model="formData.password"
-                    placeholder="Entrer votre mot de passe"
-                />
-                <selectFamily
-                    label="Secteur d'activité"
-                    :options="['Commerce', 'Restauration', 'Santé', 'Éducation', 'Autre']"
-                />
-            </div>
-        </Transition>
-        <div class="regis__btn">
-            <mainButton
-                label="Inscription" 
-                @click="submitForm"
-                :isLoading = isLoading
-            />
-        </div>
-        <stepper
-            title="Conditions d'utilisations appliquées"
-        />
-    </form>
+        <newNavbar />
+        <section class="regis__section main__section">
+            <firmRegistationForm/>
+        </section>
+        <footerSection/>
     </main>
   </template>
   
   <script>
-  import { ref } from 'vue';
-  import checkBoxDbChoices from '@/components/tools/checkBoxDbChoices.vue';
-  import moreButton from '@/components/button/moreButton.vue';
-  import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
-  import prevButton from '@/components/button/prevButton.vue';
-  import mainButton from '@/components/button/mainButton.vue';
-  import stepper from '@/components/cards/stepper.vue';
-  import api from '@/_services/_authservices';
-  import newNavbar  from '@/layout/newNavbar.vue';
-  import { useRouter } from 'vue-router';
-  import selectFamily from '@/components/tools/selectFamily.vue';
-  export default {
+import { ref } from 'vue';
+import api from '@/_services/_authservices';
+import footerSection from '@/layout/footerSection.vue';
+import newNavbar  from '@/layout/newNavbar.vue';
+import { useRouter } from 'vue-router';
+import firmRegistationForm from '../authtools/firmRegistationForm.vue';
+
+export default {
     components:{ 
-      checkBoxDbChoices, 
-      moreButton, 
-      inputFamily__2, 
-      prevButton, 
-      mainButton, 
-      stepper,
       newNavbar,
-      selectFamily
+      footerSection,
+      firmRegistationForm
     },
   
     setup(){

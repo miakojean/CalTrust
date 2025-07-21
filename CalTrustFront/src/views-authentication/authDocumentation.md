@@ -12,14 +12,28 @@
     ├── registration.vue
     ├── registrationSection.vue   
 
-How authentication has to work? 
+How authentication must work? 
 
 Firstly, there are two choices:
 -I'm a customer
 -I'm a firm
-Once choice is done, we go on another url()
+Once choice is done, we go on another url() which can be an
+``` js
+  {
+    path:'/registration/firms',
+    name: 'registrationFirms',
+    component: () => import('@/views-authentication/composant/firms.vue')
+  }, /* the firm route's  */
+  {
+    path:'/registration/consumer',
+    name: 'registrationCustomer',
+    component: () => import('@/views-authentication/composant/customerform.vue')
+  }, /* the consumer route's  */
 
-Our JSON file expected:
+```
+
+Our JSON file expected for firm and simple_user:
+``` json
 {
   "username": "new_firm",
   "email": "firm@business.com",
@@ -30,7 +44,9 @@ Our JSON file expected:
   "siret": "12345678901234",
   "address": "123 Tech Park, Innovation City"
 }
+```
 
+``` json
 {
   "username": "new_customer_user",
   "email": "customer@example.com",
@@ -39,3 +55,4 @@ Our JSON file expected:
   "phone": "0123456789",
   "birth_date": "1990-05-20"
 }
+```
