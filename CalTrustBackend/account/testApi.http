@@ -2,7 +2,7 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "second_customer_user",
+  "username": "customer_one",
   "email": "customer@example.com",
   "password": "securepassword123",
   "user_type": "customer",
@@ -14,13 +14,13 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "new_firm",
-  "email": "firm@business.com",
+  "username": "issif",
+  "email": "issifm@business.com",
   "password": "supersecurepassword",
   "user_type": "firm",
-  "company_name": "Tech Solutions Inc.",
+  "company_name": "issif Tech Solutions Inc.",
   "company_category": "Commerce",
-  "siret": "12345678901234",
+  "siret": "12347678901284",
   "address": "123 Tech Park, Innovation City"
 }
 
