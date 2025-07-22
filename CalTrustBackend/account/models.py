@@ -6,7 +6,7 @@ from django.utils import timezone
 class CustomerProfile(models.Model):
     # Le lien One-to-One vers le modèle User de Django
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True,
-                              related_name='account_customer_profile')
+                        related_name='account_customer_profile')
 
     # Champs spécifiques aux clients
     phone = models.CharField(max_length=20, blank=True)

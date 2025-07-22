@@ -2,8 +2,12 @@ from django.shortcuts import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
 from .serializer import UserRegistrationSerializer
+from django.contrib.auth import authenticate
+from rest_framework_simplejwt.tokens import RefreshToken
 from .models import *
 
 # Create your views here.
@@ -76,7 +80,49 @@ class UserRegistrationView(APIView):
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-    
+        
+class UserLoginView(APIView):
+    # Allow any user (authenticated or not) to access this view
+    permission_classes = [AllowAny]
+    # Do not require any authentication scheme for this view
+    authentication_classes = [] # This is key!
+    def post(self, request):
+        email = request.data.get('email')
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        if not password or (not email and not username):
+            return Response(
+                {'error': 'Veuillez fournir un email/nom d\'utilisateur et un mot de passe.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Si email est fourni, on cherche l'utilisateur par email
+        if email:
+            user = User.objects.filter(email=email).first()
+            if not user:
+                return Response(
+                    {'error': 'Email ou mot de passe incorrect.'},
+                    status=status.HTTP_401_UNAUTHORIZED
+                )
+            username = user.username 
+
+        # Authentification
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            })
+        else:
+            return Response(
+                {'error': 'Identifiants incorrects.'},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+
 class PasswordResetConfirmView(APIView):
     def post(self, request, token):
         new_password = request.data.get('new_password')

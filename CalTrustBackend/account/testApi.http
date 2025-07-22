@@ -24,10 +24,10 @@ Content-Type: application/json
   "address": "123 Tech Park, Innovation City"
 }
 
-POST http://127.0.0.1:8000/account/token/
+POST http://127.0.0.1:8000/account/login/
 Content-Type: application/json
 
 {
-  "username": "johndoe",
-  "password": "Jeanyves123456@"
+  "email": "customer@example.com",
+  "password": "securepassword123"
 }
