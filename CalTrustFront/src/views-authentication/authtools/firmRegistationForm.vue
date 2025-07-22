@@ -152,15 +152,55 @@ export default {
     }
 
     const handleApiError = (error) => {
-      if (error.response?.data) {
-        const errors = Object.entries(error.response.data)
-          .map(([field, messages]) => `${field}: ${messages.join(', ')}`)
-          .join(' | ');
-        message.value.errorMessage = `Erreur: ${errors}`;
-      } else {
-        message.value.errorMessage = 'Erreur réseau. Veuillez réessayer.';
-      }
-    };
+      if (error.response?.status === 401) {
+    // Cas spécifique d'inscription
+    if (error.config.url.includes('/register')) {
+      message.value = "Création de compte non autorisée";
+    } else {
+      message.value = "Session expirée, veuillez vous reconnecter";
+    }
+  }
+  // Erreur réseau ou requête non atteinte
+  if (!error.response) {
+    message.value.errorMessage = 'Erreur réseau. Veuillez réessayer.';
+    return;
+  }
+  const { status, data } = error.response;
+  // Erreur d'authentification
+  if (status === 401) {
+    message.value.errorMessage = 'Session expirée. Veuillez vous reconnecter.';
+    return;
+  }
+  // Format classique d'erreur Django/DRF/Rails
+  if (data && typeof data === 'object') {
+    // Cas où l'API renvoie {errors: [...]} ou {message: string}
+    if (data.errors) {
+      message.value.errorMessage = `Erreur: ${Array.isArray(data.errors) 
+        ? data.errors.join(', ') 
+        : data.errors}`;
+    } else if (data.message) {
+      message.value.errorMessage = `Erreur: ${data.message}`;
+    } 
+    // Format Django/DRF standard
+    else if (Object.keys(data).length > 0) {
+      message.value.errorMessage = Object.entries(data)
+        .map(([field, messages]) => 
+          `${field}: ${Array.isArray(messages) 
+            ? messages.join(', ') 
+            : messages}`
+        )
+        .join(' | ');
+    } else {
+      message.value.errorMessage = `Erreur ${status}: Une erreur est survenue`;
+    }
+  } 
+  // Si data est une string
+  else if (typeof data === 'string') {
+    message.value.errorMessage = data;
+  } else {
+    message.value.errorMessage = `Erreur ${status}: Une erreur est survenue`;
+  }
+};
 
     return { firstPassword, message, isLoading, formData, submitForm };
   }
