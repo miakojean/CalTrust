@@ -26,12 +26,12 @@
     <label 
       for="company" 
       class="checkbox__family" 
-      :class="{ 'selected': selectedOption === 'company' }"
+      :class="{ 'selected': selectedOption === 'firms' }"
     >
       <input 
         type="radio" 
         name="userType" 
-        id="company" 
+        id="firms" 
         value="firms"
         v-model="selectedOption"
       >

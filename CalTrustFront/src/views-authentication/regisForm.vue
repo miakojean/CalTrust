@@ -22,11 +22,12 @@ import checkBoxDbChoices from '@/components/tools/checkBoxDbChoices.vue';
 import stepper from '@/components/cards/stepper.vue';
 import footerSection from '@/layout/footerSection.vue';
 import { useRouter } from 'vue-router';
+import mainButton from '@/components/button/mainButton.vue';
 
 export default {
     components:{ 
         checkBoxDbChoices, stepper,
-        footerSection
+        footerSection, mainButton
     },
 
     setup(){
