@@ -1,7 +1,7 @@
 import api from "@/_services/_authservices";
 
 
-const passwordReseting = async (data) => {
+const passwordReset = async (data) => {
   try {
     const response = await api.post('/account/password-reseting/', data, {
       headers: { 'Content-Type': 'application/json' }
@@ -30,4 +30,4 @@ const verifyToken = async (token) => {
 };
 
 
-export default {passwordReseting, verifyToken}; 
+export {passwordReset, verifyToken}; 
