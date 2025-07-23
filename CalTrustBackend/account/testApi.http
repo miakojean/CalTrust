@@ -38,3 +38,18 @@ Content-Type: application/json
 {
   "email": "sinistre12@gmail.com"
 }
+
+POST http://127.0.0.1:8000/account/password-reset/confirm/
+Content-Type: application/json
+
+{
+  "token": "ad83f842-1c56-4497-8f83-abec2a37f875",
+  "new_password": "NouveauMotDePasseSecure123!"
+}
+
+POST http://127.0.0.1:8000/account/password-reset/verify-token/
+Content-Type: application/json
+
+{
+  "token": "be7ee026-47d6-4f1b-8f5f-9e08db0d02e1"
+}
