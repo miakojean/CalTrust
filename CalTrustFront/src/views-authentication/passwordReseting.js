@@ -15,19 +15,29 @@ const passwordReset = async (data) => {
 
 const verifyToken = async (token) => {
   try {
-    const response = await fetch('/api/password-reset/verify-token/', {
-      method: 'POST',
+    const response = await api.post('/api/password-reset/verify-token/', token, {
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token })
     });
-    
-    const data = await response.json();
-    return data.valid ? data : { valid: false, message: "Erreur de vérification" };
+    return response.status === 200;
     
   } catch (error) {
-    return { valid: false, message: "Erreur réseau" };
+    return console.log(error);
   }
 };
 
+const updatePassword = async () => {
 
-export {passwordReset, verifyToken}; 
+  try {
+
+    const response = await api.post('/account/password-reset/confirm/', {
+      headers: {'Content-Type': 'application/json'}
+    });
+    return response.status === 200;
+  } catch(error) {
+    console.log(error)
+  }
+
+}
+
+
+export {passwordReset, verifyToken, updatePassword}; 

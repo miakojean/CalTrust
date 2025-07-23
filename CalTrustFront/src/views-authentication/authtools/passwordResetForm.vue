@@ -37,7 +37,7 @@
     </form>
   
     <!-- Étape 2 : Token -->
-    <form @submit.prevent="checkToken" v-else-if="step === 2">
+    <form @submit.prevent="verifyToken" v-else-if="step === 2">
       <div class="firms__form flex__center">
         <second-stepper title="Réinitialiser mon mot de passe"/>
         
@@ -105,14 +105,15 @@
     </form>
   </template>
   
-  <script>
-  import { ref } from 'vue';
-  import { useRouter } from 'vue-router';
-  import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
-  import mainButton from '@/components/button/mainButton.vue';
-  import stepper from '@/components/cards/stepper.vue';
-  import secondStepper from '@/components/cards/secondStepper.vue';
-  import { passwordReset, verifyToken, updatePassword } from '../passwordReseting';
+<script>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
+import mainButton from '@/components/button/mainButton.vue';
+import stepper from '@/components/cards/stepper.vue';
+import secondStepper from '@/components/cards/secondStepper.vue';
+import { passwordReset, verifyToken, updatePassword} from '../passwordReseting';
+import api from '@/_services/_authservices';
   
   export default {
     components: { 
@@ -166,31 +167,55 @@
         } finally {
           isLoading.value = false;
         }
-      };
+    };
       
-      const checkToken = async () => {
-        if (!formToken.value.trim()) {
-          message.value.errorMessage = "Le code est obligatoire";
-          return;
-        }
-  
+    const verifyToken = async () => {
         isLoading.value = true;
         message.value.errorMessage = "";
-  
-        try {
-          const result = await verifyToken(formToken.value);
-          
-          if (result.valid) {
-            step.value = 3;
-          } else {
-            message.value.errorMessage = result.message || "Code invalide";
-          }
-        } catch (error) {
-          message.value.errorMessage = error.message || "Erreur de vérification";
-        } finally {
-          isLoading.value = false;
+
+        if (!formToken.value.trim()) {
+            isLoading.value = false;
+            message.value.errorMessage = "Veuillez saisir le code de réinitialisation";
+            return false;
         }
-      };
+
+        try {
+            const payload = {
+                token: formToken.value
+            };
+
+            const response = await api.post(
+                '/account/password-reset/verify-token/', 
+                payload,  // Envoie l'objet payload
+                {
+                    headers: { 
+                        'Content-Type': 'application/json',
+                    }
+                }
+            );
+
+            if (response.status === 200) {
+                step.value = 3;
+                return true;
+            }
+                
+            } catch (error) {
+                let errorMsg = "Une erreur est survenue";
+                
+                if (error.response) {
+                    // Gestion des erreurs spécifiques du serveur
+                    errorMsg = error.response.data?.error || 
+                            error.response.data?.detail || 
+                            "Code invalide ou expiré";
+                }
+
+                message.value.errorMessage = errorMsg;
+                console.error("Erreur de vérification:", error);
+                return false;
+            } finally {
+                isLoading.value = false;
+            }
+        };
       
       const updatePassword = async () => {
         if (formData.value.newPassword !== formData.value.confirmPassword) {
@@ -226,7 +251,7 @@
         formData,
         formToken,
         submitForm,
-        checkToken,
+        verifyToken,
         updatePassword
       };
     }   
