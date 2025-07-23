@@ -14,11 +14,11 @@
             </Transition>
 
             <inputFamily__2 
-                label="nom d'utilisateur"
+                label="Nom d'utilisateur"
                 v-model="formData.username"
             />
             <inputFamily__2 
-                label="email"
+                label="Email"
                 type="email"
                 v-model="formData.email"
                 placeholder="Entrer votre email"
