@@ -13,4 +13,21 @@ const passwordReseting = async (data) => {
   }
 };
 
-export default passwordReseting
+const verifyToken = async (token) => {
+  try {
+    const response = await fetch('/api/password-reset/verify-token/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+    
+    const data = await response.json();
+    return data.valid ? data : { valid: false, message: "Erreur de vérification" };
+    
+  } catch (error) {
+    return { valid: false, message: "Erreur réseau" };
+  }
+};
+
+
+export default {passwordReseting, verifyToken}; 

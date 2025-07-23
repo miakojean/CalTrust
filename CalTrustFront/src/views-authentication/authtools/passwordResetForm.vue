@@ -33,6 +33,23 @@
             <inputFamily__2 
                 label="Mon code"
                 placeholder="Coller le code réçu"
+                v-model="formToken"
+            />
+        </div>
+        <div class="fims__form flex__center"  v-if="step === 3">
+
+            <second-stepper title="Réinitialiser mon mot de passe"/>
+
+            <Transition>
+                <p class="errorMessage" v-if="message.errorMessage">{{ message.errorMessage }}</p>
+            </Transition>
+            <Transition>
+                <p class="succesMessage" v-if="message.successMessage">{{ message.successMessage }}</p>
+            </Transition>
+
+            <inputFamily__2 
+                label="Mon code"
+                placeholder="Coller le code réçu"
                 v-model="formData.username"
             />
         </div>
@@ -46,6 +63,11 @@
                 :isLoading = isLoading
             />
             <mainButton v-if="step === 2"
+                label="suivant" 
+                @click="submitForm"
+                :isLoading = isLoading
+            />
+            <mainButton v-if="step === 3"
                 label="suivant" 
                 @click="submitForm"
                 :isLoading = isLoading
@@ -68,7 +90,7 @@ import stepper from '@/components/cards/stepper.vue';
 import newNavbar  from '@/layout/newNavbar.vue';
 import { useRouter } from 'vue-router';
 import secondStepper from '@/components/cards/secondStepper.vue';
-import passwordReseting from '../passwordReseting';
+import {passwordReseting, verifyToken} from '../passwordReseting';
 
 export default {
     components:{ 
@@ -96,6 +118,8 @@ export default {
         const formData = ref({
             email: ""
         })
+
+        const formToken = ref("")
 
         // Nouvelle méthode submitForm optimisée
         const submitForm = async () => { 
@@ -130,9 +154,20 @@ export default {
             }
         }
         
+        const checkToken = async () => {
+            token = token.value
+            const result = await verifyToken(token);
+        
+            if (result.valid) {
+                step.value = 3
+            } else {
+                // Afficher result.message à l'utilisateur
+            }
+        };
+        
         return {
             message, step, isLoading,
-            formData, submitForm
+            formData, formToken, submitForm, checkToken
         }
     }   
 }
