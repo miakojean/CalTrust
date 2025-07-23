@@ -112,7 +112,7 @@ import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import stepper from '@/components/cards/stepper.vue';
 import secondStepper from '@/components/cards/secondStepper.vue';
-import { passwordReset, verifyToken, updatePassword} from '../passwordReseting';
+import { passwordReset} from '../passwordReseting';
 import api from '@/_services/_authservices';
   
   export default {
@@ -217,31 +217,49 @@ import api from '@/_services/_authservices';
             }
         };
       
-      const updatePassword = async () => {
-        if (formData.value.newPassword !== formData.value.confirmPassword) {
-          message.value.errorMessage = "Les mots de passe ne correspondent pas";
-          return;
+        const updatePassword = async () => {
+            isLoading.value = true;
+            message.value.errorMessage = "";
+            if (!formData.value.newPassword || !formData.value.confirmPassword) {
+                message.value.errorMessage = "Veuillez remplir tous les champs obligatoires";
+                isLoading.value = false;
+                return;
+            }
+            if (formData.value.newPassword !== formData.value.confirmPassword) {
+                message.value.errorMessage = "Les mots de passe ne correspondent pas";
+                isLoading.value = false;
+                return;
+            }
+            try {
+                const payload = {
+                    new_password: formData.value.newPassword.trim(),
+                    token: formToken.value.trim()
+                };
+
+                const response = await api.post(
+                    '/account/password-reset/confirm/', 
+                    payload, 
+                    {
+                        headers: { 
+                            'Content-Type': 'application/json',
+                        }
+                    }
+                );
+
+                if (response.status === 200) {
+                    message.value.successMessage = "Mot de passe réinitialisé avec succès !";
+                    setTimeout(() => {
+                        router.push('/signin');
+                    }, 2000);
+                } else {
+                    message.value.errorMessage = "Échec de la réinitialisation du mot de passe.";
+                }
+            } catch (error) {
+                message.value.errorMessage = error.response?.data?.detail || "Erreur lors de la mise à jour du mot de passe.";
+            } finally {
+                isLoading.value = false;
+            }
         }
-  
-        isLoading.value = true;
-        message.value.errorMessage = "";
-  
-        try {
-          const success = await updatePassword({
-            token: formToken.value,
-            newPassword: formData.value.newPassword
-          });
-          
-          if (success) {
-            message.value.successMessage = "Mot de passe mis à jour avec succès !";
-            setTimeout(() => router.push('/login'), 2000);
-          }
-        } catch (error) {
-          message.value.errorMessage = error.message || "Erreur lors de la mise à jour";
-        } finally {
-          isLoading.value = false;
-        }
-      };
       
       return {
         router,
