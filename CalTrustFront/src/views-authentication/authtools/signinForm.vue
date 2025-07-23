@@ -12,13 +12,13 @@
                 <p v-if="message.emptyfields">{{ message.emptyfields }}</p>
             </Transition>
             <inputfamily__2
-                label="email"
+                label="Email"
                 type="email"
                 placeholder="Entrer votre email"
                 v-model="email"
             />
             <inputfamily__2
-                label="mot de passe"
+                label="Mot de passe"
                 type="password"
                 placeholder="Entrer votre mot de passe"
                 v-model="password"

@@ -58,6 +58,11 @@ const router = createRouter({
       path:'/password-reseting',
       name:"password-reseting",
       component: () => import('@/views-authentication/composant/passworReset.vue')
+    },
+    {
+      path:'/profilcustomer',
+      name: 'profilcustomer',
+      component: () => import ('@/section/profilcustomer.vue')
     }
   ]
   })

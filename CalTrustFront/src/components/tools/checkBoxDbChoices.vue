@@ -61,11 +61,11 @@ export default {
     },
     description: {
       type: String,
-      default: "Compte utilisateur juste pour des avis"
+      default: "Compte utilisateur pour donner des avis"
     },
     descriptionTwo: {
       type: String,
-      default: "Compte business pour collecte d'avis"
+      default: "Compte business pour recevoir des avis"
     }
   },
   emits: ['selection-changed'], // Bonne pratique : déclarer les événements émis
