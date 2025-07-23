@@ -46,16 +46,16 @@
                 :isLoading = isLoading
             />
             <mainButton v-if="step === 2"
-                label="Réinitaliser" 
+                label="suivant" 
                 @click="submitForm"
                 :isLoading = isLoading
             />
         </div>
         <stepper
-          title="J'ai déjà un compte"
+          title="J'ouvre mon compte"
         />
-        <RouterLink to="/signin">
-            Je me connecte ici
+        <RouterLink to="/registration">
+            J'ouvre un compte
         </RouterLink>
     </form>
 </template>
@@ -65,10 +65,10 @@ import { ref } from 'vue';
 import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import stepper from '@/components/cards/stepper.vue';
-import api from '@/_services/_authservices';
 import newNavbar  from '@/layout/newNavbar.vue';
 import { useRouter } from 'vue-router';
 import secondStepper from '@/components/cards/secondStepper.vue';
+import passwordReseting from '../passwordReseting';
 
 export default {
     components:{ 
@@ -83,7 +83,7 @@ export default {
     
         const router = useRouter();
 
-        const step = ref(1)
+        const step = ref(2)
 
         const message = ref({
             errorMessage : "",
@@ -98,54 +98,35 @@ export default {
         })
 
         // Nouvelle méthode submitForm optimisée
-        const submitForm = async () => {
-            // Validation basique
-            if (!formData.value.email) {
-            message.value.errorMessage = "Veuillez remplir tous les champs obligatoires"
-            return
+        const submitForm = async () => { 
+            // Validation
+            if (!formData.value.email?.trim()) {
+                message.value.errorMessage = "L'email est obligatoire"
+                return
             }
+
             isLoading.value = true
             message.value.errorMessage = ""
-            
-
+    
             try {
-                const payload = { 
-                    ...formData.value,
+                const payload = {
                     email: formData.value.email.trim().toLowerCase()
                 }
-
-                const response = await api.post('/account/', payload, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-
-                // Gestion de la réponse
-                if (response.status === 201) {
-                    message.value.successMessage = "Email envoy !"
-                    // Réinitialisation du formulaire
-                    formData.value = {
-                        email: "",
-                    }
-                    setTimeout(() => {
-                        message.value.successMessage = "";
-                    }, 2000);
-                    router.push('/signin')
-                    
-                }
-
-            } catch (error) {
-                // Gestion d'erreur améliorée
-                if (error.response?.status === 400) {
-                    message.value.errorMessage = "Données invalides : " + 
-                        (error.response.data?.username?.[0] || "Vérifiez les champs")
-                } else if (error.response?.status === 500) {
-                    message.value.errorMessage = "Erreur serveur. Veuillez réessayer plus tard."
+                
+                const success = await passwordReseting(payload)  // <-- Attendre la réponse
+                
+                if (success) {
+                    message.value.successMessage = "Email envoyé avec succès !"
+                    formData.value.email = "" // Reset du champ si besoin
+                    step.value = 2
                 } else {
-                    message.value.errorMessage = "Erreur de connexion. Vérifiez votre réseau."
+                    message.value.errorMessage = "Échec d'envoi. Veuillez réessayer."
                 }
+            } catch (error) {
+                message.value.errorMessage = "Erreur réseau. Veuillez réessayer plus tard."
+                console.error("Erreur submitForm:", error)
             } finally {
-                isLoading.value = false
+                isLoading.value = false // <-- Important pour désactiver le loading
             }
         }
         
