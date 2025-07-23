@@ -2,8 +2,8 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "customer_one",
-  "email": "customer@example.com",
+  "username": "owner",
+  "email": "sinistre12@gmail.com",
   "password": "securepassword123",
   "user_type": "customer",
   "phone": "0123456789",
@@ -30,4 +30,11 @@ Content-Type: application/json
 {
   "email": "customer@example.com",
   "password": "securepassword123"
+}
+
+POST http://127.0.0.1:8000/account/password-reseting/
+Content-Type: application/json
+
+{
+  "email": "sinistre12@gmail.com"
 }

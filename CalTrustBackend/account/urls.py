@@ -9,6 +9,8 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('', UserRegistrationView.as_view(), name='index'),
     path('login/', UserLoginView.as_view(), name='login'),
+    path('password-reseting/', PasswordResetRequestView.as_view(), name="password-reseting"),
+    path('password-reset/confirm/', PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
     # JWT Authentication Endpoints
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
