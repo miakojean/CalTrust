@@ -1,181 +1,239 @@
 <template>
-
-    <form @submit.prevent="submitForm" action="">
-
-        <div class="fims__form flex__center" v-if="step === 1">
-
-            <second-stepper title="Réinitialiser mon mot de passe"/>
-
-            <Transition>
-                <p class="errorMessage" v-if="message.errorMessage">{{ message.errorMessage }}</p>
-            </Transition>
-            <Transition>
-                <p class="succesMessage" v-if="message.successMessage">{{ message.successMessage }}</p>
-            </Transition>
-
-            <inputFamily__2 
-                label="Email"
-                placeholder="Entrer votre email"
-                v-model="formData.email"
-            />
-        </div>
-        <div class="fims__form flex__center"  v-if="step === 2">
-
-            <second-stepper title="Réinitialiser mon mot de passe"/>
-
-            <Transition>
-                <p class="errorMessage" v-if="message.errorMessage">{{ message.errorMessage }}</p>
-            </Transition>
-            <Transition>
-                <p class="succesMessage" v-if="message.successMessage">{{ message.successMessage }}</p>
-            </Transition>
-
-            <inputFamily__2 
-                label="Mon code"
-                placeholder="Coller le code réçu"
-                v-model="formToken"
-            />
-        </div>
-        <div class="fims__form flex__center"  v-if="step === 3">
-
-            <second-stepper title="Réinitialiser mon mot de passe"/>
-
-            <Transition>
-                <p class="errorMessage" v-if="message.errorMessage">{{ message.errorMessage }}</p>
-            </Transition>
-            <Transition>
-                <p class="succesMessage" v-if="message.successMessage">{{ message.successMessage }}</p>
-            </Transition>
-
-            <inputFamily__2 
-                label="Mon code"
-                placeholder="Coller le code réçu"
-                v-model="formData.username"
-            />
-        </div>
-        <stepper
-          title="Conditions d'utilisations appliquées"
+    <!-- Étape 1 : Email -->
+    <form @submit.prevent="submitForm" v-if="step === 1">
+      <div class="firms__form flex__center">
+        <second-stepper title="Réinitialiser mon mot de passe"/>
+        
+        <Transition>
+          <p class="errorMessage" v-if="message.errorMessage">{{ message.errorMessage }}</p>
+        </Transition>
+        <Transition>
+          <p class="succesMessage" v-if="message.successMessage">{{ message.successMessage }}</p>
+        </Transition>
+  
+        <inputFamily__2 
+          label="Email"
+          type="email"
+          placeholder="Entrer votre email"
+          v-model="formData.email"
+          required
         />
+        
+        <stepper title="Conditions d'utilisations appliquées"/>
+        
         <div class="regis__btn">
-            <mainButton v-if="step === 1"
-                label="Suivant" 
-                @click="submitForm"
-                :isLoading = isLoading
-            />
-            <mainButton v-if="step === 2"
-                label="suivant" 
-                @click="submitForm"
-                :isLoading = isLoading
-            />
-            <mainButton v-if="step === 3"
-                label="suivant" 
-                @click="submitForm"
-                :isLoading = isLoading
-            />
+          <mainButton
+            label="Suivant" 
+            type="submit"
+            :isLoading="isLoading"
+          />
         </div>
-        <stepper
-          title="J'ouvre mon compte"
-        />
+        
+        <stepper title="J'ouvre mon compte"/>
         <RouterLink to="/registration">
-            J'ouvre un compte
+          J'ouvre un compte
         </RouterLink>
+      </div>
     </form>
-</template>
-
-<script>
-import { ref } from 'vue';
-import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
-import mainButton from '@/components/button/mainButton.vue';
-import stepper from '@/components/cards/stepper.vue';
-import newNavbar  from '@/layout/newNavbar.vue';
-import { useRouter } from 'vue-router';
-import secondStepper from '@/components/cards/secondStepper.vue';
-import { passwordReset, verifyToken } from '../passwordReseting';
-
-export default {
-    components:{ 
-        inputFamily__2, 
-        mainButton, 
-        stepper,
-        newNavbar,
-        secondStepper
+  
+    <!-- Étape 2 : Token -->
+    <form @submit.prevent="checkToken" v-else-if="step === 2">
+      <div class="firms__form flex__center">
+        <second-stepper title="Réinitialiser mon mot de passe"/>
+        
+        <Transition>
+          <p class="errorMessage" v-if="message.errorMessage">{{ message.errorMessage }}</p>
+        </Transition>
+        <Transition>
+          <p class="succesMessage" v-if="message.successMessage">{{ message.successMessage }}</p>
+        </Transition>
+  
+        <inputFamily__2 
+          label="Code de vérification"
+          type="text"
+          placeholder="Coller le code reçu"
+          v-model="formToken"
+          required
+        />
+        
+        <div class="regis__btn">
+          <mainButton
+            label="Vérifier le code" 
+            type="submit"
+            :isLoading="isLoading"
+          />
+        </div>
+      </div>
+    </form>
+  
+    <!-- Étape 3 : Nouveau mot de passe -->
+    <form @submit.prevent="updatePassword" v-else-if="step === 3">
+      <div class="firms__form flex__center">
+        <second-stepper title="Réinitialiser mon mot de passe"/>
+        
+        <Transition>
+          <p class="errorMessage" v-if="message.errorMessage">{{ message.errorMessage }}</p>
+        </Transition>
+        <Transition>
+          <p class="succesMessage" v-if="message.successMessage">{{ message.successMessage }}</p>
+        </Transition>
+  
+        <inputFamily__2 
+          label="Nouveau mot de passe"
+          type="password"
+          placeholder="Entrez votre nouveau mot de passe"
+          v-model="formData.newPassword"
+          required
+        />
+        
+        <inputFamily__2 
+          label="Confirmer le mot de passe"
+          type="password"
+          placeholder="Confirmez votre mot de passe"
+          v-model="formData.confirmPassword"
+          required
+        />
+        
+        <div class="regis__btn">
+          <mainButton
+            label="Réinitialiser" 
+            type="submit"
+            :isLoading="isLoading"
+          />
+        </div>
+      </div>
+    </form>
+  </template>
+  
+  <script>
+  import { ref } from 'vue';
+  import { useRouter } from 'vue-router';
+  import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
+  import mainButton from '@/components/button/mainButton.vue';
+  import stepper from '@/components/cards/stepper.vue';
+  import secondStepper from '@/components/cards/secondStepper.vue';
+  import { passwordReset, verifyToken, updatePassword } from '../passwordReseting';
+  
+  export default {
+    components: { 
+      inputFamily__2, 
+      mainButton, 
+      stepper,
+      secondStepper
     },
-
-    setup(){
-    
-        const router = useRouter();
-
-        const step = ref(1)
-
-        const message = ref({
-            errorMessage : "",
-            successMessage: ""
-        })
-
-        const isLoading = ref(false)
-
-        // Données utilisateur
-        const formData = ref({
-            email: ""
-        })
-
-        const formToken = ref("")
-
-        // Nouvelle méthode submitForm optimisée
-        const submitForm = async () => { 
-            // Validation
-            if (!formData.value.email?.trim()) {
-                message.value.errorMessage = "L'email est obligatoire"
-                return
-            }
-
-            isLoading.value = true
-            message.value.errorMessage = ""
-    
-            try {
-                const payload = {
-                    email: formData.value.email.trim().toLowerCase()
-                }
-                
-                const success = await passwordReset(payload)  // <-- Attendre la réponse
-                
-                if (success) {
-                    message.value.successMessage = "Email envoyé avec succès !"
-                    formData.value.email = "" // Reset du champ si besoin
-                    step.value = 2
-                } else {
-                    message.value.errorMessage = "Échec d'envoi. Veuillez réessayer."
-                }
-            } catch (error) {
-                message.value.errorMessage = "Erreur réseau. Veuillez réessayer plus tard."
-                console.error("Erreur submitForm:", error)
-            } finally {
-                isLoading.value = false // <-- Important pour désactiver le loading
-            }
+  
+    setup() {
+      const router = useRouter();
+      const step = ref(1);
+      const isLoading = ref(false);
+      const formToken = ref("");
+  
+      const message = ref({
+        errorMessage: "",
+        successMessage: ""
+      });
+  
+      const formData = ref({
+        email: "",
+        newPassword: "",
+        confirmPassword: ""
+      });
+  
+      const submitForm = async () => {
+        if (!formData.value.email?.trim()) {
+          message.value.errorMessage = "L'email est obligatoire";
+          return;
         }
-        
-        const checkToken = async () => {
-            token = token.value
-            const result = await verifyToken(token);
-        
-            if (result.valid) {
-                step.value = 3
-            } else {
-                // Afficher result.message à l'utilisateur
-            }
-        };
-        
-        return {
-            router, message, step, isLoading,
-            formData, formToken, submitForm, checkToken
+  
+        isLoading.value = true;
+        message.value.errorMessage = "";
+  
+        try {
+          const payload = {
+            email: formData.value.email.trim().toLowerCase()
+          };
+          
+          const success = await passwordReset(payload);
+          
+          if (success) {
+            message.value.successMessage = "Email envoyé avec succès !";
+            step.value = 2;
+          } else {
+            message.value.errorMessage = "Échec d'envoi. Veuillez réessayer.";
+          }
+        } catch (error) {
+          message.value.errorMessage = error.message || "Erreur réseau. Veuillez réessayer plus tard.";
+        } finally {
+          isLoading.value = false;
         }
+      };
+      
+      const checkToken = async () => {
+        if (!formToken.value.trim()) {
+          message.value.errorMessage = "Le code est obligatoire";
+          return;
+        }
+  
+        isLoading.value = true;
+        message.value.errorMessage = "";
+  
+        try {
+          const result = await verifyToken(formToken.value);
+          
+          if (result.valid) {
+            step.value = 3;
+          } else {
+            message.value.errorMessage = result.message || "Code invalide";
+          }
+        } catch (error) {
+          message.value.errorMessage = error.message || "Erreur de vérification";
+        } finally {
+          isLoading.value = false;
+        }
+      };
+      
+      const updatePassword = async () => {
+        if (formData.value.newPassword !== formData.value.confirmPassword) {
+          message.value.errorMessage = "Les mots de passe ne correspondent pas";
+          return;
+        }
+  
+        isLoading.value = true;
+        message.value.errorMessage = "";
+  
+        try {
+          const success = await updatePassword({
+            token: formToken.value,
+            newPassword: formData.value.newPassword
+          });
+          
+          if (success) {
+            message.value.successMessage = "Mot de passe mis à jour avec succès !";
+            setTimeout(() => router.push('/login'), 2000);
+          }
+        } catch (error) {
+          message.value.errorMessage = error.message || "Erreur lors de la mise à jour";
+        } finally {
+          isLoading.value = false;
+        }
+      };
+      
+      return {
+        router,
+        message,
+        step,
+        isLoading,
+        formData,
+        formToken,
+        submitForm,
+        checkToken,
+        updatePassword
+      };
     }   
-}
-
-</script>
+  }
+  </script>
 
 <style scoped>
-
 form p{
   font-size: 1.2rem;
   font-weight: 600;
