@@ -155,6 +155,43 @@ class PasswordResetRequestView(APIView):
             {'message': 'Si un compte existe, un email a été envoyé.'},
             status=status.HTTP_200_OK
         )
+
+class PasswordResetTokenVerifyView(APIView):
+    """
+    Vérifie la validité d'un token de réinitialisation
+    Exemple de requête : POST /api/password-reset/verify-token/
+    {
+        "token": "abc123..."
+    }
+    """
+    authentication_classes = []
+    permission_classes = []
+
+    def post(self, request):
+        token = request.data.get('token')
+        
+        if not token:
+            return Response(
+                {"valid": False, "message": "Token requis"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            reset_token = PasswordResetToken.objects.get(
+                token=token,
+                expires_at__gt=timezone.now()  # Vérifie que le token n'a pas expiré
+            )
+            return Response({
+                "valid": True,
+                "message": "Token valide",
+                "email": reset_token.user.email  # Optionnel : pour confirmation frontend
+            })
+            
+        except PasswordResetToken.DoesNotExist:
+            return Response({
+                "valid": False,
+                "message": "Token invalide ou expiré"
+            }, status=status.HTTP_400_BAD_REQUEST)
     
 class PasswordResetConfirmView(APIView):
     authentication_classes = []
