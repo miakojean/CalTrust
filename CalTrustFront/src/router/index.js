@@ -49,7 +49,7 @@ const router = createRouter({
     {
       path:'/registration/consumer',
       name: 'registrationCustomer',
-      component: () => import('@/views-authentication/composant/customerform.vue')
+      component: () => import('@/views-authentication/composant/customer.vue')
     },
   ]
   })

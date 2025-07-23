@@ -53,7 +53,18 @@ input{
     font-weight: 500;
     font-size: 0.8rem;
     background: #eeeeee;
+    transition: ease-in-out 0.8s;
+}
 
+input:focus{
+    background: #d6e4ee;
+    transition: ease-in-out 0.5s;
+}
+
+input:hover{
+    background: #d6e4ee;
+    transition: ease-in-out 0.5s;
+    cursor: text;
 }
 
 @media (min-width: 1024px) {

@@ -1,13 +1,7 @@
 <template>
   <section class="login__section">
     <div class="main__container">
-      <h2 class="text__illus">
-        Connexion
-      </h2>
-      <p class="text__illus">
-        Nous ferons pleine de belles choses ensemble
-      </p>
-      <ourForm/>
+      <signin-form/>
     </div>
     <div class="illustrations__container">
       <img class="svg" src="../assets/svg/undraw_reviews_ukai.svg" alt="">
@@ -18,9 +12,10 @@
 <script>
 import ourForm from '@/components/tools/ourSigninForm.vue';
 import stepper from '@/components/cards/stepper.vue';
+import signinForm from './authtools/signinForm.vue';
 export default {
   components:{
-    ourForm, stepper
+    ourForm, stepper, signinForm
   }
 }
 </script>

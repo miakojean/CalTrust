@@ -25,7 +25,7 @@ export default {
     background: var(--tertiary-color);
     color: var(--primary-color);
     transition: 0.5s;
-    border-radius: 0.4rem;
+    border-radius: 2rem;
     width: 50%;
     max-width: 200px;
     font-size: 0.9rem;

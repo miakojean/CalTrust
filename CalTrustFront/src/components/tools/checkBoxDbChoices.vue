@@ -24,7 +24,7 @@
     </label>
 
     <label 
-      for="company" 
+      for="firms" 
       class="checkbox__family" 
       :class="{ 'selected': selectedOption === 'firms' }"
     >

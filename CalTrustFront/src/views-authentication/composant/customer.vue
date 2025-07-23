@@ -2,7 +2,7 @@
     <main>
         <newNavbar />
         <section class="regis__section main__section">
-            <firmRegistationForm/>
+            <customerRegistration/>
         </section>
         <footerSection/>
     </main>
@@ -14,14 +14,13 @@ import api from '@/_services/_authservices';
 import footerSection from '@/layout/footerSection.vue';
 import newNavbar  from '@/layout/newNavbar.vue';
 import { useRouter } from 'vue-router';
-import firmRegistationForm from '../authtools/firmRegistationForm.vue';
-
+import customerRegistration from '../authtools/customerRegistration.vue';
 
 export default {
     components:{ 
       newNavbar,
       footerSection,
-      firmRegistationForm,
+      customerRegistration
     },
   
     setup(){

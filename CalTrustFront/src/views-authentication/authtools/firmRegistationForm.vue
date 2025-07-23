@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submitForm" class="regis__form">
-    <h2>Inscription Professionnelle</h2>
+    <second-stepper title="Inscription entreprise"/>
     
     <Transition name="fade">
       <p class="errorMessage" v-if="message.errorMessage">
@@ -16,13 +16,13 @@
 
     <div class="form__flex__center">
       <inputFamily__2
-        label="Nom de l'entreprise*"
+        label="Nom de l'entreprise"
         placeholder="Votre raison sociale"
         v-model="formData.company_name"
         required
       />
       <inputFamily__2
-        label="SIRET*"
+        label="SIRET"
         placeholder="14 chiffres (ex: 12345678901234)"
         v-model="formData.siret"
         maxlength="14"
@@ -31,7 +31,7 @@
     </div>
 
     <inputFamily__2
-      label="Email professionnel*"
+      label="Email professionnel"
       placeholder="email@votre-entreprise.com"
       type="email"
       v-model="formData.email"
@@ -39,7 +39,7 @@
     />
 
     <inputFamily__2
-      label="Adresse*"
+      label="Adresse"
       placeholder="Adresse complète de l'entreprise"
       v-model="formData.address"
       required
@@ -47,7 +47,7 @@
 
     <div class="form__flex__center">
       <inputFamily__2
-        label="Mot de passe*"
+        label="Mot de passe"
         placeholder="8 caractères minimum"
         type="password"
         v-model="firstPassword"
@@ -55,7 +55,7 @@
         minlength="8"
       />
       <inputFamily__2
-        label="Confirmation*"
+        label="Confirmation"
         placeholder="Identique au mot de passe"
         type="password"
         v-model="formData.password"
@@ -68,6 +68,9 @@
       type="submit"
       :isLoading="isLoading"
     />
+    <stepper
+      title="Conditions d'utilisations appliquées"
+    />
   </form>
 </template>
 
@@ -77,9 +80,11 @@ import { useRouter } from 'vue-router';
 import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import api from '@/_services/_authservices';
+import secondStepper from '@/components/cards/secondStepper.vue';
+import stepper from '@/components/cards/stepper.vue';
 
 export default {
-  components: { inputFamily__2, mainButton },
+  components: { inputFamily__2, mainButton, secondStepper, stepper },
   setup() {
     const router = useRouter();
     const firstPassword = ref('');

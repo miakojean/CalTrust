@@ -25,9 +25,9 @@ export default {
     background: var(--primary-color);
     color: #fff;
     transition: 0.5s;
-    border-radius: 0.4rem;
+    border-radius: 2rem;
     width: 100%;
-    max-width: 200px;
+    max-width: 400px;
 }
 
 .main__button:hover{
