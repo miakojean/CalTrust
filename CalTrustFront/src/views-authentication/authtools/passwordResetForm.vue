@@ -90,7 +90,7 @@ import stepper from '@/components/cards/stepper.vue';
 import newNavbar  from '@/layout/newNavbar.vue';
 import { useRouter } from 'vue-router';
 import secondStepper from '@/components/cards/secondStepper.vue';
-import {passwordReseting, verifyToken} from '../passwordReseting';
+import { passwordReset, verifyToken } from '../passwordReseting';
 
 export default {
     components:{ 
@@ -105,7 +105,7 @@ export default {
     
         const router = useRouter();
 
-        const step = ref(2)
+        const step = ref(1)
 
         const message = ref({
             errorMessage : "",
@@ -137,7 +137,7 @@ export default {
                     email: formData.value.email.trim().toLowerCase()
                 }
                 
-                const success = await passwordReseting(payload)  // <-- Attendre la réponse
+                const success = await passwordReset(payload)  // <-- Attendre la réponse
                 
                 if (success) {
                     message.value.successMessage = "Email envoyé avec succès !"
@@ -166,7 +166,7 @@ export default {
         };
         
         return {
-            message, step, isLoading,
+            router, message, step, isLoading,
             formData, formToken, submitForm, checkToken
         }
     }   
