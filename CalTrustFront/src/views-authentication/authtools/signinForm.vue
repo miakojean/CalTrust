@@ -37,7 +37,11 @@
               J'ouvre mon compte
             </RouterLink>
             <Transition>
-                <p v-if="attempt > 0">Mot de passe oublié? <a href="#">Cliquer ici</a></p>
+                <p v-if="attempt > 0">Mot de passe oublié? 
+                  <RouterLink to="/password-reseting">
+                    Cliquer ici
+                  </RouterLink>
+                </p>
             </Transition>
 
         </div>
