@@ -2,9 +2,9 @@
 
     <form @submit.prevent="submitForm" action="">
 
-        <div class="fims__form flex__center">
+        <div class="fims__form flex__center" v-if="step === 1">
 
-            <second-stepper/>
+            <second-stepper title="Réinitialiser mon mot de passe"/>
 
             <Transition>
                 <p class="errorMessage" v-if="message.errorMessage">{{ message.errorMessage }}</p>
@@ -14,38 +14,41 @@
             </Transition>
 
             <inputFamily__2 
-                label="nom d'utilisateur"
+                label="Email"
+                placeholder="Entrer votre email"
+                v-model="formData.email"
+            />
+        </div>
+        <div class="fims__form flex__center"  v-if="step === 2">
+
+            <second-stepper title="Réinitialiser mon mot de passe"/>
+
+            <Transition>
+                <p class="errorMessage" v-if="message.errorMessage">{{ message.errorMessage }}</p>
+            </Transition>
+            <Transition>
+                <p class="succesMessage" v-if="message.successMessage">{{ message.successMessage }}</p>
+            </Transition>
+
+            <inputFamily__2 
+                label="Mon code"
+                placeholder="Coller le code réçu"
                 v-model="formData.username"
             />
-            <inputFamily__2 
-                label="email"
-                type="email"
-                v-model="formData.email"
-                placeholder="Entrer votre email"
-            />
-            <div class="form__flex__center">
-                <inputFamily__2 
-                    label="Mot de pase"
-                    type="password"
-                    v-model="formData.password"
-                    placeholder="Entrer votre mot de passe"
-                />
-                <inputFamily__2 
-                    label="Confirmer mot de passe"
-                    type="password"
-                    v-model="confirmPassword"
-                    placeholder="Entrer votre mot de passe"
-                />
-            </div>
         </div>
         <stepper
           title="Conditions d'utilisations appliquées"
         />
         <div class="regis__btn">
-            <mainButton
-              label="Inscription" 
-              @click="submitForm"
-              :isLoading = isLoading
+            <mainButton v-if="step === 1"
+                label="Suivant" 
+                @click="submitForm"
+                :isLoading = isLoading
+            />
+            <mainButton v-if="step === 2"
+                label="Réinitaliser" 
+                @click="submitForm"
+                :isLoading = isLoading
             />
         </div>
         <stepper
@@ -79,38 +82,28 @@ export default {
     setup(){
     
         const router = useRouter();
+
+        const step = ref(1)
+
         const message = ref({
             errorMessage : "",
             successMessage: ""
         })
 
-        const confirmPassword = ref("")
-
         const isLoading = ref(false)
 
         // Données utilisateur
         const formData = ref({
-            username: "",
-            email: "",
-            password: "",
-            user_type: "customer", // Valeur par défaut
-            phone: "",
-            birth_date: null
+            email: ""
         })
 
         // Nouvelle méthode submitForm optimisée
         const submitForm = async () => {
             // Validation basique
-            if (!formData.value.username || !formData.value.email || !formData.value.password) {
+            if (!formData.value.email) {
             message.value.errorMessage = "Veuillez remplir tous les champs obligatoires"
             return
             }
-
-            if (confirmPassword.value != formData.value.password){
-                message.value.errorMessage = "Les mots de passes sont différents"
-                return
-            }
-
             isLoading.value = true
             message.value.errorMessage = ""
             
@@ -118,7 +111,6 @@ export default {
             try {
                 const payload = { 
                     ...formData.value,
-                    username: formData.value.username.trim(),
                     email: formData.value.email.trim().toLowerCase()
                 }
 
@@ -130,15 +122,10 @@ export default {
 
                 // Gestion de la réponse
                 if (response.status === 201) {
-                    message.value.successMessage = "Inscription réussie !"
+                    message.value.successMessage = "Email envoy !"
                     // Réinitialisation du formulaire
                     formData.value = {
-                        username: "",
                         email: "",
-                        password: "",
-                        user_type: "customer",
-                        phone: "",
-                        birth_date: null
                     }
                     setTimeout(() => {
                         message.value.successMessage = "";
@@ -163,7 +150,7 @@ export default {
         }
         
         return {
-            message, confirmPassword, isLoading,
+            message, step, isLoading,
             formData, submitForm
         }
     }   

@@ -63,14 +63,21 @@
       />
     </div>
 
+    <stepper
+      title="Conditions d'utilisations appliquées"
+    />
+
     <mainButton
       label="Créer mon compte professionnel"
       type="submit"
       :isLoading="isLoading"
     />
     <stepper
-      title="Conditions d'utilisations appliquées"
+      title="J'ai déjà un compte"
     />
+    <RouterLink to="/signin">
+      Je me connecte ici
+    </RouterLink>
   </form>
 </template>
 

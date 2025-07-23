@@ -27,7 +27,7 @@ export default {
     transition: 0.5s;
     border-radius: 2rem;
     width: 100%;
-    max-width: 400px;
+    max-width: 600px;
 }
 
 .main__button:hover{

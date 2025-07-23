@@ -12,10 +12,10 @@
                 <p v-if="message.emptyfields">{{ message.emptyfields }}</p>
             </Transition>
             <inputfamily__2
-                label="username"
-                type="text"
-                placeholder="Entrer votre username"
-                v-model="username"
+                label="email"
+                type="email"
+                placeholder="Entrer votre email"
+                v-model="email"
             />
             <inputfamily__2
                 label="mot de passe"
@@ -23,16 +23,18 @@
                 placeholder="Entrer votre mot de passe"
                 v-model="password"
             />
+            <stepper
+              title="Conditions d'utilisations appliquées"
+            />
             <mainButton
                 label="Connexion"
                 type="submit" :isLoading="isLoading"
             />
             <stepper
-                title="Pas de compte?"
+              title="Pas de compte?"
             />
             <RouterLink to="/registration">
-                J'ouvre mon compte
-                <i class="ri-contract-right-line"></i>
+              J'ouvre mon compte
             </RouterLink>
             <Transition>
                 <p v-if="attempt > 0">Mot de passe oublié? <a href="#">Cliquer ici</a></p>
@@ -60,7 +62,7 @@ export default {
   },
 
   setup() {
-    const username = ref('');
+    const email = ref('');
     const password = ref('');
 
     const message = ref({
@@ -79,15 +81,15 @@ export default {
       message.value.succesMessage = ''; // Clear previous success messages
       message.value.emptyfields = "";
 
-      if (username.value === "" || password.value === ""){
+      if (email.value === "" || password.value === ""){
         message.value.emptyfields = "Veuillez remplir tous les champs obligatoires";
         isLoading.value = false;
         return
       }
 
       try {
-        const response = await api.post('/account/token/', {
-          username: username.value, 
+        const response = await api.post('/account/login/', {
+          email: email.value, 
           password: password.value,
         });
 
@@ -128,7 +130,7 @@ export default {
 
     return {
       message,
-      username,
+      email,
       password,
       attempt,
       isLoading,

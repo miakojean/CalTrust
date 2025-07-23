@@ -75,3 +75,31 @@ main{
         border-radius: 2rem;
     }
 }
+
+@media (min-width: 1680px) {
+
+    .main__section{
+        padding: 1rem 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        gap: 1rem;
+        min-height: 100vh;
+    }
+
+    .main__container{
+        padding-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    #features__section{
+        background: linear-gradient(181deg, rgba(33, 153, 222, 1) 0%, rgba(186, 186, 186, 1) 50%, rgba(252, 252, 250, 1) 100%);
+        border-radius: 2rem;
+    }
+}

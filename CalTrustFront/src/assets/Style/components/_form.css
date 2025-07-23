@@ -105,3 +105,47 @@ input::placeholder{
 }
 
 /*for desktop*/
+
+@media (min-width: 1680px) {
+    input{
+        width: 100%;
+        padding: 0.8rem;
+        background: #f3f3f3;
+        border: none;
+        border-radius: 2rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #383838;
+    }
+
+    form{
+        width: 100%;
+        height: 100%;
+        max-width: 600px;
+        border-radius: 1rem;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        gap: 1rem;
+    }
+
+    .form__title{
+        width: 100%;
+        text-align: center;
+    }
+
+    .regis__form{
+        width:100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .form__flex__center{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+}

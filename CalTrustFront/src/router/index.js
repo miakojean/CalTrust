@@ -31,6 +31,9 @@ const router = createRouter({
       name: 'avis',
       component: () => import('../views/Reviews.vue')
     },
+    
+    /* About authentication */
+
     {
       path:'/signin',
       name: 'connexion',
@@ -51,6 +54,11 @@ const router = createRouter({
       name: 'registrationCustomer',
       component: () => import('@/views-authentication/composant/customer.vue')
     },
+    {
+      path:'/password-reseting',
+      name:"password-reseting",
+      component: () => import('@/views-authentication/composant/passworReset.vue')
+    }
   ]
   })
 
