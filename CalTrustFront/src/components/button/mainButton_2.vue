@@ -1,5 +1,5 @@
 <template>
-  <button class="main__button" :disabled="isLoading">
+  <button class="main__button" :style="{ width: width }" :disabled="isLoading">
     <template v-if="isLoading">
       <loader aria-label="Chargement"/>
     </template>
@@ -14,7 +14,11 @@ import loader from '../tools/loader.vue';
 export default {
   props: {
     label: { type: String, default: 'Get Started' },
-    isLoading: { type: Boolean, default: false }
+    isLoading: { type: Boolean, default: false },
+    width: {
+            type: String,
+            default: 'auto'
+        }
   },
   components: { loader }
 };
