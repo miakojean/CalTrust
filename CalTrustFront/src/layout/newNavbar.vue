@@ -5,7 +5,7 @@
     </div>
 
     <ul class="nav__links" :class="{ 'nav__links--open': isMenuOpen }">
-      <li><a href="#">Accueil</a></li>
+      <li><router-link to="/">Acceuil</router-link></li>
       <li><a href="#">Entreprises</a></li>
       <li><a href="#">Avis</a></li>
       <li><a href="#">À propos</a></li>
@@ -22,7 +22,7 @@
 
     <div class="auth__btn">
       <secondButton/>
-      <mainButton label = "connexion"/>
+      <mainButton @click="login" label = "connexion"/>
     </div>
   </nav>
 </template>
@@ -32,6 +32,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import hamburger from '@/components/button/hamburger.vue';
 import secondButton from '@/components/button/secondButton.vue';
 import mainButton from '@/components/button/mainButton.vue';
+import { useRouter } from 'vue-router';
 
 const isMenuOpen = ref(false);
 const isFixed = ref(false);
@@ -39,11 +40,14 @@ const isVisible = ref(false);
 const isDesktop = ref(window.innerWidth >= 768); // Nouvelle référence pour le mode desktop
 const scrollThreshold = 50;
 let lastScrollY = window.scrollY;
+const router = useRouter();
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
-
+const login = () => {
+  router.push('/signin'); // Redirection vers la page de connexion
+};
 const handleScroll = () => {
   // Ne pas appliquer le scroll effect sur mobile
   if (!isDesktop.value) {

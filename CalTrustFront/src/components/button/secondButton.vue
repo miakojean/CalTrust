@@ -1,18 +1,28 @@
 <template>
-  <button class="second__button">{{ label }}
+  <button @click="registration" class="second__button">{{ label }}
     <i class="ri-contract-right-line"></i>
   </button>
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
+
 export default {
     props:{
         label:{
             type:String,
             default: "inscription"
         }
+    },
+    setup () {
+        const router = useRouter();
+        const registration = () => {
+            router.push('/registration');
+        };
+        return {registration};
     }
 }
+
 </script>
 
 <style scoped>
