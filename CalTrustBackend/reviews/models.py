@@ -25,8 +25,14 @@ class Review(models.Model):
 
     class Meta:
         unique_together = ('firm', 'customer')  # Empêche les doublons
-        verbose_name = "Avis"
+        verbose_name = "Avi"
         ordering = ['-created_at']
+        # Dans votre modèle Review
+        indexes = [
+            models.Index(fields=['firm'], name='firm_idx'),
+            models.Index(fields=['-created_at'], name='date_desc_idx'),
+            #GinIndex(fields=['comment'], name='search_idx')  # Pour PostgreSQL
+        ]
 
     def __str__(self):
-        return f"{self.customer} → {self.firm} ({self.rating}/5)"
+        return f"l'utilisateur {self.customer} a noté l'entreprise {self.firm} ({self.rating}/5)"

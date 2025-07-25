@@ -1,0 +1,19 @@
+POST http://127.0.0.1:8000/account/login/
+Content-Type: application/json
+
+{
+  "email": "sinistre12@gmail.com",
+  "password": "NouveauMotDePasseSecure123!"
+}
+
+POST http://127.0.0.1:8000/reviews/firms/3/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzNDc0ODI1LCJpYXQiOjE3NTM0NzEyMjUsImp0aSI6IjAwOWZlZTVjYTMwNDQxNDI4ZDVkZjkwODhlOTk2ZDU1IiwidXNlcl9pZCI6NX0.Ex0fFFFYyhLgq8BpA7s5CjoN1Dgy56rpTGAwoXV-XVo
+
+{
+    "rating": 4,
+    "comment": "Service rapide et personnel très aimable. Le plat était délicieux!"
+}
+
+GET http://127.0.0.1:8000/reviews/public/recent/
+Content-Type: application/json
