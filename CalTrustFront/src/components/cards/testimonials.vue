@@ -114,14 +114,14 @@ export default {
 
 @media (min-width: 766px) {
     .message__body{
-        font-size: 1.1rem;
+        font-size: 0.8rem;
         text-align: start;
     }
 }
 
 @media (min-width: 1260px) {
     .message__body{
-        font-size: 1rem;
+        font-size: 0.8rem;
         text-align: start;
     }
 }

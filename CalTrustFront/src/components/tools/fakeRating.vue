@@ -99,7 +99,7 @@ export default {
 
 .rating-text {
   margin-left: 0.5rem;
-  font-size: 0.8em;
+  font-size: 0.8rem;
   color: #666;
 }
 </style>

@@ -22,6 +22,17 @@ input{
 }
 
 input:focus{
+    background: #d6e4ee;
+    transition: ease-in-out 0.5s;
+}
+
+input:hover{
+    background: #d6e4ee;
+    transition: ease-in-out 0.5s;
+    cursor: text;
+}
+
+input:focus{
     outline: none;
 }
 

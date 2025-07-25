@@ -2,7 +2,7 @@
     <div class="research__box">
         <label for="firms">Je cherche des avis sur</label>
         <div class="input__family">
-            <input type="text" class="firms" id="firms" placeholder="Trouver un service, une entreprise, un produits">
+            <input type="text" class="firms" id="firms" placeholder="Trouver un service, une entreprise, un produit">
             <button class="research__button">
                 <i class="fas fa-search"></i>
             </button>
@@ -29,6 +29,12 @@ export default {
     flex-direction: column;
     justify-content: start;
     border-radius: 1rem;
+}
+
+label{
+    cursor: pointer;
+    color: var(--primary-color);
+    font-weight: 600;
 }
 
 .input__family{

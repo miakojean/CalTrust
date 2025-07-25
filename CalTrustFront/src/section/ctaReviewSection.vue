@@ -9,16 +9,18 @@
             sur les expériences d'autres personnes.
         </p>
         <research-box/>
+        <caroussel/>
     </div>
   </section>
 </template>
 
 <script>
 import researchBox from '@/components/tools/researchBox.vue';
+import caroussel from '@/components/cards/caroussel.vue';
 export default {
 
     components:{
-        researchBox
+        researchBox, caroussel
     }
 
 }

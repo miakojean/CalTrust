@@ -43,7 +43,7 @@ defineProps({
 .text {
   padding: 0 1rem; /* Espace entre le texte et les lignes */
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.5px;
 }
 
