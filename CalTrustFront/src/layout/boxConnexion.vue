@@ -1,15 +1,23 @@
 <template>
   <div class="box__connexion">
     <h2>Rejoignez notre communauté dès maintenant !</h2>
-    <mainButton label="j'ouvre mon compte"/>
+    <mainButton @click="registration" label="j'ouvre mon compte" width="40%"/>
   </div>
 </template>
 
 <script>
 import mainButton from '@/components/button/mainButton.vue';
+import { useRouter } from 'vue-router';
 export default {
     components:{
         mainButton
+    },
+    setup() {
+        const router = useRouter();
+        const registration = () => {
+            router.push('/registration'); // Redirection vers la page d'inscription
+        };
+        return { registration };
     }
 }
 </script>

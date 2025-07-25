@@ -16,16 +16,16 @@
     
     <div class="ft__links grid__two_and_four__fr">
       <footerCard/>
-      <footerCard title="support" :tables="support"/>
-      <footerCard title="company" :tables="company"/>
-      <footerCard title="legal" :tables="legal"/>
+      <footerCard title="Support" :tables="support"/>
+      <footerCard title="Company" :tables="company"/>
+      <footerCard title="Legal" :tables="legal"/>
     </div>
 
     <div class="newsletter flex__center">
       <h3 class="title">
         S'abonner à la newsletter
       </h3>
-      <inputfamily label="Email" type ="email" placeholder = "Entrer votre addresse mail"/>
+      <inputfamily label="Email" type ="email" placeholder = "Entrer votre adresse mail"/>
       <mainButton_2 label="s'inscrire"/>
     </div>
 

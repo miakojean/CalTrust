@@ -20,7 +20,7 @@ export default {
         placeholder:{
             type: String,
             default: "Entrer votre nom d'utilisateur" // <- Correction ici
-        }
+        },
     }
 
 }
@@ -36,6 +36,7 @@ input{
     border: 1px solid var(--near-white);
     color: var(--near-white);
     font-weight: 500;
+    max-width: 500px;
 }
 
 </style>
