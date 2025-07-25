@@ -23,6 +23,7 @@ export default {
 <style scoped>
 .research__box{
     width: 100%;
+    max-width: 600px;
     gap: 1rem;
     display: flex;
     flex-direction: column;
@@ -38,7 +39,7 @@ export default {
 }
 
 input,label{
-    width: 90%;
+    width: 100%;
     max-width: 600px;
 }
 
