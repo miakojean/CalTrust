@@ -12,7 +12,7 @@
 <script>
 import ourForm from '@/components/tools/ourSigninForm.vue';
 import stepper from '@/components/cards/stepper.vue';
-import signinForm from '@./authtools/signinForm.vue';
+import signinForm from '@/views-authentication/authtools/signinForm.vue';
 export default {
   components:{
     ourForm, stepper, signinForm
