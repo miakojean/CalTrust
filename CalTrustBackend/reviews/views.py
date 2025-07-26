@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.permissions import IsAuthenticated
-from .models import Review
+from .models import Review, ReviewResponse 
 from .serializers import ReviewSerializer, PublicReviewSerializer
 from account.models import CustomerProfile, FirmProfile
 from django.shortcuts import get_object_or_404
@@ -166,3 +166,31 @@ class ReviewSearchView(APIView):
         
         serializer = ReviewSerializer(results, many=True)
         return Response(serializer.data)
+    
+class RespondToReviewAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, review_id):
+        try:
+            firm_profile = FirmProfile.objects.get(user=request.user)
+        except FirmProfile.DoesNotExist:
+            return Response({"error": "Utilisateur non autorisé."}, status=status.HTTP_403_FORBIDDEN)
+
+        review = get_object_or_404(Review, id=review_id)
+
+        # Vérifie que l'avis appartient bien à l'entreprise connectée
+        if review.firm != firm_profile:
+            return Response({"error": "Cet avis ne concerne pas votre entreprise."}, status=status.HTTP_403_FORBIDDEN)
+
+        # Préparer les données
+        data = {
+            "review": review.id,
+            "firm": firm_profile.id,
+            "response_text": request.data.get("response_text")
+        }
+
+        serializer = ReviewResponseSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

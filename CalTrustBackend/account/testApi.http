@@ -14,6 +14,18 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
+  "username": "KARA_225",
+  "email": "Attaangek@gmail.com",
+  "password": "Romaric1",
+  "user_type": "customer",
+  "phone": "0145896230",
+  "birth_date": "2000-05-20"
+}
+
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
   "username": "issif",
   "email": "issifm@business.com",
   "password": "supersecurepassword",
@@ -22,6 +34,20 @@ Content-Type: application/json
   "company_category": "Commerce",
   "siret": "12347678901284",
   "address": "123 Tech Park, Innovation City"
+}
+
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "Caladrius",
+  "email": "Caladrius225@gmail.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Caladrius Inc.",
+  "company_category": "industrie",
+  "siret": "12347678902589",
+  "address": "225 Cocody, Innovation City"
 }
 
 POST http://127.0.0.1:8000/account/login/

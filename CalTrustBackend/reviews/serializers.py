@@ -46,3 +46,16 @@ class PublicReviewSerializer(serializers.ModelSerializer):
     def get_local_date(self, obj):
         # Format jour/mois français
         return obj.created_at.strftime("%d/%m à %Hh%M")
+    
+class ReviewResponseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReviewResponse
+        fields = [
+            'id',
+            'review',
+            'firm',
+            'response_text',
+            'created_at',
+            'updated_at'
+        ]
+        read_only_fields = ['created_at', 'updated_at']
