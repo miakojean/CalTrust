@@ -7,7 +7,7 @@
     <ul class="nav__links" :class="{ 'nav__links--open': isMenuOpen }">
       <li><router-link to="/">Acceuil</router-link></li>
       <li><a href="#">Entreprises</a></li>
-      <li><a href="#">Avis</a></li>
+      <li><router-link to="/avis">Avis</router-link></li>
       <li><a href="#">À propos</a></li>
       <li><a href="#">Contact</a></li>
     </ul>

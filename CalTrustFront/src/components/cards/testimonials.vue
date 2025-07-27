@@ -2,10 +2,7 @@
   <article class="testimonial-card">
     <div class="message">
         <p class="message__body">
-            Lorem ipsum dolor sit amet consectetur 
-            adipisicing elit. Aliquam deserunt 
-            mollitia est dolore maxime! Ut 
-            doloremque earum illo facilis accusamus!
+            {{ message }}
         </p>
     </div>
     <fake-rating 
@@ -36,6 +33,7 @@ export default {
     props:{
         message:{
             type: String,
+            default:"Bienvenu au pays mon fils"
         },
         info:{
             type: String,
