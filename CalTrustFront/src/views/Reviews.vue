@@ -3,6 +3,7 @@
     <NewNavbar/>
     <ctaReviewSection/>
     <reviewstestimonials/>
+    <companieSection/>
     <footerSection/>
   </main>
 </template>
@@ -12,12 +13,14 @@
 import NewNavbar from '@/layout/newNavbar.vue';
 import ctaReviewSection from '@/section/ctaReviewSection.vue';
 import reviewstestimonials from '@/section/reviewsTestimonials.vue';
+import companieSection from '@/views-companies/companieSection.vue';
 import footerSection from '@/layout/footerSection.vue';
 
 export default {
   components:{
     NewNavbar,
     ctaReviewSection,
+    companieSection,
     reviewstestimonials,
     footerSection
   }

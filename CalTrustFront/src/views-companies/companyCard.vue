@@ -1,0 +1,133 @@
+<template>
+    <article class="testimonial-card">
+        <div class="profile">
+            <img class="pp" :src="pic" alt="fake profile picture">
+            <div class="profile__info">
+                <span>{{ info }}</span>
+                <p class="message__body">@{{username}}</p>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <fake-rating 
+            :value="4" 
+            :max="5"
+            color="#1B3C53"
+            size="small"
+        />
+        <div class="btn__frame">
+            <cardMainButton/>
+            <cardMoreButton/>
+        </div>
+    </article>
+</template>
+
+<script>
+import fakeRating from '@/components/tools/fakeRating.vue';
+import cardMainButton from '@/components/button/cardMainButton.vue';
+import cardMoreButton from '@/components/button/cardMoreButton.vue';
+import { computed } from 'vue';
+
+const defaultPic = new URL('@/assets/pictures/devnomicus.png', import.meta.url).href;
+
+export default {
+    props:{
+        message:{
+            type: String,
+            default:"Bienvenu au pays mon fils"
+        },
+        info:{
+            type: String,
+            default:"CALADRIUS"
+        },
+        username:{
+            type: String,
+            default: 'Caladrius llc'
+        },
+        pic:{
+            type: String,
+            default: defaultPic
+        }
+    },
+
+    components:{
+        fakeRating, cardMainButton,
+        cardMoreButton
+    },
+
+    setup(props) {
+        const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
+        const profilePic = computed(() => props.pic || defaultPic);
+
+        return { profilePic };
+    }
+
+}
+</script>
+
+<style scoped>
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.divider {
+  height: 2px;
+  background: var(--primary-color); /* Couleur grise légère */
+  margin: 24px 0; /* Espacement vertical */
+}
+
+.profile{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 2rem;
+}
+
+.pp{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+.profile__info{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.profile__info span{
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+.btn__frame{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+@media (min-width: 766px) {
+    .message__body{
+        font-size: 0.8rem;
+        text-align: start;
+    }
+}
+
+@media (min-width: 1260px) {
+    .message__body{
+        font-size: 0.8rem;
+        text-align: start;
+    }
+}
+</style>
