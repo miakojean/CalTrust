@@ -1,10 +1,12 @@
 <template>
     <article class="testimonial-card">
         <div class="profile">
-            <img class="pp" :src="pic" alt="fake profile picture">
+            <div class="pp">
+                <span>CA</span>
+            </div>
             <div class="profile__info">
-                <span>{{ info }}</span>
-                <p class="message__body">@{{username}}</p>
+                <span>{{ firm }}</span>
+                <p class="message__body">{{ category }}</p>
             </div>
         </div>
         <div class="divider"></div>
@@ -28,17 +30,13 @@ const defaultPic = new URL('@/assets/pictures/devnomicus.png', import.meta.url).
 
 export default {
     props:{
-        message:{
+        firm:{
             type: String,
-            default:"Bienvenu au pays mon fils"
+            default:"Caladrius"
         },
-        info:{
+        category:{
             type: String,
-            default:"CALADRIUS"
-        },
-        username:{
-            type: String,
-            default: 'Caladrius llc'
+            default: 'fintech'
         },
         pic:{
             type: String,
@@ -77,7 +75,7 @@ export default {
 .divider {
   height: 2px;
   background: var(--primary-color); /* Couleur grise légère */
-  margin: 24px 0; /* Espacement vertical */
+  margin: 1rem 0; /* Espacement vertical */
 }
 
 .profile{
@@ -92,6 +90,15 @@ export default {
     height: 60px;
     width: 60px;
     border-radius: 50%;
+    background: #d87422;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pp span{
+    color: white;
+    font-weight: 600;
 }
 
 .profile__info{
@@ -102,7 +109,7 @@ export default {
 }
 
 .profile__info span{
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1rem;
     color: var(--primary-color);
 }

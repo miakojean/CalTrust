@@ -15,10 +15,10 @@ export default {
   props: {
     label: { type: String, default: 'Poster un avis' },
     isLoading: { type: Boolean, default: false },
-    width: {
-            type: String,
-            default: 'auto'
-        }
+    width:{
+        type: String,
+        default: 'auto'
+    }
   },
   components: { loader }
 };
