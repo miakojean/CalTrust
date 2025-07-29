@@ -1,7 +1,2 @@
-POST http://127.0.0.1:8000/companies/
+GET http://127.0.0.1:8000/companies/
 Content-Type: application/json
-
-{
-  "name": "",
-  "category": "Commerce"
-}

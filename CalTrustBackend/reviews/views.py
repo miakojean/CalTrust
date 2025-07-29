@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.permissions import IsAuthenticated
 from .models import Review, ReviewResponse 
-from .serializers import ReviewSerializer, PublicReviewSerializer
+from .serializers import *
 from account.models import CustomerProfile, FirmProfile
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
