@@ -7,11 +7,11 @@
       <testimonials 
         v-for="(review, index) in reviews"
         :key="review.id || index"  
-        :info="review.customer_name || 'Anonyme'"
+        :info="review.user || 'Anonyme'"
         :rating="review.rating"
         :message="review.comment"
         :date="review.local_date"
-        :avatar="jane" 
+        :avatar="review.user_initial" 
       />
       
       <!-- State de chargement/erreur -->
@@ -25,31 +25,37 @@
 <script>
 import SecondStepper from '@/components/cards/secondStepper.vue';
 import testimonials from '@/components/cards/testimonials.vue';
-import { onMounted,ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { fetchRecentsReviews } from '@/_services/_fetchreviews';
+
 export default {
-    components:{
+    components: {
         testimonials,
         SecondStepper
     },
 
-    setup(){
+    setup() {
+        const reviews = ref({});
 
-        const reviews = ref([]);
-
-        onMounted( async ( ) => { 
+        onMounted(async () => {
             try {
-                const response = await fetchRecentsReviews();
-                if (response) {
-                    reviews.value = response.data; // Stockez les données
-                    console.log('Avis chargés:', reviews.value);
+                const apiData = await fetchRecentsReviews();
+                
+                // Si l'API retourne { status, data }
+                if (apiData.status === 'success') {
+                reviews.value = apiData.data;
+                } 
+                // Si l'API retourne directement le tableau
+                else if (Array.isArray(apiData)) {
+                reviews.value = apiData;
                 }
+                
             } catch (error) {
-                console.error("Erreur de chargement:", error);
+                error.value = error.message;
             }
         });
 
-        return{
+        return {
             reviews
         }
     }

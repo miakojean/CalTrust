@@ -8,12 +8,7 @@
             </div>
         </div>
         <div class="divider"></div>
-        <fake-rating 
-            :value="4" 
-            :max="5"
-            color="#1B3C53"
-            size="small"
-        />
+        <rating-component/>
         <div class="btn__frame">
             <cardMainButton/>
             <cardMoreButton/>
@@ -25,7 +20,9 @@
 import fakeRating from '@/components/tools/fakeRating.vue';
 import cardMainButton from '@/components/button/cardMainButton.vue';
 import cardMoreButton from '@/components/button/cardMoreButton.vue';
+import ratingComponent from '@/components/tools/ratingComponent.vue';
 import { computed } from 'vue';
+import RatingComponent from '../../../CalTrustFront/src/components/tools/ratingComponent.vue';
 
 const defaultPic = new URL('@/assets/pictures/devnomicus.png', import.meta.url).href;
 
@@ -50,8 +47,8 @@ export default {
     },
 
     components:{
-        fakeRating, cardMainButton,
-        cardMoreButton
+        fakeRating, cardMainButton, cardMoreButton, ratingComponent,
+        RatingComponent
     },
 
     setup(props) {
@@ -111,8 +108,9 @@ export default {
 }
 
 .btn__frame{
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     gap: 0.5rem;
 }

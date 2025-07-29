@@ -42,7 +42,7 @@ export default {
     },
     color: {
       type: String,
-      default: '#1B3C53'
+      default: '#f3f3f3'
     }
   },
   computed: {
@@ -82,6 +82,7 @@ export default {
   color: #e0e0e0;
   position: relative;
   display: inline-block;
+  background: var(--primary-color);
 }
 
 .star.filled {

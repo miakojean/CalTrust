@@ -5,11 +5,17 @@ const fetchRecentsReviews = async () => {
         const response = await api.get('/reviews/public/recent/', {
             headers: { 'Content-Type': 'application/json' }
         });
-        return response; // Retournez toute la réponse
+        
+        if (!response.data) {
+            throw new Error('Réponse vide de l\'API');
+        }
+        
+        return response.data;
+        
     } catch (error) {
-        console.error("Fetch error", error);
-        throw error; // Propagez l'erreur
+        console.error("Erreur lors de la récupération des avis:", error);
+        throw new Error(`Impossible de charger les avis: ${error.message}`);
     }
 }
 
-export { fetchRecentsReviews }; // Exportez avec le bon nom
+export {fetchRecentsReviews};

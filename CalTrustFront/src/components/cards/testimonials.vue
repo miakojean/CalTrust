@@ -6,10 +6,10 @@
         </p>
     </div>
     <fake-rating 
-        :value="4" 
+        :value="rating" 
         :max="5"
         color="#1B3C53"
-        size="large"
+        size="small"
     />
     <div class="divider"></div>
     <div class="profile">
@@ -46,6 +46,13 @@ export default {
         pic:{
             type: String,
             default: defaultPic
+        },
+        rating: { 
+            type: Number,
+            default: 4,  // Valeur par défaut
+            validator: (value) => {
+                return value >= 0 && value <= 5;  // Validation entre 0 et 5
+            }
         }
     },
 
@@ -67,13 +74,14 @@ export default {
 .testimonial-card {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  align-items: normal;
+  gap: 0.5rem;
   padding: 1.5rem;
   border-radius: 1rem;
   background: white;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   width: 100%;
-  max-width: 600px;
+  max-width: 400px;
 
 }
 
@@ -105,8 +113,8 @@ export default {
 }
 
 .profile__info span{
-    font-weight: 800;
-    font-size: 1.1rem;
+    font-weight: 500;
+    font-size: 1rem;
     color: var(--primary-color);
 }
 
