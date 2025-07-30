@@ -33,16 +33,18 @@ export default {
     items: {
       type: Array,
       default: () => [
-        { name: "TechCorp", icon: "fas fa-microchip" },
-        { name: "DesignCo", icon: "fas fa-paint-brush" },
-        { name: "FoodExpress", icon: "fas fa-utensils" },
-        { name: "EcoWorld", icon: "fas fa-leaf" },
-        { name: "FinancePlus", icon: "fas fa-chart-line" },
-        { name: "TechCorp", icon: "fas fa-microchip" },
-        { name: "DesignCo", icon: "fas fa-paint-brush" },
-        { name: "FoodExpress", icon: "fas fa-utensils" },
-        { name: "EcoWorld", icon: "fas fa-leaf" },
-        { name: "FinancePlus", icon: "fas fa-chart-line" }
+        { name: "Restauration hotellerie", icon: "fas fa-utensils" },
+        { name: "Commerce et e-commerce", icon: "fa-solid fa-dumpster"},
+        { name: "Transport et logistique", icon: "ri-truck-fill" },
+        { name: "Santé et bien-être", icon: "fas fa-leaf" },
+        { name: "Finance Banque", icon: "fas fa-chart-line" },
+        { name: "Télécommunication", icon: "fas fa-microchip" },
+        { name: "Education et formation", icon: "fa-solid fa-graduation-cap"},
+        { name: "Artisanat et services", icon: "fa-solid fa-bell-concierge" },
+        { name: "Immobiliers", icon: "fa-solid fa-building" },
+        { name: "Loisirs et divertissements", icon: "fa-solid fa-dice" },
+        { name: "services publiques", icon: "fa-solid fa-building-columns" },
+        { name: "Agroindustrie", icon: "fa-solid fa-wheat-awn" }
       ]
     },
     autoplay: {
