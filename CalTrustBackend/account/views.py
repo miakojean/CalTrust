@@ -10,7 +10,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import *
 from .utils import generate_password_reset_token, send_password_reset_email
 from django.utils import timezone
-from datetime import timedelta
 from django.conf import settings
 
 # Create your views here.

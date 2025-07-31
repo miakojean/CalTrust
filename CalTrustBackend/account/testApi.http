@@ -50,6 +50,20 @@ Content-Type: application/json
   "address": "225 Cocody, Innovation City"
 }
 
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "Ismo shop",
+  "email": "Caladrius25@gmail.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Ismo shop",
+  "company_category": "industrie",
+  "siret": "12347678932589",
+  "address": "225 Cocody, Innovation City"
+}
+
 POST http://127.0.0.1:8000/account/login/
 Content-Type: application/json
 
