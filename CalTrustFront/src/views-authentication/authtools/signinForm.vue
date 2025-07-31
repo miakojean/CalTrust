@@ -55,6 +55,7 @@ import mainButton from '@/components/button/mainButton.vue';
 import stepper from '@/components/cards/stepper.vue';
 import api from '@/_services/_authservices'; // Your Axios instance
 import secondStepper from '@/components/cards/secondStepper.vue';
+import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 
 export default {
@@ -77,6 +78,8 @@ export default {
 
     const attempt = ref(0);
     const isLoading = ref(false);
+
+    const router = useRouter()
 
     // This function will now handle the API call
     const submitForm = async () => {
@@ -104,6 +107,8 @@ export default {
           message.value.succesMessage = "Connexion établie avec succès !";
           localStorage.setItem('userToken', token.access); // ou adapter selon la structure de réponse;
           localStorage.setItem('userTokenRefresh', token.refresh)
+          localStorage.setItem('username', token.username)
+          router.push('/')
         } else {
           // If no token but success response (shouldn't happen with DRF TokenObtainPairView)
           message.value.errorMessages = "Connexion réussie mais pas de jeton reçu.";

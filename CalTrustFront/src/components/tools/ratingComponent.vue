@@ -13,14 +13,14 @@
     </div>
     <span class="the__rate">{{ rating.toFixed(1) }}</span>
   </div>
-</template>
+</template> 
 
 <script>
 import { computed } from 'vue';
 
 export default {
   props: {
-    rating: {type: Number, default: 4},
+    rating: {type: Number, default: 3},
     maxStars: { type: Number, default: 5 }, // Renommé pour plus de clarté
   },
   setup(props) {

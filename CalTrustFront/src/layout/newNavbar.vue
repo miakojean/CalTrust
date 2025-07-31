@@ -20,9 +20,14 @@
       />
     </div>
 
-    <div class="auth__btn">
+    <div class="auth__btn" v-if="isLoggedIn === false">
       <secondButton/>
       <mainButton @click="login" label = "connexion"/>
+    </div>
+
+    <div class="auth__btn" v-if="isLoggedIn === true">
+      <secondButton :label = "username"/>
+      <mainButton label = "deconnexion" @click="logout"/>
     </div>
   </nav>
 </template>
@@ -32,7 +37,10 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import hamburger from '@/components/button/hamburger.vue';
 import secondButton from '@/components/button/secondButton.vue';
 import mainButton from '@/components/button/mainButton.vue';
+import api from '@/_services/_authservices';
 import { useRouter } from 'vue-router';
+
+const isLoggedIn = ref(false);
 
 const isMenuOpen = ref(false);
 const isFixed = ref(false);
@@ -82,10 +90,68 @@ const handleResize = () => {
   }
 };
 
+const username = ref('')
+
+const isAuthenticated = () =>{
+  if (localStorage.getItem('userToken') && localStorage.getItem('userTokenRefresh')){
+    username.value = localStorage.getItem('username')
+    isLoggedIn.value = true
+    return true
+  } else 
+    return false
+}
+
+const logout = async () => {
+  // Récupérer les deux tokens depuis le localStorage
+  const accessToken = localStorage.getItem('userToken');
+  const refreshToken = localStorage.getItem('userTokenRefresh'); // Assurez-vous que c'est la bonne clé
+
+  // Si l'un des tokens manque, on nettoie et on arrête
+  if (!refreshToken || !accessToken) {
+    console.error("Tokens manquants pour la déconnexion.");
+    localStorage.clear(); // Nettoyage par sécurité
+    // Mettez à jour votre UI ici (ex: isLoggedIn.value = false)
+    return;
+  }
+
+  try {
+    // 1. Préparer le corps (body) de la requête avec le refresh token
+    const requestBody = {
+      refresh: refreshToken,
+    };
+
+    // 2. Préparer les en-têtes (headers) avec l'access token
+    const requestConfig = {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      }
+    };
+
+    // 3. Envoyer la requête POST avec l'URL, le corps et les en-têtes
+    await api.post('/account/logout/', requestBody, requestConfig);
+    router.push('/')
+    
+    console.log("Déconnexion réussie côté serveur.");
+
+  } catch (error) {
+    console.error("Échec de la déconnexion côté serveur:", error.response ? error.response.data : error.message);
+    // Même en cas d'erreur (ex: token expiré), il faut déconnecter l'utilisateur côté client.
+  } finally {
+    // 4. Quoi qu'il arrive, nettoyer le localStorage pour finaliser la déconnexion côté client
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('userTokenRefresh');
+    localStorage.removeItem('username'); // N'oubliez pas le nom d'utilisateur
+
+    // Mettez à jour l'état de votre application (ex: isLoggedIn.value = false)
+    // et redirigez l'utilisateur si nécessaire.
+  }
+};
+
 onMounted(() => {
   isVisible.value = true;
   window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('resize', handleResize);
+  isAuthenticated()
 });
 
 onUnmounted(() => {

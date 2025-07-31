@@ -5,10 +5,9 @@
             {{ message }}
         </p>
     </div>
-    <fake-rating 
-        :value="rating" 
+    <ratingComponent 
+        :rating="rating" 
         :max="5"
-        color="#1B3C53"
         size="small"
     />
     <div class="divider"></div>
@@ -26,6 +25,7 @@
 <script>
 import fakeRating from '../tools/fakeRating.vue';
 import { computed } from 'vue';
+import ratingComponent from '../tools/ratingComponent.vue';
 
 const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
 
@@ -57,7 +57,8 @@ export default {
     },
 
     components:{
-        fakeRating
+        fakeRating,
+        ratingComponent
     },
 
     setup(props) {
