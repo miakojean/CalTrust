@@ -1,6 +1,6 @@
 <template>
   <section class="reviews__section">    
-    <second-stepper title="Les entreprises les plus mieux notées"/>
+    <second-stepper title="Les entreprises les mieux notées"/>
     
     <div class="testimonial__container">
       <!-- Boucle sur les avis -->
