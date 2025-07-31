@@ -46,6 +46,7 @@
               label="Inscription" 
               @click="submitForm"
               :isLoading = isLoading
+              width = "100%"
             />
         </div>
         <stepper

@@ -19,6 +19,7 @@ input{
     font-size: 1rem;
     font-weight: 600;
     color: #383838;
+    transition: ease-in-out 0.7s;
 }
 
 input:focus{
@@ -80,6 +81,21 @@ input::placeholder{
         font-size: 0.8rem;
         font-weight: 500;
         color: #383838;
+    }
+
+    input:focus{
+        background: #d6e4ee;
+        transition: ease-in-out 0.5s;
+    }
+
+    input:hover{
+        background: #d6e4ee;
+        transition: ease-in-out 0.5s;
+        cursor: text;
+    }
+
+    input:focus{
+        outline: none;
     }
 
     form{

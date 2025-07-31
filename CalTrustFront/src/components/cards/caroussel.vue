@@ -5,17 +5,17 @@
         </button>
         
         <div class="carousel-track" :style="trackStyle" ref="track">
-        <div 
+          <div 
             v-for="(logo, index) in logos" 
             :key="index" 
             class="carousel-slide"
             :class="{ active: currentIndex === index }"
-        >
-            <div class="logo-container">
+          >
+          <div class="logo-container">
             <i v-if="!logo.image" :class="logo.icon || 'fas fa-building'"></i>
             <img v-else :src="logo.image" :alt="logo.name || 'Company logo'">
             <span v-if="logo.name" class="logo-name">{{ logo.name }}</span>
-            </div>
+          </div>
         </div>
         </div>
         
