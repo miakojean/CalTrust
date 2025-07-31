@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.hashers import make_password
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializer import UserRegistrationSerializer
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -117,6 +117,7 @@ class UserLoginView(APIView):
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
+                'username': user.username
             })
         else:
             return Response(
@@ -124,6 +125,24 @@ class UserLoginView(APIView):
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
+
+class UserLogoutView(APIView):
+    permission_classes = [IsAuthenticated]  # Seuls les utilisateurs authentifiés peuvent se déconnecter
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(
+                {'message': 'Deconnexion réussie'},
+                status=status.HTTP_205_RESET_CONTENT
+            )
+        except Exception as e:
+            return Response(
+                {'message': 'Un erreur est survenue lors de la connexion'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 class PasswordResetRequestView(APIView):
     authentication_classes = []

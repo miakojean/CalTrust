@@ -10,8 +10,8 @@ POST http://127.0.0.1:8000/account/login/
 Content-Type: application/json
 
 {
-  "email": "Caladrius225@gmail.com",
-  "password": "supersecurepassword"
+  "email": "abdoulaziz@gmail.com",
+  "password": "Jeanyves123456@"
 }
 
 POST http://127.0.0.1:8000/reviews/firms/4/

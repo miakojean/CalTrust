@@ -64,14 +64,6 @@ Content-Type: application/json
   "address": "225 Cocody, Innovation City"
 }
 
-POST http://127.0.0.1:8000/account/login/
-Content-Type: application/json
-
-{
-  "email": "customer@example.com",
-  "password": "securepassword123"
-}
-
 POST http://127.0.0.1:8000/account/password-reseting/
 Content-Type: application/json
 
@@ -92,4 +84,20 @@ Content-Type: application/json
 
 {
   "token": "be7ee026-47d6-4f1b-8f5f-9e08db0d02e1"
+}
+
+POST http://127.0.0.1:8000/account/login/
+Content-Type: application/json
+
+{
+  "email": "abdoulaziz@gmail.com",
+  "password": "Jeanyves123456@"
+}
+
+POST http://127.0.0.1:8000/account/logout/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzOTcyMzAxLCJpYXQiOjE3NTM5Njg3MDEsImp0aSI6IjYzNjMzNDA5ODk3MzQxNDQ4MzMyZjdmM2ViNTZlYjJmIiwidXNlcl9pZCI6Nn0.7omf7VidykqPI1S_pL7pDSwjVYu3KWnl9Xak05VCzlA
+
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NDA1NTEwMSwiaWF0IjoxNzUzOTY4NzAxLCJqdGkiOiJiODBiY2RkYjk2NTI0ZDg1OTVhOTRmZDY3OGVhMmUwYyIsInVzZXJfaWQiOjZ9.TCzlFTBPuauP86fB2m0GxeoJEx2ugDaN7naUXQSXVjo"
 }

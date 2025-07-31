@@ -7,7 +7,6 @@ from .serializers import *
 from account.models import CustomerProfile, FirmProfile
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-from django.db.models import Prefetch
 from datetime import timezone
 from rest_framework.permissions import AllowAny
 
