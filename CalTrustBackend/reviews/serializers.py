@@ -24,6 +24,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class PublicReviewSerializer(serializers.ModelSerializer):
     establishment = serializers.CharField(source='firm.company_name')
+    user = serializers.CharField(source = 'customer.user.username')
     user_initial = serializers.SerializerMethodField()
     rating_stars = serializers.SerializerMethodField()
     local_date = serializers.SerializerMethodField()
@@ -32,9 +33,12 @@ class PublicReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = [
             'id', 'establishment', 'rating', 'rating_stars',
-            'comment', 'local_date', 'user_initial'
+            'comment', 'local_date', 'user_initial', 'user',
         ]
         read_only_fields = fields
+
+    def get_username(self, obj):
+        return obj.customer.user.username
 
     def get_user_initial(self, obj):
         # Protection vie privée : seul l'initiale est visible
