@@ -18,4 +18,8 @@ const fetchRecentsReviews = async () => {
     }
 }
 
+const fetchRecentsFirms = async () => {
+    
+}
+
 export {fetchRecentsReviews};

@@ -1,19 +1,19 @@
 <template>
   <div class="my__rating_container">
-    <div class="stars__wrapper">
-      <!-- Étoiles pleines -->
+    <div 
+      class="stars__wrapper"
+      :class="{ 'low-rating': rating === 1 }"
+    >
       <span class="my__star" v-for="i in fullStars" :key="'filled-' + i">★</span>
-      <!-- Étoile partiellement remplie (si applicable) -->
       <span v-if="partialStarWidth > 0" class="my__star partial__star">
         <span class="stars__foreground" :style="{ width: partialStarWidth + '%' }">★</span>
         <span class="stars__background">★</span>
       </span>
-      <!-- Étoiles vides -->
       <span class="my__star empty__star" v-for="i in emptyStars" :key="'empty-' + i">★</span>
     </div>
     <span class="the__rate">{{ rating.toFixed(1) }}</span>
   </div>
-</template> 
+</template>
 
 <script>
 import { computed } from 'vue';
@@ -94,5 +94,21 @@ export default {
 .the__rate {
   color: #777777;
   font-size: 0.9rem;
+}
+
+.low-rating .my__star {
+  background: red;
+  color: white;
+}
+
+.low-rating .stars__foreground {
+  background: red;
+  color: white;
+}
+
+.low-rating .empty__star,
+.low-rating .stars__background {
+  background: #f3f3f3;
+  color: gray;
 }
 </style>

@@ -1,16 +1,28 @@
 <template>
   <article class="testimonial-card">
-    <div class="message">
-        <p class="message__body">
-            {{ message }}
-        </p>
+    <div class="profile">
+        <div class="pp__firm">
+            <span>CA</span>
+        </div>
+        <div class="profile__info">
+            <span>{{ info }}</span>
+        </div>
     </div>
+    
     <ratingComponent 
         :rating="rating" 
         :max="5"
         size="small"
     />
+    
     <div class="divider"></div>
+
+    <div class="message">
+        <p class="message__body">
+            {{ message }}
+        </p>
+    </div>
+    
     <div class="profile">
         <img class="pp" :src="pic" alt="fake profile picture">
         <div class="profile__info">
@@ -18,13 +30,29 @@
             <p class="message__body">@{{username}}</p>
         </div>
     </div>
+    
+    <div class="divider__two"></div>
+
+    <div class="utility">
+        <p class="is_right">Trouvez-vous cet avis utile?</p>
+        <i @click="iLikeIt()" 
+            class="ri-thumb-up-line"
+            v-if="isUseful === false"
+        ></i>
+
+        <i class="ri-thumb-up-fill"
+            @click="iLikeIt()"
+            v-else 
+        ></i>
+
+    </div>
 
   </article>
 </template>
 
 <script>
 import fakeRating from '../tools/fakeRating.vue';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import ratingComponent from '../tools/ratingComponent.vue';
 
 const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
@@ -65,7 +93,17 @@ export default {
         const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
         const profilePic = computed(() => props.pic || defaultPic);
 
-        return { profilePic };
+        const isUseful = ref(false)
+
+        function iLikeIt () {
+            if (isUseful.value === false){
+                isUseful.value = true
+            } else if (isUseful.value === true){
+                isUseful.value = false
+            }
+        }
+
+        return { profilePic, isUseful, iLikeIt };
     }
 
 }
@@ -89,7 +127,13 @@ export default {
 .divider {
   height: 2px;
   background: var(--primary-color); /* Couleur grise légère */
-  margin: 24px 0; /* Espacement vertical */
+  margin: 12px 0; /* Espacement vertical */
+}
+
+.divider__two {
+  height: 1px;
+  background: #d8d8d8; /* Couleur grise légère */
+  margin: 0.5rem 0; /* Espacement vertical */
 }
 
 .profile{
@@ -97,7 +141,7 @@ export default {
     display: flex;
     justify-content: start;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .pp{
@@ -110,13 +154,50 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    align-items: center;
+    justify-content: start;
 }
 
 .profile__info span{
     font-weight: 500;
     font-size: 1rem;
     color: var(--primary-color);
+}
+
+.pp__firm{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background: #d87422;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pp__firm span{
+    color: white;
+    font-weight: 600;
+}
+
+.utility{
+    display: flex;
+    justify-content: start;
+    gap: 0.5em;
+}
+
+.utility i {
+    cursor: pointer;
+
+}
+
+.utility i:hover {
+    cursor: pointer;
+    
+}
+
+.is_right{
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: start;
 }
 
 @media (min-width: 766px) {
