@@ -4,11 +4,11 @@
     
     <div class="testimonial__container">
       <!-- Boucle sur les avis -->
-        <companyCard/>
-        <companyCard/>
-        <companyCard/>
-        <companyCard/>
-        <companyCard/>
+        <companyCard 
+            v-for="(firm, index) in firms"
+            :key="index"
+            :firm="firm.company_name"
+        />
     </div>
   </section>
 </template>
@@ -18,7 +18,7 @@ import SecondStepper from '@/components/cards/secondStepper.vue';
 import testimonials from '@/components/cards/testimonials.vue';
 import companyCard from './companyCard.vue';
 import { onMounted,ref } from 'vue';
-import { fetchRecentsReviews } from '@/_services/_fetchreviews';
+import { fetchRecentsFirms } from '@/_services/_fetchreviews';
 export default {
     components:{
         testimonials,
@@ -28,14 +28,14 @@ export default {
 
     setup(){
 
-        const reviews = ref([]);
+        const firms = ref([]);
 
         onMounted( async ( ) => { 
             try {
-                const response = await fetchRecentsReviews();
+                const response = await fetchRecentsFirms();
                 if (response) {
-                    reviews.value = response.data; // Stockez les données
-                    console.log('Avis chargés:', reviews.value);
+                    firms.value = response.data; // Stockez les données
+                    console.log('Entreprises récentes chargées:', firms.value);
                 }
             } catch (error) {
                 console.error("Erreur de chargement:", error);
@@ -43,7 +43,7 @@ export default {
         });
 
         return{
-            reviews
+            firms,
         }
     }
 }

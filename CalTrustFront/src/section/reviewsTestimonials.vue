@@ -11,7 +11,8 @@
         :rating="review.rating"
         :message="review.comment"
         :date="review.local_date"
-        :avatar="review.user_initial" 
+        :avatar="review.user_initial"
+        :company="review.establishment"
       />
       
       <!-- State de chargement/erreur -->

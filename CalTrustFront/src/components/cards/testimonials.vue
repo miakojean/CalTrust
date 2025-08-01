@@ -5,7 +5,7 @@
             <span>CA</span>
         </div>
         <div class="profile__info">
-            <span>{{ info }}</span>
+            <span>{{ company }}</span>
         </div>
     </div>
     
@@ -59,6 +59,11 @@ const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.
 
 export default {
     props:{
+
+        company:{
+            type:String,
+            default:'anonymous'
+        },
         message:{
             type: String,
             default:"Bienvenu au pays mon fils"
