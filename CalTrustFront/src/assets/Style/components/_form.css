@@ -42,6 +42,39 @@ input::placeholder{
     font-size: 0.8rem;
 }
 
+textarea{
+    width: 100%;
+    min-height: 200px;
+    padding: 0.8rem;
+    background: #f3f3f3;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #383838;
+    transition: ease-in-out 0.7s;
+}
+
+textarea:focus{
+    background: #d6e4ee;
+    transition: ease-in-out 0.5s;
+}
+
+textarea:hover{
+    background: #d6e4ee;
+    transition: ease-in-out 0.5s;
+    cursor: text;
+}
+
+textarea:focus{
+    outline: none;
+}
+
+textarea::placeholder{
+    font-weight: 400;
+    font-size: 0.8rem;
+}
+
 /* For tablet*/
 
 @media (min-width: 766px) {

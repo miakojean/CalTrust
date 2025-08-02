@@ -12,9 +12,16 @@
         <div class="divider"></div>
         <rating-component/>
         <div class="btn__frame">
-            <cardMainButton/>
+            <cardMainButton @click="openModal"/>
             <cardMoreButton/>
         </div>
+            
+        <modal-section 
+            v-model="showModal" 
+            :title="`Poster un avis sur ${firm}`"
+            @submit="handleSubmit"
+        />
+        
     </article>
 </template>
 
@@ -23,8 +30,10 @@ import fakeRating from '@/components/tools/fakeRating.vue';
 import cardMainButton from '@/components/button/cardMainButton.vue';
 import cardMoreButton from '@/components/button/cardMoreButton.vue';
 import ratingComponent from '@/components/tools/ratingComponent.vue';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import RatingComponent from '../../../CalTrustFront/src/components/tools/ratingComponent.vue';
+import modalSection from '@/section/modalSection.vue';
+import ModalSection from '../section/modalSection.vue';
 
 const defaultPic = new URL('@/assets/pictures/devnomicus.png', import.meta.url).href;
 
@@ -46,14 +55,27 @@ export default {
 
     components:{
         fakeRating, cardMainButton, cardMoreButton, ratingComponent,
-        RatingComponent
+        RatingComponent, modalSection,
+        ModalSection
     },
 
     setup(props) {
-        const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
-        const profilePic = computed(() => props.pic || defaultPic);
+        const showModal = ref(false);
 
-        return { profilePic };
+        const openModal = () => {
+            showModal.value = true;
+        };
+
+        const handleSubmit = () => {
+            console.log('Formulaire soumis pour', props.firm);
+            // Ajoutez ici la logique de soumission
+        };
+
+        return { 
+            showModal,
+            openModal,
+            handleSubmit
+        };
     }
 
 }
@@ -82,7 +104,6 @@ export default {
     width: 100%;
     display: flex;
     justify-content: start;
-    align-items: center;
     gap: 2rem;
 }
 
@@ -104,8 +125,8 @@ export default {
 .profile__info{
     display: flex;
     flex-direction: column;
+    justify-content: start;
     gap: 0.5rem;
-    align-items: center;
 }
 
 .profile__info span{

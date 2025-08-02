@@ -1,89 +1,94 @@
 <template>
   <div class="rating-container">
-    <fieldset class="rating" :aria-label="ariaLabel">
-      <legend v-if="showLegend" class="sr-only">{{ legendText }}</legend>
-      
-      <input
-        v-for="i in maxRating"
-        :key="`star-${i}`"
-        :id="`${name}-star-${i}`"
-        :name="name"
-        type="radio"
-        :value="i"
-        :checked="modelValue === i"
-        :disabled="disabled"
-        @change="handleRatingChange(i)"
-        class="rating-input"
+    <label v-if="label" class="rating-label">{{ label }}</label>
+    <div class="stars-container">
+      <span 
+        v-for="star in maxStars" 
+        :key="star" 
+        class="star"
+        :class="[
+          { 'filled': star <= internalValue, 'editable': editable },
+          getRatingColorClass(internalValue)
+        ]"
+        @click="setRating(star)"
+        @mouseover="hoverRating = editable ? star : 0"
+        @mouseleave="hoverRating = 0"
       >
-      <label
-        v-for="i in maxRating"
-        :key="`star-label-${i}`"
-        :for="`${name}-star-${i}`"
-        :title="`${i} ${i > 1 ? 'étoiles' : 'étoile'}`"
-        class="rating-label"
-      >
-        <span class="sr-only">{{ i }} étoiles</span>
-        <span class="star-icon">★</span>
-      </label>
-    </fieldset>
-    
-    <div v-if="showCurrentRating" class="current-rating">
-      Note actuelle : {{ modelValue || 0 }}/{{ maxRating }}
+        {{ star <= (hoverRating || internalValue) ? '★' : '☆' }}
+      </span>
     </div>
+    <input 
+      type="hidden" 
+      :name="name" 
+      :value="internalValue"
+    >
+    <span v-if="showValue" class="rating-value">
+      {{ internalValue }} / {{ maxStars }}
+    </span>
   </div>
 </template>
 
 <script>
-import { computed } from 'vue';
+import { ref, watch } from 'vue';
 
 export default {
-  name: 'StarRating',
+  name: 'Rating',
   props: {
     modelValue: {
       type: Number,
-      default: 3,
-      validator: value => value >= 0
+      default: 0
+    },
+    maxStars: {
+      type: Number,
+      default: 5
+    },
+    label: {
+      type: String,
+      default: 'Attribuer une note :'
     },
     name: {
       type: String,
       default: 'rating'
     },
-    maxRating: {
-      type: Number,
-      default: 5,
-      validator: value => value > 0
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    showLegend: {
+    editable: {
       type: Boolean,
       default: true
     },
-    legendText: {
-      type: String,
-      default: 'Noter cet élément'
-    },
-    showCurrentRating: {
+    showValue: {
       type: Boolean,
-      default: false
-    },
-    ariaLabel: {
-      type: String,
-      default: 'Système de notation'
+      default: true
     }
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const handleRatingChange = (rating) => {
-      if (!props.disabled) {
-        emit('update:modelValue', rating);
+    const hoverRating = ref(0);
+    const internalValue = ref(props.modelValue);
+
+    watch(() => props.modelValue, (newVal) => {
+      internalValue.value = newVal;
+    });
+
+    const getRatingColorClass = (rating) => {
+      if (rating === 1) return 'rating-red';
+      if (rating === 2) return 'rating-orange';
+      if (rating === 3) return 'rating-yellow';
+      if (rating === 4) return 'rating-lightgreen';
+      if (rating === 5) return 'rating-green';
+      return '';
+    };
+
+    const setRating = (value) => {
+      if (props.editable) {
+        internalValue.value = value;
+        emit('update:modelValue', value);
       }
     };
 
     return {
-      handleRatingChange
+      hoverRating,
+      internalValue,
+      setRating,
+      getRatingColorClass
     };
   }
 };
@@ -91,85 +96,65 @@ export default {
 
 <style scoped>
 .rating-container {
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 0.5rem;
-}
-
-.rating {
-  display: inline-flex;
-  margin: 0;
-  padding: 0;
-  border: none;
-  direction: rtl;
-  unicode-bidi: bidi-override;
-}
-
-.rating-input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
+  font-family: Arial, sans-serif;
 }
 
 .rating-label {
-  position: relative;
+  font-weight: bold;
+  color: #333;
+}
+
+.stars-container {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.star {
+  font-size: 1.8rem;
+  color: #ddd;
+  cursor: default;
+  transition: color 0.2s;
+}
+
+.star.filled {
+  color: var(--primary-color); /* Couleur des étoiles remplies */
+}
+
+.star.editable {
   cursor: pointer;
-  font-size: 2rem;
-  color: #e4e5e9;
-  transition: color 0.2s ease, transform 0.1s ease;
 }
 
-.rating-label:hover,
-.rating-label:hover ~ .rating-label,
-.rating-input:checked ~ .rating-label {
-  color: #1B3C53;
+.star.editable:hover {
+  transform: scale(1.1);
 }
 
-.rating-input:focus-visible + .rating-label {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
-  border-radius: 2px;
+.rating-value {
+  font-size: 0.9rem;
+  color: #666;
 }
 
-.rating-label:active {
-  transform: scale(0.9);
+/* Animation pour les étoiles */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }
 
-.star-icon {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  text-align: center;
+.star.editable.filled:hover {
+  animation: pulse 0.5s infinite;
 }
 
-.current-rating {
-  font-size: 0.875rem;
-  color: #64748b;
-  text-align: center;
+/* Animation supplémentaire pour les mauvaises notes */
+.rating-red .filled {
+  animation: pulse 0.5s ease infinite alternate;
 }
 
-/* Accessibilité */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* Thème sombre */
-@media (prefers-color-scheme: dark) {
-  .rating-label {
-    color: #4b5563;
-  }
-  
-  .current-rating {
-    color: #9ca3af;
-  }
+@keyframes pulse {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
 }
 </style>
