@@ -27,6 +27,7 @@ import rating from '@/components/tools/rating.vue';
 import inputArea from '@/components/tools/inputArea.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import secondButton2 from '@/components/button/secondButton2.vue';
+import api from '@/_services/_authservices';
 import { ref, watch } from 'vue';
 
 export default {
@@ -74,12 +75,36 @@ export default {
     });
     const token = ref('')
 
-    function submitForm() {
+    async function submitForm() {
       if (comment.value.trim() === '') {
         message.value.errorMessage = "Le commentaire ne peut être vide.";
         return;
       }
-      token.value = localStorage.getItem('token');
+      token.value = localStorage.getItem('userToken');
+
+      try {
+        // 1. Préparer le corps (body) de la requête avec le refresh token
+        const requestBody = {
+            rating: ratingValue.value,
+            comment: comment.value
+        };
+
+        // 2. Préparer les en-têtes (headers) avec l'access token
+        const requestConfig = {
+          headers: {
+            'Authorization': `Bearer ${token.value}`
+          }
+        };
+
+        // 3. Envoyer la requête POST avec l'URL, le corps et les en-têtes
+        await api.post('/reviews/firms/4/', requestBody, requestConfig);
+        
+        console.log("Avis posté surl'entreprise");
+
+      } catch (error) {
+        console.error("Un problème est survenu:", error.response ? error.response.data : error.message);
+        // Même en cas d'erreur (ex: token expiré), il faut déconnecter l'utilisateur côté client.
+      }
     }
 
     return {
