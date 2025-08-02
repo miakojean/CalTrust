@@ -18,7 +18,8 @@
             
         <modal-section 
             v-model="showModal" 
-            :title="`Poster un avis sur ${firm}`"
+            :title="`Poster un avis sur`"
+            :firm = firm
             @submit="handleSubmit"
         />
         
@@ -33,7 +34,6 @@ import ratingComponent from '@/components/tools/ratingComponent.vue';
 import { computed, ref } from 'vue';
 import RatingComponent from '../../../CalTrustFront/src/components/tools/ratingComponent.vue';
 import modalSection from '@/section/modalSection.vue';
-import ModalSection from '../section/modalSection.vue';
 
 const defaultPic = new URL('@/assets/pictures/devnomicus.png', import.meta.url).href;
 
@@ -56,7 +56,7 @@ export default {
     components:{
         fakeRating, cardMainButton, cardMoreButton, ratingComponent,
         RatingComponent, modalSection,
-        ModalSection
+        modalSection
     },
 
     setup(props) {

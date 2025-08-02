@@ -2,7 +2,7 @@
   <div v-if="isOpen" class="modal-overlay" @click.self="close">
     <div class="modal-content">
       <div class="modal-header">
-        <h4>{{ title }}</h4>
+        <h4>{{ title }} <span> {{ firm }}</span></h4>
         <button @click="close" class="close-btn">&times;</button>
       </div>
       <div class="modal-body">
@@ -13,8 +13,8 @@
         <inputArea/>
       </div>
       <div class="modal-footer">
-        <button @click="close" class="cancel-btn">Annuler</button>
-        <button @click="submit" class="submit-btn">Valider</button>
+        <secondButton2 label="annuler"/>
+        <mainButton label = "envoyer"/>
       </div>
     </div>
   </div>
@@ -23,15 +23,22 @@
 <script>
 import rating from '@/components/tools/rating.vue';
 import inputArea from '@/components/tools/inputArea.vue';
+import mainButton from '@/components/button/mainButton.vue';
+import secondButton2 from '@/components/button/secondButton2.vue';
 import { ref, watch } from 'vue';
+import cardMoreButton from '@/components/button/cardMoreButton.vue';
 
 export default {
-  components: {rating, inputArea },
+  components: {rating, inputArea , mainButton, secondButton2},
   props: {
     modelValue: Boolean,
     title: {
       type: String,
       default: 'Titre de la modale'
+    },
+    firm:{
+      type: String,
+      default:"Anonyme"
     }
   },
   emits: ['update:modelValue', 'submit'],
@@ -86,6 +93,9 @@ export default {
 
 /* Style pour le contenu de la modale */
 .modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   background-color: white;
   border-radius: 8px;
   width: 100%;
@@ -94,6 +104,18 @@ export default {
   min-height: 100%;
   overflow-y: auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header{
+  color: gray;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.modal-header span{
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 /* Style pour l'en-tête de la modale */
@@ -108,6 +130,9 @@ export default {
 /* Style pour le corps de la modale */
 .modal-body {
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 /* Style pour le pied de la modale */

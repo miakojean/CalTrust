@@ -17,7 +17,7 @@ export default {
     props:{
         label:{
             type:String,
-            default:"username"
+            default:"Votre expérience"
         },
         type:{
             type:String,
@@ -25,7 +25,7 @@ export default {
         },
         placeholder:{
             type: String,
-            default: "Votre message ici" // <- Correction ici
+            default: "Comment s'est passé votre expérience" // <- Correction ici
         },
         modelValue: {
             type: String,
@@ -46,6 +46,10 @@ export default {
 label{
     color: var(--primary-color);
     font-size: 0.8rem;
+}
+
+label h4{
+    font-size: 1rem;
 }
 
 input{

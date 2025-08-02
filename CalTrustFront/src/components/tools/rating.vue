@@ -2,7 +2,8 @@
   <div class="rating-container">
     <label v-if="label" class="rating-label">{{ label }}</label>
     <div class="stars-container">
-      <span 
+      <div class="stars__container_scd">
+        <span 
         v-for="star in maxStars" 
         :key="star" 
         class="star"
@@ -13,18 +14,22 @@
         @click="setRating(star)"
         @mouseover="hoverRating = editable ? star : 0"
         @mouseleave="hoverRating = 0"
-      >
-        {{ star <= (hoverRating || internalValue) ? '★' : '☆' }}
-      </span>
+        >
+          {{ star <= (hoverRating || internalValue) ? '★' : '☆' }}
+        </span>
+      </div>
+
+      <div class="marks">
+        <input 
+        type="hidden" 
+        :name="name" 
+        :value="internalValue"
+        >
+        <span v-if="showValue" class="rating-value">
+          {{ internalValue }} / {{ maxStars }}
+        </span>
+      </div>
     </div>
-    <input 
-      type="hidden" 
-      :name="name" 
-      :value="internalValue"
-    >
-    <span v-if="showValue" class="rating-value">
-      {{ internalValue }} / {{ maxStars }}
-    </span>
   </div>
 </template>
 
@@ -99,8 +104,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5rem;
-  font-family: Arial, sans-serif;
+  gap: 1rem;
 }
 
 .rating-label {
@@ -108,9 +112,22 @@ export default {
   color: #333;
 }
 
-.stars-container {
+.stars-container{
+  width: 100%;
   display: flex;
-  gap: 0.3rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.stars__container_scd {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.marks{
+  width: 100%;
+  display: flex;
+  justify-content: end;
 }
 
 .star {

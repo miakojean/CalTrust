@@ -49,8 +49,9 @@ textarea{
     background: #f3f3f3;
     border: none;
     border-radius: 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
+    line-height: 1.5;
+    font-size: 0.9rem;
+    font-weight: 500;
     color: #383838;
     transition: ease-in-out 0.7s;
 }
@@ -72,7 +73,7 @@ textarea:focus{
 
 textarea::placeholder{
     font-weight: 400;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
 
 /* For tablet*/
