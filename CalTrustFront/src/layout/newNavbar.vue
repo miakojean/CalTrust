@@ -22,12 +22,12 @@
 
     <div class="auth__btn" v-if="isLoggedIn === false">
       <secondButton/>
-      <mainButton @click="login" label = "connexion"/>
+      <mainButton @click="login" label = "Connexion"/>
     </div>
 
     <div class="auth__btn" v-if="isLoggedIn === true">
       <secondButton :label = "username"/>
-      <mainButton label = "deconnexion" @click="logout"/>
+      <mainButton label = "Deconnexion" @click="logout"/>
     </div>
   </nav>
 </template>
@@ -129,7 +129,7 @@ const logout = async () => {
 
     // 3. Envoyer la requête POST avec l'URL, le corps et les en-têtes
     await api.post('/account/logout/', requestBody, requestConfig);
-    router.push('/')
+    router.push('/signin')
     
     console.log("Déconnexion réussie côté serveur.");
 

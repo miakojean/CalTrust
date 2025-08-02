@@ -4,17 +4,19 @@
       <div class="modal-header">
         <h4>{{ title }} <span> {{ firm }}</span></h4>
         <button @click="close" class="close-btn">&times;</button>
+        <p v-if="message.errorMessage">{{ message.errorMessage }}</p>
       </div>
       <div class="modal-body">
         <rating
           v-model="ratingValue"
           :max-stars="5"
         />
-        <inputArea/>
+        <inputArea 
+        v-model="comment"/>
       </div>
       <div class="modal-footer">
         <secondButton2 label="annuler"/>
-        <mainButton label = "envoyer"/>
+        <mainButton label = "envoyer" @click="submitForm"/>
       </div>
     </div>
   </div>
@@ -26,7 +28,6 @@ import inputArea from '@/components/tools/inputArea.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import secondButton2 from '@/components/button/secondButton2.vue';
 import { ref, watch } from 'vue';
-import cardMoreButton from '@/components/button/cardMoreButton.vue';
 
 export default {
   components: {rating, inputArea , mainButton, secondButton2},
@@ -65,12 +66,30 @@ export default {
       emit('submit');
       close();
     };
+    //la logique commence ici
+    const comment = ref('');
+    const message = ref({
+      errorMessage: "",
+      successMessage: ""
+    });
+    const token = ref('')
+
+    function submitForm() {
+      if (comment.value.trim() === '') {
+        message.value.errorMessage = "Le commentaire ne peut être vide.";
+        return;
+      }
+      token.value = localStorage.getItem('token');
+    }
 
     return {
       isOpen,
       close,
       ratingValue,
-      submit
+      submit,
+      comment,
+      message,
+      submitForm,
     };
   }
 };

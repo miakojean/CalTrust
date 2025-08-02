@@ -11,7 +11,7 @@ export default {
     props:{
         label:{
             type:String,
-            default: "inscription"
+            default: "Inscription"
         }
     },
     setup () {
