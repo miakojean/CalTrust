@@ -1,5 +1,7 @@
 <template>
+  
   <div v-if="isOpen" class="modal-overlay" @click.self="close">
+    
     <div class="modal-content">
       <div class="modal-header">
         <h4>{{ title }} <span> {{ firm }}</span></h4>
@@ -24,6 +26,7 @@
         <mainButton label = "envoyer" @click="submitForm"/>
       </div>
     </div>
+  
   </div>
 </template>
 
@@ -46,6 +49,9 @@ export default {
     firm:{
       type: String,
       default:"Anonyme"
+    },
+    firmId:{
+      type:Number
     }
   },
   emits: ['update:modelValue', 'submit'],
@@ -72,14 +78,16 @@ export default {
       emit('submit');
       close();
     };
+    
     //la logique commence ici
     const comment = ref('');
     const message = ref({
       errorMessage: "",
       successMessage: ""
     });
+    
     const token = ref('')
-
+    const firmId = ref(props.firmId)
     async function submitForm() {
       if (comment.value.trim() === '') {
         message.value.errorMessage = "Le commentaire ne peut être vide.";
@@ -102,7 +110,7 @@ export default {
         };
 
         // 3. Envoyer la requête POST avec l'URL, le corps et les en-têtes
-        await api.post('/reviews/firms/4/', requestBody, requestConfig);
+        await api.post(`/reviews/firms/${firmId.value}/`, requestBody, requestConfig);
         
         console.log("Avis posté surl'entreprise");
 
@@ -245,5 +253,4 @@ input {
   color: red;
   font-size: 0.8rem;
 }
-
 </style>

@@ -8,6 +8,7 @@
             v-for="(firm, index) in firms"
             :key="index"
             :firm="firm.company_name"
+            :user="firm.user"
         />
     </div>
   </section>
@@ -42,8 +43,15 @@ export default {
             }
         });
 
+        const myFirmId = ref(0)
+
+        const voirFirm = (index) =>{
+            myFirmId.value = index
+            console.log(index)
+        }
+
         return{
-            firms,
+            firms, voirFirm, myFirmId
         }
     }
 }
@@ -72,6 +80,14 @@ export default {
 }
 
 @media(min-width: 1024px) {
+    .testimonial__container{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1rem;
+    }
+}
+
+@media(min-width: 1280px) {
     .testimonial__container{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;

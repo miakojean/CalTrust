@@ -12,7 +12,9 @@
         <div class="divider"></div>
         <rating-component/>
         <div class="btn__frame">
-            <cardMainButton @click="openModal"/>
+            <cardMainButton 
+                @click="openModal"
+            />
             <cardMoreButton/>
         </div>
             
@@ -20,6 +22,7 @@
             v-model="showModal" 
             :title="`Poster un avis sur`"
             :firm = firm
+            :firmId = user
             @submit="handleSubmit"
         />
         
@@ -50,6 +53,9 @@ export default {
         pic:{
             type: String,
             default: defaultPic
+        },
+        user:{
+            type:Number
         }
     },
 
