@@ -4,9 +4,14 @@
       <div class="modal-header">
         <h4>{{ title }} <span> {{ firm }}</span></h4>
         <button @click="close" class="close-btn">&times;</button>
-        <p v-if="message.errorMessage">{{ message.errorMessage }}</p>
       </div>
       <div class="modal-body">
+        <p 
+          v-if="message.errorMessage"
+          class="errorMessage"
+        >
+          {{ message.errorMessage }}
+        </p>
         <rating
           v-model="ratingValue"
           :max-stars="5"
@@ -235,4 +240,10 @@ input {
   border-radius: 4px;
   box-sizing: border-box;
 }
+
+.errorMessage{
+  color: red;
+  font-size: 0.8rem;
+}
+
 </style>
