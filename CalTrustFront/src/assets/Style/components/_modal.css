@@ -11,10 +11,11 @@
   z-index: 1000;
 }
 
-/* Ici c'est la modale pour les commentaires sur une entreprise*/
-
 /* Style pour le contenu de la modale */
 .modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   background-color: white;
   border-radius: 8px;
   width: 100%;
@@ -23,6 +24,18 @@
   min-height: 100%;
   overflow-y: auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header{
+  color: gray;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.modal-header span{
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 /* Style pour l'en-tête de la modale */
@@ -34,10 +47,75 @@
   border-bottom: 1px solid #eee;
 }
 
+/* Style pour le corps de la modale */
+.modal-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Style pour le pied de la modale */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  border-top: 1px solid #eee;
+  gap: 8px;
+}
+
+/* Style pour le bouton de fermeture */
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+/* Style pour les boutons d'action */
+.cancel-btn, .submit-btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+}
 
 /* for tablet */
 @media (min-width: 766px) {
-    
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+  position: relative;
+  top: 20%;
+  bottom: 20%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 40vh;
+  max-width: 500px;
+  min-height: 100%;
+  overflow-y: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 }
 
 /* for laptop */

@@ -1,5 +1,5 @@
 <template>
-  
+  <Transition>
   <div v-if="isOpen" class="modal-overlay" @click.self="close">
     
     <div class="modal-content">
@@ -28,6 +28,7 @@
     </div>
   
   </div>
+  </Transition>
 </template>
 
 <script>
@@ -72,7 +73,7 @@ export default {
       emit('update:modelValue', false);
     };
 
-    const ratingValue = ref(3)
+    const ratingValue = ref(1)
 
     const submit = () => {
       emit('submit');
@@ -134,123 +135,20 @@ export default {
 </script>
 
 <style scoped>
-/* Style pour l'overlay de la modale */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-/* Style pour le contenu de la modale */
-.modal-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  background-color: white;
-  border-radius: 8px;
-  width: 100%;
-  margin-top: 40vh;
-  max-width: 500px;
-  min-height: 100%;
-  overflow-y: auto;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.modal-header{
-  color: gray;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.modal-header span{
-  color: var(--primary-color);
-  font-weight: 700;
-  font-size: 1rem;
-}
-
-/* Style pour l'en-tête de la modale */
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px;
-  border-bottom: 1px solid #eee;
-}
-
-/* Style pour le corps de la modale */
-.modal-body {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-/* Style pour le pied de la modale */
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  padding: 16px;
-  border-top: 1px solid #eee;
-  gap: 8px;
-}
-
-/* Style pour le bouton de fermeture */
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #666;
-}
-
-/* Style pour les boutons d'action */
-.cancel-btn, .submit-btn {
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.cancel-btn {
-  background-color: #f5f5f5;
-  border: 1px solid #ddd;
-}
-
-.submit-btn {
-  background-color: #42b983;
-  color: white;
-  border: none;
-}
-
-/* Style pour le bouton d'ouverture de la modale */
-.open-modal-btn {
-  padding: 10px 20px;
-  background-color: #42b983;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 20px;
-}
-
-/* Style pour l'input dans la modale */
-input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
 
 .errorMessage{
   color: red;
   font-size: 0.8rem;
+}
+
+/* nous vous expliquerons ensuite ce que font ces classes ! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

@@ -8,6 +8,7 @@
 @import './components/_form.css';
 @import './components/_card.css';
 @import './components/_form.css';
+@import './components/_modal.css';
 
 #app {
   width: calc(100% - 2rem); /* 1rem de marge à gauche + 1rem à droite = 2rem */
