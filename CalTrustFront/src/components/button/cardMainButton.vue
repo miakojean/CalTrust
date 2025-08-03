@@ -26,22 +26,28 @@ export default {
 
 <style scoped>
 .main__button{
-    background: var(--primary-color);
-    color: white;
-    transition: 0.5s;
-    border-radius: 2rem;
-    width: 50%;
-    max-width: 200px;
-    font-size: 0.65rem;
-    font-weight: 400;
-    transition: ease-in-out 0.3s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background: var(--primary-color);
+  color: white;
+  transition: 0.5s;
+  border-radius: 2rem;
+  width: 50%;
+  max-width: 200px;
+  font-size: 0.65rem;
+  font-weight: 400;
+  transition: ease-in-out 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .main__button:hover{
     background: var(--secondary-color);
     transition: ease-in-out 0.3s;
+}
+
+@media(min-width: 1024){
+  .main__button{
+    font-size: 1.2rem;
+  }
 }
 </style>

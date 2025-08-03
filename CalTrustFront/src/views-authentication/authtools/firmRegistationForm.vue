@@ -22,10 +22,10 @@
         required
       />
       <inputFamily__2
-        label="SIRET"
-        placeholder="14 chiffres (ex: 12345678901234)"
-        v-model="formData.siret"
-        maxlength="14"
+        label="Numero de télephone"
+        placeholder="10 chiffres (ex: 0102030405)"
+        v-model="formData.phone_number"
+        maxlength="10"
         required
       />
     </div>
@@ -104,8 +104,7 @@ export default {
       password: '',
       user_type: 'firm',
       company_name: '',
-      company_category: "Commerce", // Valeur par défaut
-      siret: '',
+      phone_number: '',
       address: ''
     });
 
@@ -132,8 +131,8 @@ export default {
         return;
       }
 
-      if (!formData.value.siret || !/^\d{14}$/.test(formData.value.siret)) {
-        message.value.errorMessage = 'Le SIRET doit comporter 14 chiffres';
+      if (!formData.value.phone_number || !/^\d{10}$/.test(formData.value.phone_number)) {
+        message.value.errorMessage = 'Le téléphone doit comporter 10 chiffres';
         isLoading.value = false;
         return;
       }

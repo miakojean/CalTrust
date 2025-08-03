@@ -150,8 +150,9 @@ export default {
 }
 
 .rating-value {
-  font-size: 0.9rem;
-  color: #666;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary-color);
 }
 
 /* Animation pour les étoiles */

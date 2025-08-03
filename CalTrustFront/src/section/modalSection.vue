@@ -14,6 +14,12 @@
         >
           {{ message.errorMessage }}
         </p>
+        <p 
+          v-if="message.successMessage"
+          class="succesMessage"
+        >
+          {{ message.successMessage }}
+        </p>
         <rating
           v-model="ratingValue"
           :max-stars="5"
@@ -23,7 +29,10 @@
       </div>
       <div class="modal-footer">
         <secondButton2 label="annuler"/>
-        <mainButton label = "envoyer" @click="submitForm"/>
+        <mainButton 
+          label = "envoyer"
+          :isLoading = isloading
+          @click="submitForm"/>
       </div>
     </div>
   
@@ -80,20 +89,26 @@ export default {
       close();
     };
     
-    //la logique commence ici
-    const comment = ref('');
+    //la logique du formulaire commence à partir de là
+    const isloading = ref(false)
+    
     const message = ref({
       errorMessage: "",
       successMessage: ""
     });
+
+    const comment = ref('');
     
     const token = ref('')
     const firmId = ref(props.firmId)
     async function submitForm() {
+      isloading.value = true
       if (comment.value.trim() === '') {
         message.value.errorMessage = "Le commentaire ne peut être vide.";
+        isloading.value = false
         return;
       }
+      message.value.errorMessage = ""
       token.value = localStorage.getItem('userToken');
 
       try {
@@ -112,6 +127,9 @@ export default {
 
         // 3. Envoyer la requête POST avec l'URL, le corps et les en-têtes
         await api.post(`/reviews/firms/${firmId.value}/`, requestBody, requestConfig);
+        message.value.successMessage = "Avis posté avec succès!!!, merci pour votre temps"
+        isloading.value = false
+        setTimeout(() => close(), 3000);
         
         console.log("Avis posté surl'entreprise");
 
@@ -122,13 +140,8 @@ export default {
     }
 
     return {
-      isOpen,
-      close,
-      ratingValue,
-      submit,
-      comment,
-      message,
-      submitForm,
+      isOpen, close, ratingValue, submit, comment,
+      isloading, message, submitForm,
     };
   }
 };
@@ -139,6 +152,16 @@ export default {
 .errorMessage{
   color: red;
   font-size: 0.8rem;
+  width: 100%;
+  text-align: start;
+}
+
+.succesMessage{
+  width: 100%;
+  text-align: start;
+  font-size: 1rem;
+  font-weight:600;
+  color:var(--primary-color)
 }
 
 /* nous vous expliquerons ensuite ce que font ces classes ! */
