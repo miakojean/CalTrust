@@ -1,8 +1,7 @@
-from django.db import models
-from django.db.models import Avg, Count
+from django.db import models 
+from django.db.models import Avg 
 from django.utils.translation import gettext_lazy as _
 from account.models import FirmProfile
-
 
 class Company(models.Model):
     """
@@ -27,7 +26,7 @@ class Company(models.Model):
         AUTRE = 'OT', _('Autre')
 
     # --- Champs du modèle ---
-    name = models.ForeignKey(FirmProfile, on_delete=models.CASCADE)
+    name = models.OneToOneField(FirmProfile, on_delete=models.CASCADE)
     category = models.CharField(
         max_length=2,
         choices=CategoryChoices.choices,
@@ -36,7 +35,7 @@ class Company(models.Model):
     )
     description = models.TextField(blank=True, null=True, verbose_name=_("Description"))
     website = models.URLField(max_length=200, blank=True, null=True, verbose_name=_("Site Web"))
-    phone_number = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Numéro de téléphone"))
+    siret = models.CharField(max_length=14, blank=True, unique=True, default="", help_text="Laissez vide si non applicable")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date de création"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Date de mise à jour"))
 
@@ -55,7 +54,7 @@ class Company(models.Model):
         return self.reviews.aggregate(Avg('rating'))['rating__avg'] or 0.0
 
     def __str__(self):
-        return self.name
+        return f'{self.name}'
 
     class Meta:
         verbose_name = _("Entreprise")

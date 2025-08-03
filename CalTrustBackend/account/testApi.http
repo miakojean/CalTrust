@@ -31,8 +31,6 @@ Content-Type: application/json
   "password": "supersecurepassword",
   "user_type": "firm",
   "company_name": "issif Tech Solutions Inc.",
-  "company_category": "Commerce",
-  "siret": "12347678901284",
   "address": "123 Tech Park, Innovation City"
 }
 
@@ -40,14 +38,13 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "Caladrius",
-  "email": "Caladrius225@gmail.com",
+  "username": "cainvest",
+  "email": "cainvest@gmail.com",
   "password": "supersecurepassword",
   "user_type": "firm",
   "company_name": "Caladrius Inc.",
-  "company_category": "industrie",
-  "siret": "12347678902589",
-  "address": "225 Cocody, Innovation City"
+  "address": "225 Cocody, Innovation City",
+  "phone_number": "0102030405"
 }
 
 POST http://127.0.0.1:8000/account/

@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid 
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+
 
 class CustomerProfile(models.Model):
     # Le lien One-to-One vers le modèle User de Django
@@ -17,13 +19,16 @@ class CustomerProfile(models.Model):
 
 class FirmProfile(models.Model):
     # Le lien One-to-One vers le modèle User de Django
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='firm_profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, 
+                                primary_key=True, 
+                                related_name='firm_profile')
 
     # Champs spécifiques aux entreprises
     company_name = models.CharField(max_length=255)
-    siret = models.CharField(max_length=14, unique=True)
     address = models.TextField()
     is_verified = models.BooleanField(default=False)
+    phone_number = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Numéro de téléphone"))
+
 
     def __str__(self):
         return f"Profil Entreprise de {self.user.username}"

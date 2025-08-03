@@ -65,7 +65,7 @@ class UserRegistrationView(APIView):
             elif isinstance(user_profile, FirmProfile):
                 response_data["data"]["company_details"] = {
                     "company_name": user_profile.company_name,
-                    "siret": user_profile.siret,
+                    "phone_number": user_profile.phone_number,
                     "address": user_profile.address,
                     "is_verified": user_profile.is_verified
                 }

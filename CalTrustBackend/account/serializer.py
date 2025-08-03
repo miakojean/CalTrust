@@ -63,12 +63,12 @@ class UserRegistrationSerializer(serializers.Serializer):
             'max_length': 'Le nom de l\'entreprise ne doit pas dépasser 255 caractères'
         }
     )
-    siret = serializers.CharField(
-        max_length=14,
+    phone_number = serializers.CharField(
+        max_length=20,
         required=False,
         allow_blank=True,
         error_messages={
-            'max_length': 'Le SIRET doit contenir exactement 14 caractères'
+            'max_length': 'Le numéro de téléphone ne doit pas dépasser 20 caractères'
         }
     )
     address = serializers.CharField(
@@ -94,11 +94,11 @@ class UserRegistrationSerializer(serializers.Serializer):
             raise serializers.ValidationError("Ce nom d'utilisateur est déjà pris")
         return value
 
-    def validate_siret(self, value):
+    def validate_phone_number(self, value):
         if value and not value.isdigit():
-            raise serializers.ValidationError("Le SIRET doit contenir uniquement des chiffres")
-        if value and len(value) != 14:
-            raise serializers.ValidationError("Le SIRET doit contenir exactement 14 chiffres")
+            raise serializers.ValidationError("Le numéro de téléphone doit contenir uniquement des chiffres")
+        if value and len(value) != 10:
+            raise serializers.ValidationError("Le numéro de téléphone doit contenir exactement 10 chiffres")
         return value
 
     def validate(self, data):
@@ -107,9 +107,9 @@ class UserRegistrationSerializer(serializers.Serializer):
                 raise serializers.ValidationError({
                     'company_name': 'Le nom de l\'entreprise est obligatoire pour les professionnels'
                 })
-            if not data.get('siret'):
+            if not data.get('phone_number'):
                 raise serializers.ValidationError({
-                    'siret': 'Le SIRET est obligatoire pour les professionnels'
+                    'phone_number': 'Le numéro de téléphone est obligatoire pour les professionnels'
                 })
             if not data.get('address'):
                 raise serializers.ValidationError({
@@ -136,7 +136,7 @@ class UserRegistrationSerializer(serializers.Serializer):
             profile = FirmProfile.objects.create(
                 user=user,
                 company_name=validated_data.get('company_name'),
-                siret=validated_data.get('siret'),
+                phone_number=validated_data.get('phone_number'),
                 address=validated_data.get('address')
             )
         

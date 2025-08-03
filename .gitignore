@@ -205,3 +205,6 @@ desktop.ini
 
 # Linux specific
 *.py~
+
+# Test api
+.http
