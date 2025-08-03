@@ -38,9 +38,5 @@ const updatePassword = async () => {
   }
 
 }
-const isAuthenticated = () => {
-  console.log("Connecté", isAuthenticated);
-  return !!localStorage.getItem('userToken' || localStorage.getItem('userTokenRefresh'));
-}
 
-export {passwordReset, verifyToken, updatePassword, isAuthenticated}; 
+export {passwordReset, verifyToken, updatePassword}; 

@@ -35,4 +35,25 @@ const fetchRecentsFirms = async () => {
     }
 }
 
+async function postAReviews(){
+    const accessToken = localStorage.getItem('userToken');
+    const refreshToken = localStorage.getItem('userTokenRefresh');
+
+    // Si l'un des tokens manque, on nettoie et on arrête
+    if (!refreshToken || !accessToken) {
+        console.error("Tokens manquants pour la déconnexion.");
+        localStorage.clear(); // Nettoyage par sécurité
+        // Mettez à jour votre UI ici (ex: isLoggedIn.value = false)
+        return;
+    }
+
+    try {
+        const requestBody = {
+            refresh: refreshToken
+        }
+    } catch (erro) {
+        console.log("Echec de la déconnexion côté serveur")
+    }
+}
+
 export {fetchRecentsReviews, fetchRecentsFirms};

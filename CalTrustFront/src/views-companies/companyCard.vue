@@ -34,9 +34,10 @@ import fakeRating from '@/components/tools/fakeRating.vue';
 import cardMainButton from '@/components/button/cardMainButton.vue';
 import cardMoreButton from '@/components/button/cardMoreButton.vue';
 import ratingComponent from '@/components/tools/ratingComponent.vue';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import RatingComponent from '../../../CalTrustFront/src/components/tools/ratingComponent.vue';
 import modalSection from '@/section/modalSection.vue';
+import { useRouter } from 'vue-router';
 
 const defaultPic = new URL('@/assets/pictures/devnomicus.png', import.meta.url).href;
 
@@ -67,8 +68,16 @@ export default {
 
     setup(props) {
         const showModal = ref(false);
+        
+        const router = useRouter()
+
+        const accessToken = localStorage.getItem('userToken');
+        const refreshToken = localStorage.getItem('userTokenRefresh'); 
 
         const openModal = () => {
+            if(!accessToken || !refreshToken){
+                router.push('/signin')
+            }
             showModal.value = true;
         };
 
