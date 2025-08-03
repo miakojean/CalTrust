@@ -35,7 +35,6 @@ class Company(models.Model):
     )
     description = models.TextField(blank=True, null=True, verbose_name=_("Description"))
     website = models.URLField(max_length=200, blank=True, null=True, verbose_name=_("Site Web"))
-    siret = models.CharField(max_length=14, blank=True, unique=True, default="", help_text="Laissez vide si non applicable")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date de création"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Date de mise à jour"))
 
