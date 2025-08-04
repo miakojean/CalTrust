@@ -30,7 +30,7 @@ Content-Type: application/json
 GET http://127.0.0.1:8000/reviews/4/
 Content-Type: application/json
 
-GET http://127.0.0.1:8000/reviews/firm/1/review/
+GET http://127.0.0.1:8000/reviews/firm/2/review/
 Content-Type: application/json
 
 POST http://127.0.0.1:8000/reviews/2/respond/

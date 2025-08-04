@@ -129,13 +129,12 @@ class FirmReviewsAPIView(APIView):
 
     def get(self, request, firm_id):
         """Liste TOUS les avis d'une entreprise"""
-        firm = get_object_or_404(FirmProfile, id=firm_id)
+        firm = get_object_or_404(FirmProfile, company=firm_id)
         reviews = Review.objects.filter(firm=firm).order_by('-created_at')  # Correction ici
         serializer = PublicReviewSerializer(reviews, many=True)
         
         return Response({
             'firm': firm.company_name,  # Utilisez le bon champ (company_name ou autre)
-            'average_rating': firm.average_rating(),  # Assurez-vous que cette méthode existe
             'reviews': serializer.data
         })
 
