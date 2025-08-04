@@ -32,7 +32,7 @@ class ReviewAPIView(APIView):
 
     #Vue reservé aux utilisateurs pour émettre ou supprimer des avis
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request, firm_id=None, review_id=None):
         """
@@ -124,6 +124,21 @@ class ReviewAPIView(APIView):
             status=status.HTTP_204_NO_CONTENT
         )
     
+class FirmReviewsAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, firm_id):
+        """Liste TOUS les avis d'une entreprise"""
+        firm = get_object_or_404(FirmProfile, id=firm_id)
+        reviews = Review.objects.filter(firm=firm).order_by('-created_at')  # Correction ici
+        serializer = PublicReviewSerializer(reviews, many=True)
+        
+        return Response({
+            'firm': firm.company_name,  # Utilisez le bon champ (company_name ou autre)
+            'average_rating': firm.average_rating(),  # Assurez-vous que cette méthode existe
+            'reviews': serializer.data
+        })
+
 class ReviewSearchView(APIView):
 
     #vue pour effectuer les recherches d'avis!

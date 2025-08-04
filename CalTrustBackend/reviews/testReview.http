@@ -27,6 +27,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 GET http://127.0.0.1:8000/reviews/public/recent/
 Content-Type: application/json
 
+GET http://127.0.0.1:8000/reviews/4/
+Content-Type: application/json
+
+GET http://127.0.0.1:8000/reviews/firm/1/review/
+Content-Type: application/json
+
 POST http://127.0.0.1:8000/reviews/2/respond/
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzNTM2OTAyLCJpYXQiOjE3NTM1MzMzMDIsImp0aSI6IjAxOWM4MzU1NTMyNzQ2OTdhOGZiZmE2NzYyYTllNWY4IiwidXNlcl9pZCI6IjIifQ.Salp6_Fc1yEZd9LXajM-5wUd_k9VG96n9v5SSiVUFOg
 Content-Type: application/json

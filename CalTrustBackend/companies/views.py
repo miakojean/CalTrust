@@ -13,7 +13,7 @@ from .models import Company
 
 class FirmProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = FirmProfile
+        model = Company
         fields = '__all__'
 
 class MyFirmsUser(APIView):
@@ -22,23 +22,22 @@ class MyFirmsUser(APIView):
     def get(self, request):
         try:
             # 1. Utilisez Company plutôt que FirmProfile pour avoir accès aux métriques
-            companies = Company.objects.select_related('name')\
-                                     .prefetch_related('reviews')\
-                                     .order_by('-created_at')[:4]
+            companies = Company.objects.all().order_by('-created_at')[:4]
             
             # 2. Sérialiseur adapté incluant les stats
             serializer = CompanySearchSerializer(companies, many=True)
             
+            # 3 Ajouter si nécessaire le serialiser de firmProfile pour plus de données
             return Response({
                 'status': 'success',
-                'data': serializer.data  # Contient déjà rating/count
+                'data': serializer.data
             }, status=status.HTTP_200_OK)
             
         except Exception as e:
             return Response({
                 'status': 'error',
-                'message': "Erreur de chargement des entreprises"
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)        
+                'message': str(e)  # Afficher l'erreur réelle pour le débogage
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class CategoryListView(APIView):
     permission_classes = [AllowAny]

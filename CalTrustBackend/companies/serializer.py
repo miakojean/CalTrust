@@ -1,6 +1,12 @@
 # serializers.py
 from rest_framework import serializers
 from .models import Company
+from account.models import FirmProfile
+
+class FirmProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FirmProfile
+        fields = ['company_name', 'address']  # Champs à exposer
 
 class CompanySearchSerializer(serializers.ModelSerializer):
     category_display = serializers.CharField(
@@ -9,9 +15,10 @@ class CompanySearchSerializer(serializers.ModelSerializer):
     )
     average_rating = serializers.FloatField(read_only=True)  # Suppression du source
     review_count = serializers.IntegerField(read_only=True)  # Idem ici
-    
+    name = serializers.StringRelatedField(source = 'name.user.username')
+
     class Meta:
-        model = Company
+        model = Company 
         fields = [
             'id',
             'name',
@@ -22,3 +29,4 @@ class CompanySearchSerializer(serializers.ModelSerializer):
             'average_rating',  # Correspond à la propriété du modèle
             'review_count'     # Correspond à la propriété du modèle
         ]
+
