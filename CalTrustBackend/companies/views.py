@@ -5,7 +5,8 @@ from rest_framework.response import Response
 from rest_framework import status, serializers
 from account.models import FirmProfile
 from rest_framework.permissions import AllowAny
-from .serializer import CompanySerializer
+from .serializer import CompanySearchSerializer
+
 from .models import Company
 
 # Create your views here.
@@ -15,50 +16,72 @@ class FirmProfileSerializer(serializers.ModelSerializer):
         model = FirmProfile
         fields = '__all__'
 
-class MyFimrsUser(APIView):
-
+class MyFirmsUser(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
         try:
-            # Récupérer tous les objets FirmProfile
-            firms = FirmProfile.objects.all()
-            # Sérialiser le QuerySet
-            serializer = FirmProfileSerializer(firms, many=True)
+            # 1. Utilisez Company plutôt que FirmProfile pour avoir accès aux métriques
+            companies = Company.objects.select_related('name')\
+                                     .prefetch_related('reviews')\
+                                     .order_by('-created_at')[:4]
+            
+            # 2. Sérialiseur adapté incluant les stats
+            serializer = CompanySearchSerializer(companies, many=True)
+            
             return Response({
                 'status': 'success',
-                'data': serializer.data
+                'data': serializer.data  # Contient déjà rating/count
             }, status=status.HTTP_200_OK)
+            
         except Exception as e:
             return Response({
                 'status': 'error',
-                'message': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-class CompanyByCategory(APIView):
-    permission_classes = [AllowAny]
+                'message': "Erreur de chargement des entreprises"
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)        
 
-    def get(self, request, category_code):
-        try:
-            # Vérifier que le code de catégorie est valide
-            valid_categories = [choice[0] for choice in Company.CategoryChoices.choices]
-            if category_code not in valid_categories:
-                return Response({
-                    'status': 'error',
-                    'message': 'Catégorie invalide'
-                }, status=status.HTTP_400_BAD_REQUEST)
-            
-            # Filtrer les entreprises par catégorie
-            companies = Company.objects.filter(category=category_code)
-            serializer = CompanySerializer(companies, many=True)
-            
-            return Response({
-                'status': 'success',
-                'data': serializer.data,
-                'category_name': dict(Company.CategoryChoices.choices).get(category_code)
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                'status': 'error',
-                'message': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+class CategoryListView(APIView):
+    permission_classes = [AllowAny]
+    """Liste toutes les catégories disponibles"""
+    def get(self, request):
+        return Response({
+            'categories': Company.get_category_choices()
+        })
+
+# views.py
+class CompanySearchView(APIView):
+    permission_classes = [AllowAny]
+    """Recherche avancée d'entreprises"""
+    def get(self, request):
+        params = request.query_params
+        filters = {
+            'category': params.get('category'),
+            'query': params.get('q')
+        }
+        
+        # Gestion spécifique de min_rating
+        min_rating = params.get('min_rating')
+        if min_rating:
+            try:
+                filters['min_rating'] = float(min_rating)
+            except (TypeError, ValueError):
+                return Response(
+                    {'error': 'min_rating doit être un nombre valide'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        
+        # Validation de la catégorie
+        if filters['category'] and filters['category'] not in dict(Company.CategoryChoices.choices):
+            return Response(
+                {'error': 'Catégorie invalide'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Recherche et sérialisation
+        companies = Company.search(**filters)
+        serializer = CompanySearchSerializer(companies, many=True)
+        
+        return Response({
+            'count': companies.count(),
+            'results': serializer.data
+        })

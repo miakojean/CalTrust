@@ -1,0 +1,330 @@
+### Création Customer 1
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "customer1",
+  "email": "customer1@gmail.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0612345671",
+  "birth_date": "1990-01-01"
+}
+
+### Création Customer 2
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "customer2",
+  "email": "customer2@gmail.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0612345672",
+  "birth_date": "1991-02-02"
+}
+
+### Création Customer 3
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "customer3",
+  "email": "customer3@gmail.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0612345673",
+  "birth_date": "1992-03-03"
+}
+
+### Création Customer 4
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "customer4",
+  "email": "customer4@gmail.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0612345674",
+  "birth_date": "1993-04-04"
+}
+
+### Création Customer 5
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "customer5",
+  "email": "customer5@gmail.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0612345675",
+  "birth_date": "1994-05-05"
+}
+
+### Création Customer 6
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "customer6",
+  "email": "customer6@gmail.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0612345676",
+  "birth_date": "1995-06-06"
+}
+
+### Création Customer 7
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "customer7",
+  "email": "customer7@gmail.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0612345677",
+  "birth_date": "1996-07-07"
+}
+
+### Création Customer 8
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "customer8",
+  "email": "customer8@gmail.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0612345678",
+  "birth_date": "1997-08-08"
+}
+
+### Création Customer 9
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "customer9",
+  "email": "customer9@gmail.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0612345679",
+  "birth_date": "1998-09-09"
+}
+
+### Création Customer 10
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "customer10",
+  "email": "customer10@gmail.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0612345680",
+  "birth_date": "1999-10-10"
+}
+
+### Création Firme 1
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "firm1",
+  "email": "firm1@business.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Tech Solutions Inc.",
+  "address": "123 Tech Park, Innovation City",
+  "phone_number": "0612345680"
+}
+
+### Création Firme 2
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "firm2",
+  "email": "firm2@business.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Digital Innovations Ltd",
+  "address": "456 Digital Ave, Tech District",
+  "phone_number": "0662345680"
+}
+
+### Création Firme 3
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "firm3",
+  "email": "firm3@business.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Web Masters LLC",
+  "address": "789 Web Street, Silicon Valley",
+  "phone_number": "0612345980"
+}
+
+### Création Firme 4
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "firm4",
+  "email": "firm4@business.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Data Analytics Corp",
+  "address": "101 Data Drive, Cloud City",
+  "phone_number": "0692345680"
+}
+
+### Création Firme 5
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "firm5",
+  "email": "firm5@business.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "AI Pioneers GmbH",
+  "address": "202 AI Boulevard, Future Town",
+  "phone_number": "0612305680"
+}
+
+### Création Firme 6
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "firm6",
+  "email": "firm6@business.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Cyber Security Partners",
+  "address": "303 Firewall Lane, Safe Harbor",
+  "phone_number": "0612345681"
+}
+
+### Création Firme 7
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "firm7",
+  "email": "firm7@business.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Cloud Systems SA",
+  "address": "404 Virtual Street, Network City",
+  "phone_number": "0612345682"
+}
+
+### Création Firme 8
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "firm8",
+  "email": "firm8@business.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Mobile Apps Co",
+  "address": "505 App Avenue, Smartphone Town",
+  "phone_number": "0612345683"
+}
+
+### Création Firme 9
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "firm9",
+  "email": "firm9@business.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Blockchain Technologies",
+  "address": "606 Crypto Road, Decentralized City"
+}
+
+### Création Firme 10
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "firm10",
+  "email": "firm10@business.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "IoT Solutions Ltd",
+  "address": "707 Sensor Lane, Connected Town"
+}
+
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "owner",
+  "email": "sinistre12@gmail.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0123456789",
+  "birth_date": "1990-05-20"
+}
+
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "KARA_225",
+  "email": "Attaangek@gmail.com",
+  "password": "Romaric1",
+  "user_type": "customer",
+  "phone": "0145896230",
+  "birth_date": "2000-05-20"
+}
+
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "issif",
+  "email": "issifm@business.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "issif Tech Solutions Inc.",
+  "address": "123 Tech Park, Innovation City"
+}
+
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "cainvest",
+  "email": "cainvest@gmail.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Caladrius Inc.",
+  "address": "225 Cocody, Innovation City",
+  "phone_number": "0102030405"
+}
+
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "Ismo shop",
+  "email": "Caladrius25@gmail.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Ismo shop",
+  "company_category": "industrie",
+  "siret": "12347678932589",
+  "address": "225 Cocody, Innovation City"
+}

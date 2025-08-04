@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Avg 
 from django.utils.translation import gettext_lazy as _
 from account.models import FirmProfile
+from django.db.models import Q 
 
 class Company(models.Model):
     """
@@ -52,6 +53,34 @@ class Company(models.Model):
         # 'reviews' vient du related_name, 'rating' est le champ de note dans Review
         return self.reviews.aggregate(Avg('rating'))['rating__avg'] or 0.0
 
+    @classmethod
+    def search(cls, **filters):
+        """
+        Méthode de recherche avancée
+        Exemple d'utilisation: Company.search(category='RH', min_rating=4)
+        """
+        queryset = cls.objects.all()
+        
+        if category := filters.get('category'):
+            queryset = queryset.filter(category=category)
+            
+        if query := filters.get('query'):
+            queryset = queryset.filter(
+                Q(name__user__username__icontains=query) |
+                Q(description__icontains=query)
+            )
+            
+        if min_rating := filters.get('min_rating'):
+            queryset = queryset.annotate(avg_rating=Avg('reviews__rating'))\
+                              .filter(avg_rating__gte=min_rating)
+                              
+        return queryset.distinct()
+
+    @classmethod
+    def get_category_choices(cls):
+        """Formatte les choix de catégorie pour l'API"""
+        return [{'value': choice[0], 'label': str(choice[1])} 
+                for choice in cls.CategoryChoices.choices]
     def __str__(self):
         return f'{self.name}'
 

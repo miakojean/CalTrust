@@ -1,11 +1,24 @@
+# serializers.py
 from rest_framework import serializers
 from .models import Company
 
-class CompanySerializer(serializers.ModelSerializer):
+class CompanySearchSerializer(serializers.ModelSerializer):
+    category_display = serializers.CharField(
+        source='get_category_display', 
+        read_only=True
+    )
+    average_rating = serializers.FloatField(read_only=True)  # Suppression du source
+    review_count = serializers.IntegerField(read_only=True)  # Idem ici
+    
     class Meta:
         model = Company
-        fields = '__all__'
-    
-    # Optionnel: Si vous voulez inclure les statistiques des avis
-    review_count = serializers.ReadOnlyField()
-    average_rating = serializers.ReadOnlyField()
+        fields = [
+            'id',
+            'name',
+            'category',
+            'category_display',
+            'description',
+            'website',
+            'average_rating',  # Correspond à la propriété du modèle
+            'review_count'     # Correspond à la propriété du modèle
+        ]

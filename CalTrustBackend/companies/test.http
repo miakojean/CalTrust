@@ -1,5 +1,8 @@
 GET http://127.0.0.1:8000/companies/
 Content-Type: application/json
 
-GET http://127.0.0.1:8000/companies/?category=CE
+GET http://127.0.0.1:8000/companies/categories/
+Accept: application/json
+
+GET http://127.0.0.1:8000/companies/search/?category=RH
 Accept: application/json

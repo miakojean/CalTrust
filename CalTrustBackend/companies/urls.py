@@ -2,6 +2,7 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path("", MyFimrsUser.as_view(), name="firms"),
-    path('/category/<str:category_code>/', CompanyByCategory.as_view(), name='firms-by-category')
+    path("", MyFirmsUser.as_view(), name="firms"),
+    path('categories/', CategoryListView.as_view(), name='category-list'),
+    path('search/', CompanySearchView.as_view(), name='company-search'),
 ]
