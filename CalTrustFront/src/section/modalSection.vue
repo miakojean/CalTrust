@@ -101,43 +101,62 @@ export default {
     
     const token = ref('')
     const firmId = ref(props.firmId)
+    
     async function submitForm() {
-      isloading.value = true
+      isloading.value = true;
+      
+      // Validation
       if (comment.value.trim() === '') {
         message.value.errorMessage = "Le commentaire ne peut être vide.";
-        isloading.value = false
+        isloading.value = false;
         return;
       }
       
-      message.value.errorMessage = ""
-      token.value = localStorage.getItem('userToken');
-
+      message.value.errorMessage = "";
+      
       try {
-        // 1. Préparer le corps (body) de la requête avec le refresh token
-        const requestBody = {
-            rating: ratingValue.value,
-            comment: comment.value
-        };
-
-        // 2. Préparer les en-têtes (headers) avec l'access token
-        const requestConfig = {
-          headers: {
-            'Authorization': `Bearer ${token.value}`
-          }
-        };
-
-        // 3. Envoyer la requête POST avec l'URL, le corps et les en-têtes
-        await api.post(`/reviews/firms/${firmId.value}/`, requestBody, requestConfig);
-        message.value.successMessage = "Avis posté avec succès!!!, merci pour votre temps"
-        isloading.value = false
-        setTimeout(() => close(), 3000);
+        const response = await api.post(`/reviews/firms/${firmId.value}/`, {
+          rating: ratingValue.value,
+          comment: comment.value
+        });
         
-        console.log("Avis posté surl'entreprise");
-
+        message.value.successMessage = "Avis posté avec succès ! Merci pour votre temps";
+        console.log("Avis posté sur l'entreprise", response.data);
+        
+        setTimeout(() => close(), 3000);
       } catch (error) {
-        console.error("Un problème est survenu:", error.response ? error.response.data : error.message);
-        // Même en cas d'erreur (ex: token expiré), il faut déconnecter l'utilisateur côté client.
+        handleSubmissionError(error);
+      } finally {
+        isloading.value = false;
       }
+    }
+
+    // Gestion centralisée des erreurs
+    function handleSubmissionError(error) {
+      if (error.response) {
+        switch (error.response.status) {
+          case 401:
+            message.value.errorMessage = "Session expirée. Veuillez vous reconnecter.";
+            router.push('/login');
+            break;
+          case 403:
+            message.value.errorMessage = "Permission refusée.";
+            break;
+          case 500:
+            message.value.errorMessage = "Erreur serveur. Veuillez réessayer plus tard.";
+            break;
+          default:
+            message.value.errorMessage = error.response.data?.message || "Erreur lors de la soumission";
+        }
+      } else {
+        message.value.errorMessage = "Problème de connexion. Vérifiez votre réseau.";
+      }
+      
+      console.error("Erreur:", {
+        message: error.message,
+        response: error.response?.data,
+        config: error.config
+      });
     }
 
     return {
