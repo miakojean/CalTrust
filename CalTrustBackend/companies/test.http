@@ -1,8 +1,42 @@
 GET http://127.0.0.1:8000/companies/
 Content-Type: application/json
 
+POST http://127.0.0.1:8000/account/login/
+Content-Type: application/json
+
+{
+  "email": "cainvest@gmail.com",
+  "password": "supersecurepassword"
+}
+
+GET http://127.0.0.1:8000/companies/my-company/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU0NDMyNDU2LCJpYXQiOjE3NTQ0Mjg4NTYsImp0aSI6ImJmNzE5OGQ4MzFlYjQ4OTc4N2QwNTVkMjJjZTc0NTNmIiwidXNlcl9pZCI6IjEwIn0.B1D4xYkThcKwyFcMRE4YNzBTK2PWTzVTCOhJAWSqk-c
+
+
+POST http://127.0.0.1:8000/companies/my-company/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU0NDMyNDU2LCJpYXQiOjE3NTQ0Mjg4NTYsImp0aSI6ImJmNzE5OGQ4MzFlYjQ4OTc4N2QwNTVkMjJjZTc0NTNmIiwidXNlcl9pZCI6IjEwIn0.B1D4xYkThcKwyFcMRE4YNzBTK2PWTzVTCOhJAWSqk-c
+
+{
+    "category":"ML"
+}
+
 GET http://127.0.0.1:8000/companies/categories/
 Accept: application/json
 
 GET http://127.0.0.1:8000/companies/search/?category=RH
 Accept: application/json
+
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "cainvest",
+  "email": "cainvest@gmail.com",
+  "password": "supersecurepassword",
+  "user_type": "firm",
+  "company_name": "Caladrius Inc.",
+  "address": "225 Cocody, Innovation City",
+  "phone_number": "0102030405"
+}

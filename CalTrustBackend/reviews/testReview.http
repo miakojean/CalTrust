@@ -18,7 +18,6 @@ POST http://127.0.0.1:8000/reviews/firms/4/
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzNjMzNjQwLCJpYXQiOjE3NTM2MzAwNDAsImp0aSI6IjdiM2MxNDU1Y2ZiNDRhZWE5YzAyOGQ5ZmM4MDBhZGU1IiwidXNlcl9pZCI6IjIifQ.qGeCTC6PHD6NZ2y2SbqQ51cWBIr4YiMUBjs-_GyYuxA"
 
-
 {
   "rating": 4,
   "comment": "Service Exelent, je recommande ils ont fait mon site en moins d'une semaine"
