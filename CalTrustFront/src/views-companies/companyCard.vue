@@ -7,6 +7,7 @@
             <div class="profile__info">
                 <span>{{ firm }}</span>
                 <p class="message__body">{{ category }}</p>
+                <p></p>
             </div>
         </div>
         <div class="divider"></div>
@@ -30,7 +31,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import fakeRating from '@/components/tools/fakeRating.vue';
 import cardMainButton from '@/components/button/cardMainButton.vue';
@@ -59,17 +60,19 @@ export default {
         }
     },
 
-    components:{
-        fakeRating, cardMainButton, cardMoreButton, ratingComponent,
-        ratingComponent, modalSection,
+    components: {
+        fakeRating, 
+        cardMainButton, 
+        cardMoreButton, 
+        ratingComponent,
         modalSection
     },
 
     setup(props) {
         const showModal = ref(false);
         
-        const router = useRouter() 
-
+        const router = useRouter()
+        
         const openModal = async () => {  // <-- Ajout de async
             const accessToken = localStorage.getItem('userToken');
             const refreshToken = localStorage.getItem('userTokenRefresh');

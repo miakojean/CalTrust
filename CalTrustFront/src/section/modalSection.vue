@@ -72,6 +72,10 @@ export default {
     const router = useRouter();
     const isOpen = ref(props.modelValue);
 
+    watch(() => props.modelValue, (newVal) => {
+      isOpen.value = newVal;
+    })
+
     watch(isOpen, (newVal) => {
       toggleBodyScroll(newVal);
       if (!newVal) {
@@ -87,7 +91,8 @@ export default {
     };
 
     const close = () => {
-      toggleBodyScroll(false); // Ajoutez cette ligne pour restaurer le défilement
+      toggleBodyScroll(false);
+      isOpen.value = false;
       emit('update:modelValue', false);
     };
 
