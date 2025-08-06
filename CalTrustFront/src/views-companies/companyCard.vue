@@ -30,14 +30,13 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import fakeRating from '@/components/tools/fakeRating.vue';
 import cardMainButton from '@/components/button/cardMainButton.vue';
 import cardMoreButton from '@/components/button/cardMoreButton.vue';
 import ratingComponent from '@/components/tools/ratingComponent.vue';
-import { ref } from 'vue';
-import RatingComponent from '../../../CalTrustFront/src/components/tools/ratingComponent.vue';
 import modalSection from '@/section/modalSection.vue';
-import { useRouter } from 'vue-router';
 
 const defaultPic = new URL('@/assets/pictures/devnomicus.png', import.meta.url).href;
 
@@ -62,23 +61,30 @@ export default {
 
     components:{
         fakeRating, cardMainButton, cardMoreButton, ratingComponent,
-        RatingComponent, modalSection,
+        ratingComponent, modalSection,
         modalSection
     },
 
     setup(props) {
         const showModal = ref(false);
         
-        const router = useRouter()
+        const router = useRouter() 
 
-        const accessToken = localStorage.getItem('userToken');
-        const refreshToken = localStorage.getItem('userTokenRefresh'); 
-
-        const openModal = () => {
-            if(!accessToken || !refreshToken){
-                router.push('/signin')
+        const openModal = async () => {  // <-- Ajout de async
+            const accessToken = localStorage.getItem('userToken');
+            const refreshToken = localStorage.getItem('userTokenRefresh');
+            
+            if (!accessToken || !refreshToken) {
+                try {
+                    await router.push('/signin'); // <-- Ajout de await
+                    return; // S'assure qu'aucun code ne s'exécute après la navigation
+                } catch (error) {
+                    console.error("Échec de la navigation:", error);
+                    return;
+                }
             }
             showModal.value = true;
+            console.log('Modal ouverte');
         };
 
         const handleSubmit = () => {
