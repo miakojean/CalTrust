@@ -23,7 +23,7 @@
             v-model="showModal" 
             :title="`Poster un avis sur`"
             :firm = firm
-            :firmId = user_id
+            :firmId = user
             @submit="handleSubmit"
         />
         

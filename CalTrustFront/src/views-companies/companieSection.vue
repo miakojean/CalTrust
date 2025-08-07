@@ -9,6 +9,7 @@
             :key="index"
             :firm="firm.name.company_name"
             :category="firm.category_display"
+            :user = "firm.firm_profile_id"
         />
     </div>
   </section>

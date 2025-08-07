@@ -28,7 +28,10 @@
         v-model="comment"/>
       </div>
       <div class="modal-footer">
-        <secondButton2 label="annuler"/>
+        <secondButton2 
+        label="annuler"
+        @click="close"
+        />
         <mainButton 
           label = "envoyer"
           :isLoading = isloading
@@ -135,7 +138,6 @@ export default {
         });
         
         message.value.successMessage = "Avis posté avec succès ! Merci pour votre temps";
-        console.log("Avis posté sur l'entreprise", response.data);
         
         setTimeout(() => close(), 3000);
       } catch (error) {
