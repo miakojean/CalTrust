@@ -6,17 +6,29 @@ Content-Type: application/json
   "password": "securepassword123"
 }
 
+POST http://127.0.0.1:8000/account/
+Content-Type: application/json
+
+{
+  "username": "owner",
+  "email": "sinistre12@gmail.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "phone": "0123456789",
+  "birth_date": "1990-05-20"
+}
+
 POST http://127.0.0.1:8000/account/login/
 Content-Type: application/json
 
 {
-  "email": "abdoulaziz@gmail.com",
-  "password": "Jeanyves123456@"
+  "email": "customer2@gmail.com",
+  "password": "securepassword123"
 }
 
-POST http://127.0.0.1:8000/reviews/firms/4/
+POST http://127.0.0.1:8000/reviews/firms/7/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzNjMzNjQwLCJpYXQiOjE3NTM2MzAwNDAsImp0aSI6IjdiM2MxNDU1Y2ZiNDRhZWE5YzAyOGQ5ZmM4MDBhZGU1IiwidXNlcl9pZCI6IjIifQ.qGeCTC6PHD6NZ2y2SbqQ51cWBIr4YiMUBjs-_GyYuxA"
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU0NTIzNDk5LCJpYXQiOjE3NTQ1MTk4OTksImp0aSI6ImI0ZGQ2Y2FjZTkwZTQ5ZmI5NDEyNmQxNTgxODc5MTU2IiwidXNlcl9pZCI6MTJ9.yP5RQBPrqoYzRVr1L70grK9LekJstvnG3nnXBV3JEtQ
 
 {
   "rating": 4,

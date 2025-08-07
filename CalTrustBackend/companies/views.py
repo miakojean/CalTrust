@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, serializers
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .serializer import CompanySearchSerializer, CompanyAsUser
+from .serializer import CompanySearchSerializer, CompanyAsUser, CompanySerializer
 from .models import Company
 from account.models import FirmProfile
 
@@ -97,7 +97,7 @@ class MyFirmsUser(APIView):
             companies = Company.objects.all().order_by('-created_at')[:4]
             
             # 2. Sérialiseur adapté incluant les stats
-            serializer = CompanySearchSerializer(companies, many=True)
+            serializer = CompanySerializer(companies, many=True)
             
             # 3 Ajouter si nécessaire le serialiser de firmProfile pour plus de données
             return Response({

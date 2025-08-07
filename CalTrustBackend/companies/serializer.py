@@ -3,12 +3,17 @@ from rest_framework import serializers
 from .models import Company
 from account.models import FirmProfile
 
+#On définit le serialiser de FirmProfile puisqu'ils sont liés
 class FirmProfileSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
+    
     class Meta:
         model = FirmProfile
-        fields = ['company_name', 'address']  # Champs à exposer
+        fields = ['user_id', 'company_name', 'address']
+        read_only_fields = ['user_id', 'company_name', 'address']
 
 # Class to manage company as FimrUser
+
 class CompanyAsUser(serializers.ModelSerializer):
     
     name = FirmProfileSerializer(read_only = True)
@@ -28,10 +33,19 @@ class CompanyAsUser(serializers.ModelSerializer):
 #class to get company
 
 class CompanySerializer(serializers.ModelSerializer):
-    # On ajoute le serializer de FirmProfile pour bien gérer l'objet imbriqué
+    # Le serializer imbriqué utilisera maintenant user_id au lieu de id
     name = FirmProfileSerializer(read_only=True)
-
-    # On ajoute ces propriétés en lecture seule, car elles sont calculées
+    
+    # Pour avoir directement l'ID du FirmProfile (user_id) au niveau racine
+    firm_profile_id = serializers.PrimaryKeyRelatedField(
+        source='name.user', 
+        read_only=True
+    )
+    category_display = serializers.CharField(
+        source='get_category_display', 
+        read_only=True
+    )
+    
     review_count = serializers.IntegerField(read_only=True)
     average_rating = serializers.FloatField(read_only=True)
 
@@ -40,7 +54,9 @@ class CompanySerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'name',
+            'firm_profile_id',  # Donne direct l'ID du FirmProfile
             'category',
+            'category_display',
             'description',
             'website',
             'review_count',
