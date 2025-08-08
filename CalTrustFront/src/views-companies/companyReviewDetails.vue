@@ -35,6 +35,10 @@ export default {
         SecondStepper
     },
 
+    props:{
+        
+    },
+
     setup() {
         const reviews = ref({});
 

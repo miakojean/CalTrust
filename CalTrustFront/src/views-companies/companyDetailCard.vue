@@ -79,32 +79,10 @@ export default {
         
         const router = useRouter()
         
-        const openModal = async () => {  // <-- Ajout de async
-            const accessToken = localStorage.getItem('userToken');
-            const refreshToken = localStorage.getItem('userTokenRefresh');
-            
-            if (!accessToken || !refreshToken) {
-                try {
-                    await router.push('/signin'); // <-- Ajout de await
-                    return; // S'assure qu'aucun code ne s'exécute après la navigation
-                } catch (error) {
-                    console.error("Échec de la navigation:", error);
-                    return;
-                }
-            }
-            showModal.value = true;
-            console.log('Modal ouverte');
-        };
-
-        const handleSubmit = () => {
-            console.log('Formulaire soumis pour', props.firm);
-            // Ajoutez ici la logique de soumission
-        };
+        
 
         return { 
             showModal,
-            openModal,
-            handleSubmit
         };
     }
 

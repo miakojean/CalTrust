@@ -1,20 +1,20 @@
 <template>
   <article class="testimonial-card">
     <div class="title">
-        <h2>Témoignages</h2>
+        <h2 class="subtitle">Témoignages</h2>
     </div>
 
     <div class="divider"></div>
 
     <div class="title">
         <h4>Total Témoignages</h4>
-        <h2>10.7K</h2>
+        <h2 class="subtitle">10.7K</h2>
     </div>
 
     <div class="about__rating">
         <div class="rate__info">
             <h4>Note moyenne</h4>
-            <h2>4.0</h2>
+            <h2 class="subtitle">4.0</h2>
         </div>
         <ratingComponent 
             :rating="rating" 
@@ -97,9 +97,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: normal;
-  gap: 0.5rem;
+  gap: 1rem;
   padding: 1rem;
-  border-radius: 1rem;
   background: white;
   width: 100%;
   max-width: 400px;
@@ -122,6 +121,10 @@ export default {
     display:flex;
     flex-direction: column;
     justify-content:start;
+}
+
+.subtitle{
+    text-align: start;
 }
 
 .about__rating{

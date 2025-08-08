@@ -68,7 +68,6 @@ export default {
   color: white;
   font-size: 1rem;
   height: 1.5rem;
-  border-radius: 0.2rem;
 }
 
 .divider {
