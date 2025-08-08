@@ -43,7 +43,7 @@ api.interceptors.response.use(
             } catch (refreshError) {
                 // Cleanup et redirection si le refresh échoue
                 localStorage.removeItem('userToken');
-                router.push('/login?session_expired=true');
+                router.push('/signin?session_expired=true');
                 return Promise.reject(refreshError);
             }
         }
@@ -51,7 +51,7 @@ api.interceptors.response.use(
         // Gestion d'autres erreurs communes
         if (error.response?.status === 401) {
             localStorage.removeItem('userToken');
-            router.push('/login');
+            router.push('/signin');
         }
 
         return Promise.reject(error);

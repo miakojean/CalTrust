@@ -11,24 +11,19 @@
         <h2>10.7K</h2>
     </div>
 
-    <div class="title">
-        <h4>Note moyenne</h4>
-        <h2>4.0</h2>
+    <div class="about__rating">
+        <div class="rate__info">
+            <h4>Note moyenne</h4>
+            <h2>4.0</h2>
+        </div>
         <ratingComponent 
             :rating="rating" 
             :max="5"
             size="small"
         />
-        <p>La moyenne de vos notes</p>
     </div>
 
     <global-rating/>
-
-    <div class="message">
-        <p class="message__body">
-            {{ message }}
-        </p>
-    </div>
     
     <div class="divider__two"></div>
 
@@ -49,10 +44,6 @@ export default {
         company:{
             type:String,
             default:'anonymous'
-        },
-        message:{
-            type: String,
-            default:"Bienvenu au pays mon fils"
         },
         info:{
             type: String,
@@ -107,10 +98,9 @@ export default {
   flex-direction: column;
   align-items: normal;
   gap: 0.5rem;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 1rem;
   background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   width: 100%;
   max-width: 400px;
 
@@ -128,68 +118,18 @@ export default {
   margin: 0.5rem 0; /* Espacement vertical */
 }
 
-.profile{
-    width: 100%;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    gap: 1rem;
+.title{
+    display:flex;
+    flex-direction: column;
+    justify-content:start;
 }
 
-.pp{
-    height: 60px;
-    width: 60px;
-    border-radius: 50%;
-}
-
-.profile__info{
+.about__rating{
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
     justify-content: start;
-}
-
-.profile__info span{
-    font-weight: 500;
-    font-size: 1rem;
-    color: var(--primary-color);
-}
-
-.pp__firm{
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    background: #d87422;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.pp__firm span{
-    color: white;
-    font-weight: 600;
-}
-
-.utility{
-    display: flex;
-    justify-content: start;
-    gap: 0.5em;
-}
-
-.utility i {
-    cursor: pointer;
-
-}
-
-.utility i:hover {
-    cursor: pointer;
-    
-}
-
-.is_right{
-    font-size: 0.8rem;
-    width: 100%;
-    text-align: start;
+    align-items: normal;
+    gap: 1rem;
 }
 
 @media (min-width: 766px) {

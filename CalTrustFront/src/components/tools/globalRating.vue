@@ -51,12 +51,18 @@ export default {
   gap: 0.5rem;
 }
 
+.stars__container p{
+  font-size: 0.9rem;
+}
 .stars {
   display: flex;
   font-size: 1rem;
   gap: 0.5rem;
 }
 
+.stars p{
+  font-size: 0.9rem;
+}
 .my__star {
   padding: 0.2rem;
   color: white;
