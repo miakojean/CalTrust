@@ -1,6 +1,9 @@
 GET http://127.0.0.1:8000/companies/
 Content-Type: application/json
 
+GET http://127.0.0.1:8000/companies/7
+Content-Type: application/json
+
 POST http://127.0.0.1:8000/account/login/
 Content-Type: application/json
 
@@ -11,7 +14,7 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/companies/my-company/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU0NDMyNDU2LCJpYXQiOjE3NTQ0Mjg4NTYsImp0aSI6ImJmNzE5OGQ4MzFlYjQ4OTc4N2QwNTVkMjJjZTc0NTNmIiwidXNlcl9pZCI6IjEwIn0.B1D4xYkThcKwyFcMRE4YNzBTK2PWTzVTCOhJAWSqk-c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU0NjU2MTEyLCJpYXQiOjE3NTQ2NTI1MTIsImp0aSI6Ijc5ZDA1YjFlZDMwNzRiNjNhYjNlZGM0MzM4NzA5ZjhmIiwidXNlcl9pZCI6MTN9.Iy8wNPOENuKcLdcOgZMLiw03Qvr0jheGYtkhgxYvANA
 
 
 POST http://127.0.0.1:8000/companies/my-company/

@@ -88,28 +88,52 @@ class MyCompanyUserAccount(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
 
-class MyFirmsUser(APIView):
+class LatestCompanies(APIView):
     permission_classes = [AllowAny]
-
+    
     def get(self, request):
+        limit = request.query_params.get('limit', 4)  # Rend la limite configurable
         try:
-            # 1. Utilisez Company plutôt que FirmProfile pour avoir accès aux métriques
-            companies = Company.objects.all().order_by('-created_at')[:4]
-            
-            # 2. Sérialiseur adapté incluant les stats
+            companies = Company.objects.all().order_by('-created_at')[:int(limit)]
             serializer = CompanySerializer(companies, many=True)
+            return Response({
+                'status': 'success',
+                'count': len(serializer.data),
+                'data': serializer.data
+            }, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class CompanyDetail(APIView):
+    permission_classes = [AllowAny]
+    
+    def get(self, request, id):
+        try:
+            # Utilisez select_related et prefetch_related pour optimiser les requêtes
+            company = Company.objects.select_related(
+                'name',
+                'name__user'
+            ).prefetch_related(
+                'name__reviews',
+                'name__reviews__customer',
+                'name__reviews__customer__user',
+                'name__reviews__response'
+            ).get(id=id)
             
-            # 3 Ajouter si nécessaire le serialiser de firmProfile pour plus de données
+            serializer = CompanySerializer(company)
             return Response({
                 'status': 'success',
                 'data': serializer.data
             }, status=status.HTTP_200_OK)
-            
-        except Exception as e:
+        except Company.DoesNotExist:
             return Response({
                 'status': 'error',
-                'message': str(e)  # Afficher l'erreur réelle pour le débogage
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                'message': "Entreprise non trouvée"
+            }, status=status.HTTP_404_NOT_FOUND)
 
 
 class CategoryListView(APIView):
