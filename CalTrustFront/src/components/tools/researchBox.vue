@@ -35,6 +35,7 @@ label{
     cursor: pointer;
     color: var(--primary-color);
     font-weight: 600;
+    text-align: center;
 }
 
 .input__family{

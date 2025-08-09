@@ -145,6 +145,7 @@ const logout = async () => {
     // Mettez à jour l'état de votre application (ex: isLoggedIn.value = false)
     // et redirigez l'utilisateur si nécessaire.
   }
+  router.push('/signin');
 };
 
 onMounted(() => {
