@@ -43,7 +43,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .my__rating_container {
   display: flex;
   justify-content: start;

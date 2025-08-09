@@ -11,23 +11,35 @@
             </div>
         </div>
         <div class="divider"></div>
-        <rating-component/>
-        <div class="btn__frame">
-            <cardMainButton 
-                @click="openModal"
+        <div class="company_info flex__center">
+            <h4>Informations de l'entreprise</h4>
+            <infofamily/>
+            <infofamily
+                icon="ri-mail-line"
+                label="Email"
+                :info = "email"
             />
-            <cardMoreButton
-                @click="handleSubmit"
+            <infofamily
+                icon="fa-solid fa-globe"
+                label="Site internet"
+                :info = "website"
             />
         </div>
-            
-        <modal-section 
-            v-model="showModal" 
-            :title="`Poster un avis sur`"
-            :firm = firm
-            :firmId = user
-            @submit="handleSubmit"
-        />
+
+        <div class="divider"></div>
+        <div class="company_info flex__center">
+            <h4>Adresse de l'entreprise</h4>
+            <infofamily
+                icon="fa-solid fa-location-dot"
+                label="Addresse"
+                :info = "addresse"
+            />
+            <infofamily
+                icon="ri-home-4-line"
+                label="Pays"
+                info = "Côte d'Ivoire"
+            />
+        </div>
         
     </article>
 </template>
@@ -35,11 +47,7 @@
 <script>
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import fakeRating from '@/components/tools/fakeRating.vue';
-import cardMainButton from '@/components/button/cardMainButton.vue';
-import cardMoreButton from '@/components/button/cardMoreButton.vue';
-import ratingComponent from '@/components/tools/ratingComponent.vue';
-import modalSection from '@/section/modalSection.vue';
+import infofamily from '@/components/tools/infoFamily.vue';
 
 const defaultPic = new URL('@/assets/pictures/devnomicus.png', import.meta.url).href;
 
@@ -59,55 +67,32 @@ export default {
         },
         user:{
             type:Number
+        },
+        email:{
+            type:String,
+            default:"Caladrius@gmail.com"
+        },
+        website:{
+            type:String,
+            default:"www.caladrius.com"
+        },
+        addresse:{
+            type:String,
+            default:"04 Virtual Street, Network City"
         }
     },
 
-    emits:['clicked-firms'],
-
     components: {
-        fakeRating, 
-        cardMainButton, 
-        cardMoreButton, 
-        ratingComponent,
-        modalSection
+        infofamily
     },
 
-    setup(props, {emit}) {
+    setup(props) {
         const showModal = ref(false);
         
         const router = useRouter()
-        
-        const openModal = async () => {  // <-- Ajout de async
-            const accessToken = localStorage.getItem('userToken');
-            const refreshToken = localStorage.getItem('userTokenRefresh');
-            
-            if (!accessToken || !refreshToken) {
-                try {
-                    await router.push('/signin'); // <-- Ajout de await
-                    return; // S'assure qu'aucun code ne s'exécute après la navigation
-                } catch (error) {
-                    console.error("Échec de la navigation:", error);
-                    return;
-                }
-            }
-            showModal.value = true;
-            console.log('Modal ouverte');
-        };
 
-        const handleSubmit = () => {
-            console.log('Formulaire soumis pour', props.user);
-            router.push({
-                name: 'entreprises-detail',
-                params: { firm: props.firm }, // clé = "firm"
-                state: { id: props.user }
-            });
-        };
-
-        return {
-            router,
+        return { 
             showModal,
-            openModal,
-            handleSubmit,
         };
     }
 
@@ -122,7 +107,7 @@ export default {
   padding: 0.5rem;
   border-radius: 1rem;
   background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  /* box-shadow: 0 2px 8px rgba(0,0,0,0.1);*/
   width: 100%;
   max-width: 400px;
 }

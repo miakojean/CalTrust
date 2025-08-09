@@ -16,11 +16,20 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
+    
     {
       path:'/entreprises',
       name: 'entreprise',
       component: () => import('../views/firms.vue')
     },
+
+    {
+      path: '/entreprises/details/:firm',
+      name: 'entreprises-detail',
+      component: () => import('../views-companies/details/companyDetails.vue'),
+      props: true // permet d’injecter le paramètre comme prop
+    },
+
     {
       path:'/avis',
       name: 'avis',

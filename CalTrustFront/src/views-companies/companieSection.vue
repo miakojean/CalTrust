@@ -7,8 +7,9 @@
         <companyCard 
             v-for="(firm, index) in firms"
             :key="index"
-            :firm="firm.name"
+            :firm="firm.name.company_name"
             :category="firm.category_display"
+            :user = "firm.firm_profile_id"
         />
     </div>
   </section>

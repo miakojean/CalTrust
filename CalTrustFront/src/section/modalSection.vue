@@ -28,7 +28,10 @@
         v-model="comment"/>
       </div>
       <div class="modal-footer">
-        <secondButton2 label="annuler"/>
+        <secondButton2 
+        label="annuler"
+        @click="close"
+        />
         <mainButton 
           label = "envoyer"
           :isLoading = isloading
@@ -45,6 +48,7 @@ import rating from '@/components/tools/rating.vue';
 import inputArea from '@/components/tools/inputArea.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import secondButton2 from '@/components/button/secondButton2.vue';
+import { useRouter } from 'vue-router';
 import api from '@/_services/_authservices';
 import { ref, watch } from 'vue';
 
@@ -67,11 +71,22 @@ export default {
   emits: ['update:modelValue', 'submit'],
   
   setup(props, { emit }) {
+
+    const router = useRouter();
     const isOpen = ref(props.modelValue);
 
     watch(() => props.modelValue, (newVal) => {
       isOpen.value = newVal;
+    })
+
+    watch(isOpen, (newVal) => {
       toggleBodyScroll(newVal);
+      if (!newVal) {
+        // Réinitialise les messages et valeurs quand la modal se ferme
+        message.value = { errorMessage: "", successMessage: "" };
+        comment.value = '';
+        ratingValue.value = 1;
+      }
     });
 
     const toggleBodyScroll = (shouldDisable) => {
@@ -79,6 +94,8 @@ export default {
     };
 
     const close = () => {
+      toggleBodyScroll(false);
+      isOpen.value = false;
       emit('update:modelValue', false);
     };
 
@@ -121,7 +138,6 @@ export default {
         });
         
         message.value.successMessage = "Avis posté avec succès ! Merci pour votre temps";
-        console.log("Avis posté sur l'entreprise", response.data);
         
         setTimeout(() => close(), 3000);
       } catch (error) {
@@ -137,13 +153,16 @@ export default {
         switch (error.response.status) {
           case 401:
             message.value.errorMessage = "Session expirée. Veuillez vous reconnecter.";
-            router.push('/login');
+            toggleBodyScroll(false);
+            router.push('/signin');
             break;
           case 403:
             message.value.errorMessage = "Permission refusée.";
+            router.push('/signin');
             break;
           case 500:
             message.value.errorMessage = "Erreur serveur. Veuillez réessayer plus tard.";
+            router.push('/signin');
             break;
           default:
             message.value.errorMessage = error.response.data?.message || "Erreur lors de la soumission";
