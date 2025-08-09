@@ -14,7 +14,7 @@
       </div>
       <div class="company__center">
         <companyReviewDetails
-  
+          
         />
       </div>
       <div class="company__right-sidebar">
@@ -60,6 +60,8 @@ export default {
       category:""
     })
 
+    const reviews = ref([])
+
     const firmId = history.state.id;
 
     onMounted(async () => { 
@@ -69,6 +71,7 @@ export default {
         if (response) {
           // On récupère le bloc "name"
           const nameData = response.data.name;
+          const reviewsData = response.data.reviews
           const globalResponse = response.data
 
           firm.value = {
@@ -79,6 +82,8 @@ export default {
             website: globalResponse.website,     // Ajoutez
             category: globalResponse.category_display   // Ajoutez si nécessaire
           };
+
+          reviews.value = reviewsData
 
           console.log('Entreprise chargée:', firm.value);
         }

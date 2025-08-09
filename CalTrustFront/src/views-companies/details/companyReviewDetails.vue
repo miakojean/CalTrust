@@ -4,10 +4,10 @@
     
     <div class="testimonial__container">
       <!-- Boucle sur les avis -->
-      <testimonials 
+      <testimonialCardForFirm 
         v-for="(review, index) in reviews"
-        :key="review.id || index"  
-        :info="review.user || 'Anonyme'"
+        :key="review.id || index"
+        :info="review.customer_name || 'Anonyme'"  
         :rating="review.rating"
         :message="review.comment"
         :date="review.local_date"
@@ -25,14 +25,14 @@
 
 <script>
 import SecondStepper from '@/components/cards/secondStepper.vue';
-import testimonials from '@/components/cards/testimonials.vue';
+import testimonialCardForFirm from '@/components/cards/testimonialCardForFirm.vue';
 import { onMounted, ref } from 'vue';
-import { fetchRecentsReviews } from '@/_services/_fetchreviews';
+import { fetchRecentsFirms } from '../_companyservices';
 
 export default {
     components: {
-        testimonials,
-        SecondStepper
+        SecondStepper,
+        testimonialCardForFirm
     },
 
     props:{
@@ -42,26 +42,40 @@ export default {
     setup() {
         const reviews = ref({});
 
-        onMounted(async () => {
+        const firm = ref({})
+
+        const firmId = history.state.id;
+
+        onMounted(async () => { 
             try {
-                const apiData = await fetchRecentsReviews();
-                
-                // Si l'API retourne { status, data }
-                if (apiData.status === 'success') {
-                reviews.value = apiData.data;
-                } 
-                // Si l'API retourne directement le tableau
-                else if (Array.isArray(apiData)) {
-                reviews.value = apiData;
+            const response = await fetchRecentsFirms(firmId);
+
+                if (response) {
+                // On récupère le bloc "name"
+                const nameData = response.data.name;
+                const reviewsData = response.data.reviews
+                const globalResponse = response.data
+
+                firm.value = {
+                    id: nameData.user_id,
+                    company_name: nameData.company_name,
+                    address: nameData.address,
+                    email: nameData.email,        // Ajoutez
+                    website: globalResponse.website,     // Ajoutez
+                    category: globalResponse.category_display   // Ajoutez si nécessaire
+                };
+
+                reviews.value = reviewsData
+
+                console.log('Entreprise chargée:', firm.value, reviews.value);
                 }
-                
             } catch (error) {
-                error.value = error.message;
+                console.error("Erreur de chargement:", error);
             }
         });
 
         return {
-            reviews
+            reviews, firm, firmId
         }
     }
 }
