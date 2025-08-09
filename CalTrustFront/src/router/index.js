@@ -24,11 +24,12 @@ const router = createRouter({
     },
 
     {
-      path:'/entreprises/details',
-      name:'entreprises detail',
-      component: () => import('../views-companies/companyDetails.vue')
+      path: '/entreprises/details/:firm',
+      name: 'entreprises-detail',
+      component: () => import('../views-companies/details/companyDetails.vue'),
+      props: true // permet d’injecter le paramètre comme prop
     },
-    
+
     {
       path:'/avis',
       name: 'avis',

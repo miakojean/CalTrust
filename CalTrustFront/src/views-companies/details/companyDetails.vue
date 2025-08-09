@@ -19,21 +19,44 @@
 <script>
 import newNavbar from '@/layout/newNavbar.vue';
 import companyDetailSection from './companyDetailSection.vue';
-import companyReviews from './companyReviews.vue';
+import companyReviews from '../companyReviews.vue';
 import globalRatingCard from '@/components/cards/globalRatingCard.vue';
 import companyReviewDetails from './companyReviewDetails.vue';
 import footerSection from '@/layout/footerSection.vue';
+import { fetchRecentsFirms } from '../_companyservices';
+import { ref, onMounted } from 'vue';
 
 export default {
 
-    components:{
-        newNavbar,
-        footerSection,
-        companyReviews,
-        companyDetailSection,
-        companyReviewDetails,
-        globalRatingCard
-    }
+  components:{
+    newNavbar,
+    footerSection,
+    companyReviews,
+    companyDetailSection,
+    companyReviewDetails,
+    globalRatingCard
+  },
+
+  setup(){
+    
+    const firm = ref({})
+
+    const firmId = history.state.id;
+
+    onMounted( async ( ) => { 
+      try {
+        const response = await fetchRecentsFirms(firmId);
+        if (response) {
+          firm.value = response.data; // Stockez les données
+          console.log('Entreprise récente chargée:', firm.value);
+        }
+      } catch (error) {
+          console.error("Erreur de chargement:", error);
+      }
+    });
+
+    return {firm, firmId}
+  }
 
 }
 </script>

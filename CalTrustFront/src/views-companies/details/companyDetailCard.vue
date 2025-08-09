@@ -17,12 +17,12 @@
             <infofamily
                 icon="ri-mail-line"
                 label="Email"
-                info = "caladrius@gmail.com"
+                :info = "email"
             />
             <infofamily
                 icon="fa-solid fa-globe"
                 label="Site internet"
-                info = "non fourni"
+                :info = "website"
             />
         </div>
 
@@ -32,7 +32,7 @@
             <infofamily
                 icon="fa-solid fa-location-dot"
                 label="Addresse"
-                info = "04 Virtual Street, Network City"
+                :info = "addresse"
             />
             <infofamily
                 icon="ri-home-4-line"
@@ -67,6 +67,18 @@ export default {
         },
         user:{
             type:Number
+        },
+        email:{
+            type:String,
+            default:"Caladrius@gmail.com"
+        },
+        website:{
+            type:String,
+            default:"www.caladrius.com"
+        },
+        addresse:{
+            type:String,
+            default:"04 Virtual Street, Network City"
         }
     },
 
@@ -78,8 +90,6 @@ export default {
         const showModal = ref(false);
         
         const router = useRouter()
-        
-        
 
         return { 
             showModal,

@@ -23,3 +23,5 @@ const fetchRecentsFirms = async (firms) => {
         throw new Error(`Impossible de charger les avis: ${error.message}`);
     }
 }
+
+export {fetchRecentsFirms}

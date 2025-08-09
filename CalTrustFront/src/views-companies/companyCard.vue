@@ -16,7 +16,9 @@
             <cardMainButton 
                 @click="openModal"
             />
-            <cardMoreButton/>
+            <cardMoreButton
+                @click="handleSubmit"
+            />
         </div>
             
         <modal-section 
@@ -60,6 +62,8 @@ export default {
         }
     },
 
+    emits:['clicked-firms'],
+
     components: {
         fakeRating, 
         cardMainButton, 
@@ -68,7 +72,7 @@ export default {
         modalSection
     },
 
-    setup(props) {
+    setup(props, {emit}) {
         const showModal = ref(false);
         
         const router = useRouter()
@@ -91,14 +95,19 @@ export default {
         };
 
         const handleSubmit = () => {
-            console.log('Formulaire soumis pour', props.firm);
-            // Ajoutez ici la logique de soumission
+            console.log('Formulaire soumis pour', props.user);
+            router.push({
+                name: 'entreprises-detail',
+                params: { firm: props.firm }, // clé = "firm"
+                state: { id: props.user }
+            });
         };
 
-        return { 
+        return {
+            router,
             showModal,
             openModal,
-            handleSubmit
+            handleSubmit,
         };
     }
 
