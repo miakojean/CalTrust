@@ -3,6 +3,10 @@
     <second-stepper title="Les entreprises recemment ajoutées"/>
     
     <div class="testimonial__container">
+
+        <template v-if="isLoading ===true">
+            <cardLoading v-for="n in 4" :key="n" />
+        </template>
       <!-- Boucle sur les avis -->
         <companyCard 
             v-for="(firm, index) in firms"
@@ -19,18 +23,21 @@
 import SecondStepper from '@/components/cards/secondStepper.vue';
 import testimonials from '@/components/cards/testimonials.vue';
 import companyCard from '@/views-companies/companyCard.vue';
+import cardLoading from '@/components/cards/cardLoading.vue';
 import { onMounted,ref } from 'vue';
 import { fetchRecentsFirms } from '@/_services/_fetchreviews';
 export default {
     components:{
         testimonials,
         SecondStepper,
-        companyCard
+        companyCard,
+        cardLoading
     },
 
     setup(){
 
         const firms = ref([]);
+        const isLoading = ref(true);
 
         onMounted( async ( ) => { 
             try {
@@ -52,7 +59,10 @@ export default {
         }
 
         return{
-            firms, voirFirm, myFirmId
+            firms,
+            isLoading,
+            voirFirm, 
+            myFirmId
         }
     }
 }
