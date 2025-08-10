@@ -4,7 +4,7 @@
     
     <div class="testimonial__container">
 
-        <template v-if="isLoading ===true">
+        <template v-if="isLoading === true">
             <cardLoading v-for="n in 4" :key="n" />
         </template>
       <!-- Boucle sur les avis -->
@@ -13,7 +13,7 @@
             :key="index"
             :firm="firm.name.company_name"
             :category="firm.category_display"
-            :user = "firm.firm_profile_id"
+            :user = "firm.id"
         />
     </div>
   </section>
@@ -41,12 +41,15 @@ export default {
 
         onMounted( async ( ) => { 
             try {
+                isLoading.value = true
                 const response = await fetchRecentsFirms();
                 if (response) {
                     firms.value = response.data; // Stockez les données
+                    isLoading.value = false
                     console.log('Entreprises récentes chargées:', firms.value);
                 }
             } catch (error) {
+                isLoading.value = false
                 console.error("Erreur de chargement:", error);
             }
         });

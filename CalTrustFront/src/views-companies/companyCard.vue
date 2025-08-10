@@ -91,11 +91,11 @@ export default {
                 }
             }
             showModal.value = true;
-            console.log('Modal ouverte');
+            console.log('Modal ouverte',props.firm);
         };
 
         const handleSubmit = () => {
-            console.log('Formulaire soumis pour', props.user);
+            console.log('Formulaire soumis pour', props.firm, props.user);
             router.push({
                 name: 'entreprises-detail',
                 params: { firm: props.firm }, // clé = "firm"

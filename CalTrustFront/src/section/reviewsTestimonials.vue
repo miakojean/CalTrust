@@ -4,7 +4,7 @@
     
     <div class="testimonial__container">
       
-        <template v-if="isLoading ===true">
+        <template v-if="isLoading === true">
             <cardLoading v-for="n in 4" :key="n" />
         </template>
 
@@ -50,22 +50,26 @@ export default {
 
         onMounted(async () => {
             try {
+
                 const apiData = await fetchRecentsReviews();
                 
                 if (apiData.status === 'success') {
                     reviews.value = apiData.data;
+                    isLoading.value = false
                 } 
                 else if (Array.isArray(apiData)) {
                     reviews.value = apiData;
+                    isLoading.value = false
                 }
             } catch (err) {
                 // Gestion des erreurs de l'API
                 console.error("Erreur lors de la récupération des avis:", err);
                 error.value = 'Impossible de charger les avis. Veuillez réessayer.';
+                isLoading.value = false
             } finally {
                 // Cet ajout est CRUCIAL. Il garantit que le chargement se termine
                 // que la requête ait réussi ou échoué.
-                isLoading.value = true;
+                isLoading.value = false;
             }
         });
 

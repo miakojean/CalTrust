@@ -40,42 +40,33 @@ export default {
     },
 
     setup() {
-        const reviews = ref({});
+        const reviews = ref([]);
 
         const firm = ref({})
 
         const firmId = history.state.id;
 
         onMounted(async () => { 
-            try {
+        try {
             const response = await fetchRecentsFirms(firmId);
 
-                if (response) {
-                // On récupère le bloc "name"
-                const nameData = response.data.name;
-                const reviewsData = response.data.reviews
-                const globalResponse = response.data
+            if (response?.data) {
+            // Données de base
 
-                firm.value = {
-                    id: nameData.user_id,
-                    company_name: nameData.company_name,
-                    address: nameData.address,
-                    email: nameData.email,        // Ajoutez
-                    website: globalResponse.website,     // Ajoutez
-                    category: globalResponse.category_display   // Ajoutez si nécessaire
-                };
+            // Données des avis
+            reviews.value = response.data.reviews.list || [];
+            
+            // Statistiques
 
-                reviews.value = reviewsData
-
-                console.log('Entreprise chargée:', firm.value, reviews.value);
-                }
-            } catch (error) {
-                console.error("Erreur de chargement:", error);
+            console.log('Données chargées:', { reviews: reviews.value });
             }
+        } catch (error) {
+            console.error("Erreur de chargement:", error);
+        }
         });
 
         return {
-            reviews, firm, firmId
+            reviews, firmId
         }
     }
 }
