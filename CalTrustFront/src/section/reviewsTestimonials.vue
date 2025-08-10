@@ -14,10 +14,10 @@
         :avatar="review.user_initial"
         :company="review.establishment"
       />
-      
+      <cardLoading/>
       <!-- State de chargement/erreur -->
       <div v-if="reviews.length === 0" class="loading-state">
-        Chargement des avis...
+        
       </div>
     </div>
   </section>
@@ -26,13 +26,15 @@
 <script>
 import SecondStepper from '@/components/cards/secondStepper.vue';
 import testimonials from '@/components/cards/testimonials.vue';
+import cardLoading from '@/components/cards/cardLoading.vue';
 import { onMounted, ref } from 'vue';
 import { fetchRecentsReviews } from '@/_services/_fetchreviews';
 
 export default {
     components: {
         testimonials,
-        SecondStepper
+        SecondStepper,
+        cardLoading
     },
 
     setup() {
