@@ -3,6 +3,7 @@ from django.db.models import Avg
 from django.utils.translation import gettext_lazy as _
 from account.models import FirmProfile
 from django.db.models import Q 
+from django.db.models import Count, Case, When, FloatField
 
 class Company(models.Model):
     """
@@ -35,7 +36,8 @@ class Company(models.Model):
         verbose_name=_("Catégorie")
     )
     description = models.TextField(blank=True, null=True, verbose_name=_("Description"))
-    website = models.URLField(max_length=200, blank=True, null=True, verbose_name=_("Site Web"))
+    website = models.URLField(max_length=200, blank=True, null=True, 
+                                verbose_name=_("Site Web"),)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date de création"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Date de mise à jour"))
 
@@ -46,12 +48,60 @@ class Company(models.Model):
         """Retourne le nombre total d'avis pour cette entreprise."""
         # 'reviews' vient du related_name dans le modèle Review
         return self.reviews.count()
+    
+    @property
+    def reviews(self):
+        """Accès aux avis via la relation FirmProfile"""
+        return self.name.reviews.all()
 
     @property
     def average_rating(self):
         """Calcule et retourne la note moyenne des avis."""
         # 'reviews' vient du related_name, 'rating' est le champ de note dans Review
         return self.reviews.aggregate(Avg('rating'))['rating__avg'] or 0.0
+
+    @property
+    def rating_stats(self):
+        """Version corrigée de la méthode stats"""
+        reviews = self.name.reviews  # Accès via FirmProfile
+        
+        stats = reviews.aggregate(
+            average=Avg('rating'),
+            total=Count('id'),
+            stars_5=Count('id', filter=Q(rating=5)),
+            stars_4=Count('id', filter=Q(rating=4)),
+            stars_3=Count('id', filter=Q(rating=3)),
+            stars_2=Count('id', filter=Q(rating=2)),
+            stars_1=Count('id', filter=Q(rating=1)),
+        )
+        
+        total = stats['total'] or 0
+        if total == 0:
+            return {
+                'average': 0.0,
+                'total': 0,
+                'distribution': {'5': 0, '4': 0, '3': 0, '2': 0, '1': 0},
+                'percentages': {'5': 0, '4': 0, '3': 0, '2': 0, '1': 0}
+            }
+        
+        return {
+            'average': round(stats['average'] or 0, 1),
+            'total': total,
+            'distribution': {
+                '5': stats['stars_5'],
+                '4': stats['stars_4'],
+                '3': stats['stars_3'],
+                '2': stats['stars_2'],
+                '1': stats['stars_1'],
+            },
+            'percentages': {
+                '5': round((stats['stars_5'] / total) * 100),
+                '4': round((stats['stars_4'] / total) * 100),
+                '3': round((stats['stars_3'] / total) * 100),
+                '2': round((stats['stars_2'] / total) * 100),
+                '1': round((stats['stars_1'] / total) * 100),
+            }
+        }
 
     @classmethod
     def search(cls, **filters):

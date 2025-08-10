@@ -31,6 +31,12 @@ class ReviewSerializer(serializers.ModelSerializer):
         ]
         depth = 1  # Pour inclure les données relationnelles
 
+class RatingStatsSerializer(serializers.Serializer):
+    average = serializers.FloatField()
+    total = serializers.IntegerField()
+    distribution = serializers.DictField(child=serializers.IntegerField())
+    percentages = serializers.DictField(child=serializers.IntegerField())
+
 # Class to manage company as FimrUser
 
 class CompanyAsUser(serializers.ModelSerializer):

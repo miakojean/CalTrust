@@ -2,9 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, serializers
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .serializer import CompanySearchSerializer, CompanyAsUser, CompanySerializer
+from .serializer import *
 from .models import Company
 from account.models import FirmProfile
+from reviews.serializers import PublicReviewSerializer
 
 
 # Create your views here.
@@ -113,7 +114,6 @@ class CompanyDetail(APIView):
     
     def get(self, request, id):
         try:
-            # Utilisez select_related et prefetch_related pour optimiser les requêtes
             company = Company.objects.select_related(
                 'name',
                 'name__user'
@@ -125,16 +125,29 @@ class CompanyDetail(APIView):
             ).get(id=id)
             
             serializer = CompanySerializer(company)
+            stats = company.rating_stats
+            
             return Response({
-                'status': 'success',
-                'data': serializer.data
-            }, status=status.HTTP_200_OK)
+                "status": "success",
+                "data": {
+                    "company": CompanySerializer(company).data,
+                    "reviews": { 
+                        "count": company.review_count,
+                        "average": company.average_rating,
+                        "list": PublicReviewSerializer(
+                            company.name.reviews.all(),
+                            many=True
+                        ).data
+                    },
+                    "stats": company.rating_stats
+                }
+            })
+            
         except Company.DoesNotExist:
             return Response({
                 'status': 'error',
                 'message': "Entreprise non trouvée"
             }, status=status.HTTP_404_NOT_FOUND)
-
 
 class CategoryListView(APIView):
     permission_classes = [AllowAny]
