@@ -2,7 +2,6 @@
   <main>
     <NewNavbar/>
     <ctaReviewSection/>
-    <reviewstestimonials/>
     <companieSection/>
     <footerSection/>
   </main>
