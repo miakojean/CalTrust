@@ -107,23 +107,35 @@ class Company(models.Model):
     def search(cls, **filters):
         """
         Méthode de recherche avancée
-        Exemple d'utilisation: Company.search(category='RH', min_rating=4)
+        Exemple d'utilisation: 
+        - Company.search(name='resto') → recherche par nom
+        - Company.search(category='RH', min_rating=4) → recherche combinée
         """
         queryset = cls.objects.all()
         
+        # Filtre par catégorie
         if category := filters.get('category'):
             queryset = queryset.filter(category=category)
             
+        # Filtre par terme de recherche (nom ou description)
         if query := filters.get('query'):
             queryset = queryset.filter(
                 Q(name__user__username__icontains=query) |
                 Q(description__icontains=query)
             )
+        
+        # Filtre spécifique par nom d'entreprise
+        if name := filters.get('name'):
+            queryset = queryset.filter(
+                Q(name__user__username__icontains=name) |
+                Q(name__company_name__icontains=name)
+            )
             
+        # Filtre par note minimale
         if min_rating := filters.get('min_rating'):
             queryset = queryset.annotate(avg_rating=Avg('reviews__rating'))\
-                              .filter(avg_rating__gte=min_rating)
-                              
+                            .filter(avg_rating__gte=min_rating)
+                            
         return queryset.distinct()
 
     @classmethod

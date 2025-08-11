@@ -165,7 +165,8 @@ class CompanySearchView(APIView):
         params = request.query_params
         filters = {
             'category': params.get('category'),
-            'query': params.get('q')
+            'query': params.get('q'),
+            'name': params.get('name')  # Nouveau paramètre pour la recherche par nom
         }
         
         # Gestion spécifique de min_rating
