@@ -8,13 +8,13 @@
 
     <div class="title">
         <h4>Total Témoignages</h4>
-        <h2 class="subtitle">10.7K</h2>
+        <h2 class="subtitle">{{ testimonialsTotal }}</h2>
     </div>
 
     <div class="about__rating">
         <div class="rate__info">
             <h4>Note moyenne</h4>
-            <h2 class="subtitle">4.0</h2>
+            <h2 class="subtitle">{{ averageRating }}.0</h2>
         </div>
         <ratingComponent 
             :rating="rating" 
@@ -23,73 +23,82 @@
         />
     </div>
 
-    <global-rating/>
+    <global-rating
+        :fiveStars="fiveStars"
+        :fourStars="fourStars"
+        :threeStars="threeStars"
+        :twoStars="twoStars"
+        :oneStar="oneStar"
+    />
     
     <div class="divider__two"></div>
 
   </article>
 </template>
 
-<script>
-import fakeRating from '../tools/fakeRating.vue';
-import { computed, ref } from 'vue';
-import ratingComponent from '../tools/ratingComponent.vue';
-import globalRating from '../tools/globalRating.vue';
+<script lang="ts">
+import { computed, defineComponent } from 'vue';
+import RatingComponent from '../tools/ratingComponent.vue';
+import GlobalRating from '../tools/globalRating.vue';
 
-const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
-
-export default {
-    props:{
-
-        company:{
-            type:String,
-            default:'anonymous'
+export default defineComponent({
+    name: 'TestimonialCard',
+    props: {
+        testimonialsTotal: {
+            type: Number,
+            default: 0
         },
-        info:{
-            type: String,
-            default:"John Doe"
-        },
-        username:{
-            type: String,
-            default: 'unknown'
-        },
-        pic:{
-            type: String,
-            default: defaultPic
+        averageRating: {
+            type: Number,
+            default: 0,
+            validator: (value: number) => value >= 0 && value <= 5
         },
         rating: { 
             type: Number,
-            default: 4,  // Valeur par défaut
-            validator: (value) => {
-                return value >= 0 && value <= 5;  // Validation entre 0 et 5
-            }
+            default: 4,
+            validator: (value: number) => value >= 0 && value <= 5
+        },
+        fiveStars: {
+            type: Number,
+            default: 0,
+            validator: (value: number) => value >= 0 && value <= 100
+        },
+        fourStars: {
+            type: Number,
+            default: 0,
+            validator: (value: number) => value >= 0 && value <= 100
+        },
+        threeStars: {
+            type: Number,
+            default: 0,
+            validator: (value: number) => value >= 0 && value <= 100
+        },
+        twoStars: {
+            type: Number,
+            default: 0,
+            validator: (value: number) => value >= 0 && value <= 100
+        },
+        oneStar: {
+            type: Number,
+            default: 0,
+            validator: (value: number) => value >= 0 && value <= 100
         }
     },
-
-    components:{
-        fakeRating,
-        ratingComponent,
-        globalRating
+    components: {
+        RatingComponent,
+        GlobalRating
     },
-
     setup(props) {
-        const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
-        const profilePic = computed(() => props.pic || defaultPic);
+        const formattedRating = computed(() => {
+            // Affiche un chiffre après la virgule si nécessaire
+            return Number.isInteger(props.averageRating) 
+                ? props.averageRating.toFixed(1) 
+                : props.averageRating.toFixed(1);
+        });
 
-        const isUseful = ref(false)
-
-        function iLikeIt () {
-            if (isUseful.value === false){
-                isUseful.value = true
-            } else if (isUseful.value === true){
-                isUseful.value = false
-            }
-        }
-
-        return { profilePic, isUseful, iLikeIt };
+        return { formattedRating };
     }
-
-}
+});
 </script>
 
 <style scoped>

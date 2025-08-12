@@ -13,7 +13,7 @@
 import NewNavbar from '@/layout/newNavbar.vue';
 import ctaReviewSection from '@/section/ctaReviewSection.vue';
 import reviewstestimonials from '@/section/reviewsTestimonials.vue';
-import companieSection from '@/views-companies/companieSection.vue';
+import companieSection from '@/views-companies/CompanySections/companieSection.vue';
 import footerSection from '@/layout/footerSection.vue';
 
 export default {

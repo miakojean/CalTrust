@@ -9,7 +9,7 @@
       <li><router-link to="/avis">Avis</router-link></li>
       <li><a href="#">À propos</a></li>
       <li><a href="#">Contact</a></li>
-      <li><a href="#">Entreprises</a></li>
+      <li><router-link to="/entreprises">Entreprise</router-link></li>
     </ul>
 
     <div class="nav__btn">

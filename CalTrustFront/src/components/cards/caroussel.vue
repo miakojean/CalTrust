@@ -1,50 +1,56 @@
 <template>
-    <div class="carousel-container">
-        <button class="nav-btn prev" @click="prevSlide" aria-label="Previous">
-        <i class="fas fa-chevron-left"></i>
-        </button>
-        
-        <div class="carousel-track" :style="trackStyle" ref="track">
-          <div 
-            v-for="(logo, index) in logos" 
-            :key="index" 
-            class="carousel-slide"
-            :class="{ active: currentIndex === index }"
-          >
-          <div class="logo-container">
-            <i v-if="!logo.image" :class="logo.icon || 'fas fa-building'"></i>
-            <img v-else :src="logo.image" :alt="logo.name || 'Company logo'">
-            <span v-if="logo.name" class="logo-name">{{ logo.name }}</span>
-          </div>
+    <div class="carousel-container"
+      @mouseenter="pauseAutoplay" 
+      @mouseleave="startAutoplay"
+    >
+      <button class="nav-btn prev" @click="prevSlide" aria-label="Previous">
+      <i class="fas fa-chevron-left"></i>
+      </button>
+      
+      <div class="carousel-track" :style="trackStyle" ref="track">
+        <div 
+          v-for="(logo, index) in logos" 
+          :key="index" 
+          class="carousel-slide"
+          :class="{ active: currentIndex === index }"
+          @click="() => makeQuery(logo)"
+        >
+        <div class="logo-container">
+          <i v-if="!logo.image" :class="logo.icon || 'fas fa-building'"></i>
+          <img v-else :src="logo.image" :alt="logo.name || 'Company logo'">
+          <span v-if="logo.name" class="logo-name">{{ logo.name }}</span>
         </div>
-        </div>
+      </div>
+      </div>
         
-        <button class="nav-btn next" @click="nextSlide" aria-label="Next">
-        <i class="fas fa-chevron-right"></i>
-        </button>
+      <button class="nav-btn next" @click="nextSlide" aria-label="Next">
+      <i class="fas fa-chevron-right"></i>
+      </button>
     </div>
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue' // 1. Importer 'computed'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import api from '@/_services/_authservices'
 
 export default {
   props: {
     items: {
       type: Array,
       default: () => [
-        { name: "Restauration hotellerie", icon: "fas fa-utensils" },
-        { name: "Commerce et e-commerce", icon: "fa-solid fa-dumpster"},
-        { name: "Transport et logistique", icon: "ri-truck-fill" },
-        { name: "Santé et bien-être", icon: "fas fa-leaf" },
-        { name: "Finance Banque", icon: "fas fa-chart-line" },
-        { name: "Télécommunication", icon: "fas fa-microchip" },
-        { name: "Education et formation", icon: "fa-solid fa-graduation-cap"},
-        { name: "Artisanat et services", icon: "fa-solid fa-bell-concierge" },
-        { name: "Immobiliers", icon: "fa-solid fa-building" },
-        { name: "Loisirs et divertissements", icon: "fa-solid fa-dice" },
-        { name: "services publiques", icon: "fa-solid fa-building-columns" },
-        { name: "Agroindustrie", icon: "fa-solid fa-wheat-awn" }
+        { name: "Restauration hotellerie", icon: "fas fa-utensils", code :"RH" },
+        { name: "Commerce et e-commerce", icon: "fa-solid fa-dumpster", code :"CE"},
+        { name: "Transport et logistique", icon: "ri-truck-fill", code :"TL" },
+        { name: "Santé et bien-être", icon: "fas fa-leaf", code :"SB" },
+        { name: "Finance Banque", icon: "fas fa-chart-line", code :"FB" },
+        { name: "Télécommunication", icon: "fas fa-microchip", code :"TC" },
+        { name: "Education et formation", icon: "fa-solid fa-graduation-cap", code :"EF"},
+        { name: "Artisanat et services", icon: "fa-solid fa-bell-concierge", code :"AS" },
+        { name: "Immobiliers", icon: "fa-solid fa-building", code :"IM" },
+        { name: "Loisirs et divertissements", icon: "fa-solid fa-dice", code :"LD" },
+        { name: "services publiques", icon: "fa-solid fa-building-columns", code :"SP" },
+        { name: "Agroindustrie", icon: "fa-solid fa-wheat-awn", code :"AI" }
       ]
     },
     autoplay: {
@@ -57,7 +63,9 @@ export default {
     }
   },
 
-  setup(props) {
+  emits:['category-selected'],
+
+  setup(props, {emit}) {
     const currentIndex = ref(0)
     const track = ref(null)
     let autoplayInterval = null
@@ -89,9 +97,51 @@ export default {
       }
     }
 
+    const pauseAutoplay = () => {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval)
+        autoplayInterval = null
+      }
+    }
+
     onMounted(() => {
       startAutoplay()
     })
+
+    // N'oubliez pas de nettoyer l'intervalle lorsque le composant est démonté
+    onUnmounted(() => {
+      pauseAutoplay()
+    })
+
+    // Logique pour lancer les queries
+
+    const router = useRouter()
+
+    const makeQuery = async (logo) => {
+      console.log('Logo cliqué:', logo);
+      
+      if (!logo.code) {
+        console.error('Aucun code de catégorie trouvé pour ce logo');
+        return;
+      }
+
+      try {
+        const response = await api.get(`/companies/search/?category=${logo.code}`);
+        if (!response.data) throw new Error('Réponse vide de l\'API');
+        
+        // Émet l'événement avec les données
+        emit('category-selected', {
+          code: logo.code,
+          name: logo.name,
+          companies: response.data.results
+        });
+
+      } catch (error) {
+        console.error("Erreur:", error);
+        // Option: émettre un événement d'erreur
+        emit('category-error', error);
+      }
+    }
 
     return {
       currentIndex,
@@ -99,7 +149,10 @@ export default {
       nextSlide,
       prevSlide,
       logos: props.items,
-      trackStyle // 4. Exposer la propriété calculée au template
+      trackStyle, // 4. Exposer la propriété calculée au template
+      startAutoplay,
+      pauseAutoplay,
+      makeQuery
     }
   }
 }

@@ -27,6 +27,8 @@ export default {
     background: #f3f3f3;
     color: #111;
     transition: 0.5s;
+    width: 100%;
+    max-width: 300px;
 }
 
 .more__button:hover{

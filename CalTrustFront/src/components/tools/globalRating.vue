@@ -23,13 +23,61 @@
 
 <script>
 export default {
-  setup() {
+  props: {
+    fiveStars: {
+      type: Number,
+      default: 0
+    },
+    fourStars: {
+      type: Number,
+      default: 0
+    },
+    threeStars: {
+      type: Number,
+      default: 0
+    },
+    twoStars: {  // ✅ Nom corrigé
+      type: Number,
+      default: 0
+    },
+    oneStar: {
+      type: Number,
+      default: 0
+    },
+  },
+
+  setup(props) {
     const ratings = [
-      { stars: 5, width: "100%", count: "2K", color: "var(--primary-color)" },
-      { stars: 4, width: "80%", count: "1.5K", color: "#4CAF50" },  // Vert
-      { stars: 3, width: "60%", count: "1K", color: "#FFC107" },    // Jaune
-      { stars: 2, width: "40%", count: "500", color: "#FF9800" },   // Orange
-      { stars: 1, width: "20%", count: "200", color: "#F44336" },   // Rouge
+      { 
+        stars: 5, 
+        width: `${props.fiveStars}%`,  // Utilisation réelle du pourcentage
+        count: props.fiveStars, 
+        color: "var(--primary-color)" 
+      },
+      { 
+        stars: 4, 
+        width: `${props.fourStars}%`, 
+        count: props.fourStars, 
+        color: "#4CAF50" 
+      },
+      { 
+        stars: 3, 
+        width: `${props.threeStars}%`, 
+        count: props.threeStars, 
+        color: "#FFC107" 
+      },
+      { 
+        stars: 2, 
+        width: `${props.twoStars}%`,  // ✅ Utilise la prop corrigée
+        count: props.twoStars, 
+        color: "#FF9800" 
+      },
+      { 
+        stars: 1, 
+        width: `${props.oneStar}%`, 
+        count: props.oneStar, 
+        color: "#F44336" 
+      },
     ];
 
     return { ratings };

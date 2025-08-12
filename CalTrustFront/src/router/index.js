@@ -24,6 +24,13 @@ const router = createRouter({
     },
 
     {
+      path: '/entreprises/categorie/:categoryCode',
+      name: 'entreprise-category',
+      component: () => import('../views/FirmsCategory.vue'),
+      props: true
+    },
+
+    {
       path: '/entreprises/details/:firm',
       name: 'entreprises-detail',
       component: () => import('../views-companies/details/companyDetails.vue'),

@@ -28,30 +28,43 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
         
-        // Cas spécifique du 403 + éviter les boucles infinies
-        if (error.response?.status === 403 && !originalRequest._retry) {
+        // Si erreur 401 (Unauthorized) et ce n'est pas une requête de refresh
+        if (error.response?.status === 401 && 
+            !originalRequest._retry && 
+            !originalRequest.url.includes('/account/token/refresh/')) {
+            
             originalRequest._retry = true;
-
-            try {
-                const refreshResponse = await api.post('/account/token/refresh/');
-                const newAccessToken = refreshResponse.data.access;
-                
-                localStorage.setItem('userToken', newAccessToken);
-                originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-                
-                return api(originalRequest); // Utilisez 'api' et non 'axiosInstance'
-            } catch (refreshError) {
-                // Cleanup et redirection si le refresh échoue
+            const refreshToken = localStorage.getItem('userTokenRefresh');
+            
+            if (refreshToken) {
+                try {
+                    // Rafraîchir le token
+                    const refreshResponse = await axios.post(
+                        'http://localhost:8000/account/token/refresh/', 
+                        { refresh: refreshToken }
+                    );
+                    
+                    const newAccessToken = refreshResponse.data.access;
+                    localStorage.setItem('userToken', newAccessToken);
+                    
+                    // Mettre à jour le header et relancer la requête originale
+                    originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+                    return api(originalRequest);
+                    
+                } catch (refreshError) {
+                    console.error('Refresh token failed:', refreshError);
+                    // Déconnexion si le refresh échoue
+                    localStorage.removeItem('userToken');
+                    localStorage.removeItem('userTokenRefresh');
+                    localStorage.removeItem('username');
+                    router.push('/signin?session_expired=true');
+                    return Promise.reject(refreshError);
+                }
+            } else {
+                // Pas de refresh token disponible
                 localStorage.removeItem('userToken');
-                router.push('/signin?session_expired=true');
-                return Promise.reject(refreshError);
+                router.push('/signin');
             }
-        }
-
-        // Gestion d'autres erreurs communes
-        if (error.response?.status === 401) {
-            localStorage.removeItem('userToken');
-            router.push('/signin');
         }
 
         return Promise.reject(error);

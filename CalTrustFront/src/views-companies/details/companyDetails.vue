@@ -3,64 +3,73 @@
     <new-navbar/>
     <section class="company__section">
       <div class="company__left-sidebar">
-        <companyDetailCard
+        <company-detail-card
           :firm="firm.company_name"
           :category="firm.category"
           :user="firm.id"
-          :email="firm.email"
-          :website="firm.website"
-          :addresse="firm.address"
+          :email="firm.email || ''"
+          :website="firm.website || ''"
+          :address="firm.address || ''"
         />
       </div>
       <div class="company__center">
-        <companyReviewDetails
-          
+        <company-review-details
+          :reviews="reviews"
+          :stats="stats"
         />
       </div>
       <div class="company__right-sidebar">
-        <globalRatingCard/>
+        <global-rating-card
+          :testimonials-total="stats.total"
+          :average-rating="stats.average"
+          :rating="stats.average"
+          :five-stars="stats.percentages[5] || 0"
+          :four-stars="stats.percentages[4] || 0"
+          :three-stars="stats.percentages[3] || 0"
+          :two-stars="stats.percentages[2] || 0"
+          :one-star="stats.percentages[1] || 0"
+        />
       </div>
     </section>
-    <footerSection/>
+    <footer-section/>
   </main>
 </template>
 
 <script>
+import { ref, onMounted } from 'vue';
 import newNavbar from '@/layout/newNavbar.vue';
-import companyDetailSection from './companyDetailSection.vue';
-import companyReviews from '../companyReviews.vue';
+import footerSection from '@/layout/footerSection.vue';
 import globalRatingCard from '@/components/cards/globalRatingCard.vue';
 import companyDetailCard from './companyDetailCard.vue';
 import companyReviewDetails from './companyReviewDetails.vue';
-import footerSection from '@/layout/footerSection.vue';
 import { fetchRecentsFirms } from '../_companyservices';
-import { ref, onMounted } from 'vue';
-import CompanyDetailCard from './companyDetailCard.vue';
 
 export default {
-
-  components:{
+  components: {
     newNavbar,
     footerSection,
-    companyReviews,
-    companyDetailSection,
     companyDetailCard,
     companyReviewDetails,
     globalRatingCard
   },
 
-  setup(){
-    
+  setup() {
     const firm = ref({
-      name:"",
-      company_name:"",
-      address: "",
-      email:"",
-      website:"",
-      category:""
-    })
+      id: null,
+      company_name: '',
+      address: '',
+      email: '',
+      website: '',
+      category: ''
+    });
 
-    const reviews = ref([])
+    const reviews = ref([]);
+    const stats = ref({
+      average: 0,
+      total: 0,
+      distribution: {},
+      percentages: {}
+    });
 
     const firmId = history.state.id;
 
@@ -68,34 +77,42 @@ export default {
       try {
         const response = await fetchRecentsFirms(firmId);
 
-        if (response) {
-          // On récupère le bloc "name"
-          const nameData = response.data.name;
-          const reviewsData = response.data.reviews
-          const globalResponse = response.data
-
+        if (response?.data) {
+          // Données de base
           firm.value = {
-            id: nameData.user_id,
-            company_name: nameData.company_name,
-            address: nameData.address,
-            email: nameData.email,        // Ajoutez
-            website: globalResponse.website,     // Ajoutez
-            category: globalResponse.category_display   // Ajoutez si nécessaire
+            id: response.data.company.id,
+            company_name: response.data.company.name?.company_name || '',
+            address: response.data.company.name?.address || '',
+            email: response.data.name?.email || '',
+            website: response.data.website || '',
+            category: response.data.company.category_display || ''
           };
 
-          reviews.value = reviewsData
+          // Données des avis
+          reviews.value = response.data.reviews || [];
+          
+          // Statistiques
+          stats.value = response.data.stats || {
+            average: 0,
+            total: 0,
+            distribution: {5: 0, 4: 0, 3: 0, 2: 0, 1: 0},
+            percentages: {5: 0, 4: 0, 3: 0, 2: 0, 1: 0}
+          };
 
-          console.log('Entreprise chargée:', firm.value);
+          console.log('Données chargées:', { 
+            firm: firm.value, 
+            reviews: reviews.value, 
+            stats: stats.value,
+            rawData: response.data // Ajoutez ceci pour debug
+          });
         }
       } catch (error) {
         console.error("Erreur de chargement:", error);
       }
     });
 
-
-    return {firm, firmId}
+    return { firm, reviews, stats };
   }
-
 }
 </script>
 
