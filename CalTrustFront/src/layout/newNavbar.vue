@@ -5,7 +5,7 @@
     </div>
 
     <ul class="nav__links" :class="{ 'nav__links--open': isMenuOpen }">
-      <li><router-link to="/">Acceuil</router-link></li>
+      <li><router-link to="/">Accueil</router-link></li>
       <li><router-link to="/avis">Avis</router-link></li>
       <li><a href="#">À propos</a></li>
       <li><a href="#">Contact</a></li>
