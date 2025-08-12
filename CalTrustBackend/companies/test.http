@@ -25,11 +25,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
   "category":"ML"
 }
 
+### Get differents firms
 GET http://127.0.0.1:8000/companies/categories/
 Accept: application/json
 
 ### Get firms which are in that category
 GET http://127.0.0.1:8000/companies/search/?category=RH
+Accept: application/json
+
+###
+GET http://127.0.0.1:8000/companies/category/RH
 Accept: application/json
 
 ### Get firm with his specific name

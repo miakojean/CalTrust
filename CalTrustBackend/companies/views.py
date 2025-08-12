@@ -149,6 +149,8 @@ class CompanyDetail(APIView):
                 'message': "Entreprise non trouvée"
             }, status=status.HTTP_404_NOT_FOUND)
 
+# Category section !!!
+
 class CategoryListView(APIView):
     permission_classes = [AllowAny]
     """Liste toutes les catégories disponibles"""
@@ -156,6 +158,47 @@ class CategoryListView(APIView):
         return Response({
             'categories': Company.get_category_choices()
         })
+
+class CompaniesByCategory(APIView):
+    permission_classes = [AllowAny]
+    
+    def get(self, request, category):
+        # Vérifie que la catégorie est valide
+        if category not in dict(Company.CategoryChoices.choices):
+            return Response(
+                {'error': 'Catégorie invalide'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            # Récupère les entreprises de cette catégorie
+            companies = Company.objects.filter(category=category).order_by('-created_at')
+            
+            # Pagination optionnelle
+            limit = request.query_params.get('limit')
+            if limit:
+                try:
+                    companies = companies[:int(limit)]
+                except ValueError:
+                    pass
+            
+            serializer = CompanySearchSerializer(companies, many=True)
+            
+            return Response({
+                'status': 'success',
+                'category': {
+                    'value': category,
+                    'label': dict(Company.CategoryChoices.choices)[category]
+                },
+                'count': companies.count(),
+                'data': serializer.data
+            })
+            
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # views.py
 class CompanySearchView(APIView):
