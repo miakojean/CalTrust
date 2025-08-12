@@ -16,7 +16,7 @@
             <h4>Note moyenne</h4>
             <h2 class="subtitle">{{ averageRating }}.0</h2>
         </div>
-        <ratingComponent 
+        <ratingTools 
             :rating="rating" 
             :max="5"
             size="small"
@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import RatingComponent from '../tools/ratingComponent.vue';
+import ratingTools from '../rating/ratingTools.vue';
 import GlobalRating from '../tools/globalRating.vue';
 
 export default defineComponent({
@@ -85,7 +85,7 @@ export default defineComponent({
         }
     },
     components: {
-        RatingComponent,
+        ratingTools,
         GlobalRating
     },
     setup(props) {
