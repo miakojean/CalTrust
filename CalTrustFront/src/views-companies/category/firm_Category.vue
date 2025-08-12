@@ -1,19 +1,18 @@
 <template>
-  <section class="reviews__section">    
-    <second-stepper title="Les entreprises recemment ajoutées"/>
-    
-    <div class="testimonial__container">
+   <section class="reviews__section">    
+    <second-stepper :title="categoryTitle || 'Les entreprises récemment ajoutées'"/>
 
+    <div class="testimonial__container">
         <template v-if="isLoading === true">
             <cardLoading v-for="n in 4" :key="n" />
         </template>
-      <!-- Boucle sur les avis -->
+
         <companyCard 
             v-for="(firm, index) in firms"
             :key="index"
             :firm="firm.name.company_name"
             :category="firm.category_display"
-            :user = "firm.id"
+            :user="firm.id"
         />
     </div>
     <moreButton
@@ -28,8 +27,10 @@ import testimonials from '@/components/cards/testimonials.vue';
 import companyCard from '@/views-companies/CompanySections/companyCard.vue';
 import cardLoading from '@/components/cards/cardLoading.vue';
 import moreButton from '@/components/button/moreButton.vue';
-import { onMounted,ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { onMounted, ref, watch } from 'vue';
 import { fetchRecentsFirms } from '@/_services/_fetchreviews';
+import caroussel from '@/components/cards/caroussel.vue';
 
 export default {
     components:{
@@ -37,44 +38,58 @@ export default {
         SecondStepper,
         companyCard,
         cardLoading,
-        moreButton
+        moreButton,
+        caroussel
     },
 
-    setup(){
-
+    setup() {
         const firms = ref([]);
         const isLoading = ref(true);
+        const categoryTitle = ref('');
+        const route = useRoute();
 
-        onMounted( async ( ) => { 
+        const fetchFirmsByCategory = async (categoryCode) => {
             try {
-                isLoading.value = true
-                const response = await fetchRecentsFirms();
+                isLoading.value = true;
+                const response = await api.get(`/companies/search/?category=${categoryCode}`);
                 if (response) {
-                    firms.value = response.data; // Stockez les données
-                    isLoading.value = false
-                    console.log('Entreprises récentes chargées:', firms.value);
+                    firms.value = response.data.results;
+                    categoryTitle.value = `Entreprises: ${route.params.categoryName}`;
                 }
             } catch (error) {
-                isLoading.value = false
                 console.error("Erreur de chargement:", error);
+            } finally {
+                isLoading.value = false;
+            }
+        };
+
+        // Gérer le chargement initial basé sur l'URL
+        onMounted(() => {
+            if (route.params.categoryCode) {
+                fetchFirmsByCategory(route.params.categoryCode);
+            } else {
+                fetchRecentsFirms(); // Fallback aux entreprises récentes
             }
         });
 
-        const myFirmId = ref(0)
+        // Réagir aux changements de route
+        watch(() => route.params.categoryCode, (newCode) => {
+            if (newCode) fetchFirmsByCategory(newCode);
+        });
 
-        const voirFirm = (index) =>{
-            myFirmId.value = index
-            console.log(index)
-        }
+        const handleCategorySelection = (category) => {
+            // Cette méthode sera appelée quand une catégorie est sélectionnée dans le carousel
+            fetchFirmsByCategory(category.code);
+        };
 
-        return{
+        return {
             firms,
             isLoading,
-            voirFirm, 
-            myFirmId
-        }
+            categoryTitle,
+            handleCategorySelection
+        };
     }
-}
+};
 </script>
 
 <style scoped>

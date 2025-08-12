@@ -31,6 +31,7 @@
 
 <script>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import api from '@/_services/_authservices'
 
 export default {
@@ -62,7 +63,9 @@ export default {
     }
   },
 
-  setup(props) {
+  emits:['category-selected'],
+
+  setup(props, {emit}) {
     const currentIndex = ref(0)
     const track = ref(null)
     let autoplayInterval = null
@@ -110,35 +113,33 @@ export default {
       pauseAutoplay()
     })
 
+    // Logique pour lancer les queries
+
+    const router = useRouter()
+
     const makeQuery = async (logo) => {
-      console.log('Logo cliqué:', logo)
+      console.log('Logo cliqué:', logo);
       
       if (!logo.code) {
-        console.error('Aucun code de catégorie trouvé pour ce logo')
-        return
+        console.error('Aucun code de catégorie trouvé pour ce logo');
+        return;
       }
 
-      console.log(`Préparation de la requête pour la catégorie: ${logo.code}`)
-      
       try {
-        console.log(`Envoi de la requête GET à /companies/search/?category=${logo.code}`)
+        const response = await api.get(`/companies/search/?category=${logo.code}`);
+        if (!response.data) throw new Error('Réponse vide de l\'API');
         
-        const response = await api.get(`/companies/search/?category=${logo.code}`, {
-          headers: { 'Accept': 'application/json' }
-        })
+        // Émet l'événement avec les données
+        emit('category-selected', {
+          code: logo.code,
+          name: logo.name,
+          companies: response.data.results
+        });
 
-        console.log('Réponse reçue:', response)
-        
-        if (!response.data) {
-          console.error('Réponse vide de l\'API')
-          throw new Error('Réponse vide de l\'API')
-        }
-
-        console.log('Données reçues:', response.data)
-        return response.data
       } catch (error) {
-        console.error("Erreur lors de la récupération des entreprises:", error)
-        throw new Error(`Impossible de charger les entreprises: ${error.message}`)
+        console.error("Erreur:", error);
+        // Option: émettre un événement d'erreur
+        emit('category-error', error);
       }
     }
 
