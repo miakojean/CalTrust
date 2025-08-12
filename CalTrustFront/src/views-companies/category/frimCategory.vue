@@ -3,15 +3,22 @@
     <second-stepper title="Les entreprises recemment ajoutées"/>
     
     <div class="testimonial__container">
+
+        <template v-if="isLoading === true">
+            <cardLoading v-for="n in 4" :key="n" />
+        </template>
       <!-- Boucle sur les avis -->
         <companyCard 
             v-for="(firm, index) in firms"
             :key="index"
             :firm="firm.name.company_name"
             :category="firm.category_display"
-            :user = "firm.firm_profile_id"
+            :user = "firm.id"
         />
     </div>
+    <moreButton
+        label="toutes les entreprises"
+    />
   </section>
 </template>
 
@@ -19,27 +26,36 @@
 import SecondStepper from '@/components/cards/secondStepper.vue';
 import testimonials from '@/components/cards/testimonials.vue';
 import companyCard from '@/views-companies/CompanySections/companyCard.vue';
+import cardLoading from '@/components/cards/cardLoading.vue';
+import moreButton from '@/components/button/moreButton.vue';
 import { onMounted,ref } from 'vue';
 import { fetchRecentsFirms } from '@/_services/_fetchreviews';
+
 export default {
     components:{
         testimonials,
         SecondStepper,
-        companyCard
+        companyCard,
+        cardLoading,
+        moreButton
     },
 
     setup(){
 
         const firms = ref([]);
+        const isLoading = ref(true);
 
         onMounted( async ( ) => { 
             try {
+                isLoading.value = true
                 const response = await fetchRecentsFirms();
                 if (response) {
                     firms.value = response.data; // Stockez les données
+                    isLoading.value = false
                     console.log('Entreprises récentes chargées:', firms.value);
                 }
             } catch (error) {
+                isLoading.value = false
                 console.error("Erreur de chargement:", error);
             }
         });
@@ -52,7 +68,10 @@ export default {
         }
 
         return{
-            firms, voirFirm, myFirmId
+            firms,
+            isLoading,
+            voirFirm, 
+            myFirmId
         }
     }
 }

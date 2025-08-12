@@ -25,7 +25,7 @@
 <script>
 import SecondStepper from '@/components/cards/secondStepper.vue';
 import testimonials from '@/components/cards/testimonials.vue';
-import companyCard from '@/views-companies/companyCard.vue';
+import companyCard from '@/views-companies/CompanySections/companyCard.vue';
 import cardLoading from '@/components/cards/cardLoading.vue';
 import moreButton from '@/components/button/moreButton.vue';
 import { onMounted,ref } from 'vue';

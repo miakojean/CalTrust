@@ -24,4 +24,27 @@ const fetchRecentsFirms = async (firms) => {
     }
 }
 
-export {fetchRecentsFirms}
+/* 
+    On va faire le fetching pour la catégorie d'entreprise voulue
+*/
+
+const fetchCategoryFirms = async (category) => {
+    try {
+        const response = await api.get(`companies/category/${category}`, {
+            headers:{'Content-Type':'application/json'}
+        });
+
+        if (!response.data) {
+            throw new Error('Response vide de l\'api');
+        }
+
+        return response.data
+    } catch (error) {
+        console.error("Erreur lors de la récuppération des entreprises",error);
+        throw new Error(`Impossible de charger les avis: ${error.message}`);
+    }
+
+
+}
+
+export {fetchRecentsFirms, fetchCategoryFirms}
