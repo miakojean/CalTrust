@@ -31,6 +31,7 @@ import { useRoute } from 'vue-router';
 import { onMounted, ref, watch } from 'vue';
 import { fetchRecentsFirms } from '@/_services/_fetchreviews';
 import caroussel from '@/components/cards/caroussel.vue';
+import api from '@/_services/_authservices';
 
 export default {
     components:{

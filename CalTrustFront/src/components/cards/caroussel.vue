@@ -119,7 +119,7 @@ export default {
 
     const makeQuery = async (logo) => {
       console.log('Logo cliqué:', logo);
-      
+
       if (!logo.code) {
         console.error('Aucun code de catégorie trouvé pour ce logo');
         return;
@@ -128,17 +128,22 @@ export default {
       try {
         const response = await api.get(`/companies/search/?category=${logo.code}`);
         if (!response.data) throw new Error('Réponse vide de l\'API');
-        
-        // Émet l'événement avec les données
+
+        // C'est ici que l'événement est émis !
         emit('category-selected', {
           code: logo.code,
           name: logo.name,
-          companies: response.data.results
+          companies: response.data.results // Les données déjà récupérées par l'enfant
         });
+
+        // Note: Le router.push est ici dans l'enfant.
+        // Si vous voulez que le parent gère la navigation après la réception des données,
+        // vous devrez déplacer cette logique vers le parent.
+        router.push(`/entreprises/categorie/${logo.code}`) // Correction: utiliser logo.code directement
+                                                      // au lieu de props.code qui n'existe pas ici.
 
       } catch (error) {
         console.error("Erreur:", error);
-        // Option: émettre un événement d'erreur
         emit('category-error', error);
       }
     }
