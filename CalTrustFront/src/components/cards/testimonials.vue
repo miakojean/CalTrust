@@ -8,8 +8,8 @@
             <span>{{ company }}</span>
         </div>
     </div>
-    
-    <ratingComponent 
+
+    <ratingTools 
         :rating="rating" 
         :max="5"
         size="small"
@@ -54,6 +54,7 @@
 import fakeRating from '../tools/fakeRating.vue';
 import { computed, ref } from 'vue';
 import ratingComponent from '../tools/ratingComponent.vue';
+import ratingTools from '../rating/ratingTools.vue';
 
 const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
 
@@ -91,7 +92,8 @@ export default {
 
     components:{
         fakeRating,
-        ratingComponent
+        ratingComponent,
+        ratingTools
     },
 
     setup(props) {

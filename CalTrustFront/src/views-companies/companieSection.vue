@@ -16,6 +16,9 @@
             :user = "firm.id"
         />
     </div>
+    <moreButton
+        label="toutes les entreprises"
+    />
   </section>
 </template>
 
@@ -24,14 +27,17 @@ import SecondStepper from '@/components/cards/secondStepper.vue';
 import testimonials from '@/components/cards/testimonials.vue';
 import companyCard from '@/views-companies/companyCard.vue';
 import cardLoading from '@/components/cards/cardLoading.vue';
+import moreButton from '@/components/button/moreButton.vue';
 import { onMounted,ref } from 'vue';
 import { fetchRecentsFirms } from '@/_services/_fetchreviews';
+
 export default {
     components:{
         testimonials,
         SecondStepper,
         companyCard,
-        cardLoading
+        cardLoading,
+        moreButton
     },
 
     setup(){
