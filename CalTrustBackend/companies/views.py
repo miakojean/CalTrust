@@ -93,7 +93,7 @@ class LatestCompanies(APIView):
     permission_classes = [AllowAny]
     
     def get(self, request):
-        limit = request.query_params.get('limit', 4)  # Rend la limite configurable
+        limit = request.query_params.get('limit', 8)  # Rend la limite configurable
         try:
             companies = Company.objects.all().order_by('-created_at')[:int(limit)]
             serializer = CompanySerializer(companies, many=True)
