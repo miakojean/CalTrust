@@ -14,7 +14,7 @@
     <div class="about__rating">
         <div class="rate__info">
             <h4>Note moyenne</h4>
-            <h2 class="subtitle">{{ averageRating }}.0</h2>
+            <h2 class="subtitle">{{ averageRating }}</h2>
         </div>
         <ratingTools 
             :rating="rating" 

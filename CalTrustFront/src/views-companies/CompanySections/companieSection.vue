@@ -13,8 +13,10 @@
             :key="index"
             :firm="firm.name.company_name"
             :category="firm.category_display"
-            :user = "firm.id"
+            :idForPostingReview = "firm.firm_profile_id"
+            :idForgettingFirm = firm.id
         />
+        <!-- Ici le firm.firm_profile_id est pour la soumission -->
     </div>
     <moreButton
         label="toutes les entreprises"

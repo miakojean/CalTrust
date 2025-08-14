@@ -17,7 +17,7 @@
                 @click="openModal"
             />
             <cardMoreButton
-                @click="handleSubmit"
+                @click="getFirmDetail"
             />
         </div>
             
@@ -57,9 +57,13 @@ export default {
             type: String,
             default: defaultPic
         },
-        user:{
+        idForPostingReview:{
+            type:Number
+        },
+        idForgettingFirm:{
             type:Number
         }
+
     },
 
     emits:['clicked-firms'],
@@ -92,14 +96,14 @@ export default {
             }
             showModal.value = true;
             console.log('Modal ouverte',props.firm);
-        };
-
-        const handleSubmit = () => {
-            console.log('Formulaire soumis pour', props.firm, props.user);
+        };  
+        
+        getFirmDetail = () => {
+            console.log('Formulaire soumis pour', props.firm, props.idForPostingReview);
             router.push({
                 name: 'entreprises-detail',
                 params: { firm: props.firm }, // clé = "firm"
-                state: { id: props.user }
+                state: { id: props.idForgettingFirm }
             });
         };
 
@@ -107,7 +111,7 @@ export default {
             router,
             showModal,
             openModal,
-            handleSubmit,
+            getFirmDetail,
         };
     }
 

@@ -1,6 +1,6 @@
 <template>
    <section class="reviews__section">    
-    <second-stepper :title="categoryTitle || 'Les entreprises récemment ajoutées'"/>
+    <second-stepper :title="firms.categoryTitle"/>
 
     <div class="testimonial__container">
         <template v-if="isLoading === true">

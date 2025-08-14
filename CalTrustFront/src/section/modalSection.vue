@@ -29,13 +29,14 @@
       </div>
       <div class="modal-footer">
         <secondButton2 
-        label="annuler"
-        @click="close"
+          label="annuler"
+          @click="close"
         />
         <mainButton 
           label = "envoyer"
           :isLoading = isloading
-          @click="submitForm"/>
+          @click="submitForm"
+        />
       </div>
     </div>
   
@@ -151,6 +152,10 @@ export default {
     function handleSubmissionError(error) {
       if (error.response) {
         switch (error.response.status) {
+          case 400:
+            message.value.errorMessage = "Vous avez déjà posté un avis sur cet entreprise";
+            toggleBodyScroll(false);
+            break;
           case 401:
             message.value.errorMessage = "Session expirée. Veuillez vous reconnecter.";
             toggleBodyScroll(false);

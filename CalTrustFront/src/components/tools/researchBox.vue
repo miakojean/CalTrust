@@ -36,7 +36,7 @@
                     class="result-item"
                     @click="handleCompanySelect(company)"
                 >
-                    <div class="company-name">{{ company.name }}</div>
+                    <div class="company-name"><h4>{{ company.name }}</h4></div>
                     <div class="company-details">
                         <span class="category">{{ company.category }}</span>
                         <span class="rating">
