@@ -1,7 +1,8 @@
 GET http://127.0.0.1:8000/companies/
 Content-Type: application/json
 
-GET http://127.0.0.1:8000/companies/6
+### Voir le détail sur une entreprise
+GET http://127.0.0.1:8000/companies/4
 Content-Type: application/json
 
 POST http://127.0.0.1:8000/account/login/

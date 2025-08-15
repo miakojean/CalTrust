@@ -56,9 +56,13 @@ class Company(models.Model):
 
     @property
     def average_rating(self):
-        """Calcule et retourne la note moyenne des avis."""
-        # 'reviews' vient du related_name, 'rating' est le champ de note dans Review
-        return self.reviews.aggregate(Avg('rating'))['rating__avg'] or 0.0
+        """Calcule et retourne la note moyenne des avis, formatée avec une décimale."""
+        avg_rating = self.reviews.aggregate(Avg('rating'))['rating__avg']
+        if avg_rating is not None:
+            # Formate le nombre à une décimale.
+            # float(f"{avg_rating:.1f}") assure que même un entier comme 2 devient 2.0
+            return float(f"{avg_rating:.1f}")
+        return 0.0 # Retourne 0.0 si aucun avis
 
     @property
     def rating_stats(self):
