@@ -97,13 +97,16 @@ class CompanySearchSerializer(serializers.ModelSerializer):
     )
     average_rating = serializers.FloatField(read_only=True)  # Suppression du source
     review_count = serializers.IntegerField(read_only=True)  # Idem ici
-    name = serializers.StringRelatedField(source = 'name.user.username')
+    name = FirmProfileSerializer(read_only = True)
+    firm_name = serializers.CharField(source='firm.company_name', read_only=True)
+
 
     class Meta:
         model = Company 
         fields = [
             'id',
             'name',
+            'firm_name',
             'category',
             'category_display',
             'description',

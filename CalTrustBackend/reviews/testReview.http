@@ -26,9 +26,10 @@ Content-Type: application/json
   "password": "securepassword123"
 }
 
-POST http://127.0.0.1:8000/reviews/firms/7/
+###
+POST http://127.0.0.1:8000/reviews/firms/1/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU0NTIzNDk5LCJpYXQiOjE3NTQ1MTk4OTksImp0aSI6ImI0ZGQ2Y2FjZTkwZTQ5ZmI5NDEyNmQxNTgxODc5MTU2IiwidXNlcl9pZCI6MTJ9.yP5RQBPrqoYzRVr1L70grK9LekJstvnG3nnXBV3JEtQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1MTQ2NDA1LCJpYXQiOjE3NTUxMzkyMDUsImp0aSI6IjA3N2NjY2FmZTRiMzQxNDg5NDY5ODAwM2JjY2RjMmUzIiwidXNlcl9pZCI6MX0.FSl4W7c0VtcMbXL20iwPLM7QN2fBnERg7G61v8npXOk
 
 {
   "rating": 4,
@@ -41,6 +42,7 @@ Content-Type: application/json
 GET http://127.0.0.1:8000/reviews/4/
 Content-Type: application/json
 
+### Get specific reviews about that firm
 GET http://127.0.0.1:8000/reviews/firm/2/review/
 Content-Type: application/json
 
