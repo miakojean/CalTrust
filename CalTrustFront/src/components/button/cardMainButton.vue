@@ -45,9 +45,9 @@ export default {
     transition: ease-in-out 0.3s;
 }
 
-@media(min-width: 1024){
+@media(min-width: 1024px){
   .main__button{
-    font-size: 1.2rem;
+    font-size: 0.8rem;
   }
 }
 </style>

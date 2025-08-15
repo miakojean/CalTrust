@@ -1,6 +1,6 @@
 <template>
    <section class="reviews__section">    
-    <second-stepper :title="firms.categoryTitle"/>
+    <second-stepper :title="categoryTitle"/>
 
     <div class="testimonial__container">
         <template v-if="isLoading === true">

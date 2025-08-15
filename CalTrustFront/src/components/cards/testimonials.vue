@@ -51,9 +51,7 @@
 </template>
 
 <script>
-import fakeRating from '../tools/fakeRating.vue';
 import { computed, ref } from 'vue';
-import ratingComponent from '../tools/ratingComponent.vue';
 import ratingTools from '../rating/ratingTools.vue';
 
 const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
@@ -91,8 +89,6 @@ export default {
     },
 
     components:{
-        fakeRating,
-        ratingComponent,
         ratingTools
     },
 

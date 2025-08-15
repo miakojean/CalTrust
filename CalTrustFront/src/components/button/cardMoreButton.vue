@@ -51,4 +51,10 @@ export default {
 .main__button i{
     font-size: 0.5rem;
 }
+
+@media(min-width: 1024px){
+  .main__button{
+    font-size: 0.8rem;
+  }
+}
 </style>

@@ -3,17 +3,21 @@
     <second-stepper title="Les avis récents sur l'entreprise"/>
     
     <div class="testimonial__container">
-      <!-- Boucle sur les avis -->
-      <testimonialCardForFirm 
-        v-for="(review, index) in reviews"
-        :key="review.id || index"
-        :info="review.customer_name || 'Anonyme'"  
-        :rating="review.rating"
-        :message="review.comment"
-        :date="review.local_date"
-        :avatar="review.user_initial"
-        :company="review.establishment"
-      />
+
+        <template v-if="isLoading === true">
+            <cardLoading v-for="n in 4" :key="n" />
+        </template>
+        <!-- Boucle sur les avis -->
+        <testimonialCardForFirm 
+            v-for="(review, index) in reviews"
+            :key="review.id || index"
+            :info="review.customer_name || 'Anonyme'"  
+            :rating="review.rating"
+            :message="review.comment"
+            :date="review.local_date"
+            :avatar="review.user_initial"
+            :company="review.establishment"
+        />
       
       <!-- State de chargement/erreur -->
       <div v-if="reviews.length === 0" class="loading-state">
@@ -24,15 +28,17 @@
 </template>
 
 <script>
-import SecondStepper from '@/components/cards/secondStepper.vue';
-import testimonialCardForFirm from '@/components/cards/testimonialCardForFirm.vue';
 import { onMounted, ref } from 'vue';
 import { fetchRecentsFirms } from '../_companyservices';
+import cardLoading from '@/components/cards/cardLoading.vue';
+import SecondStepper from '@/components/cards/secondStepper.vue';
+import testimonialCardForFirm from '@/components/cards/testimonialCardForFirm.vue';
 
 export default {
     components: {
         SecondStepper,
-        testimonialCardForFirm
+        testimonialCardForFirm,
+        cardLoading
     },
 
     props:{
@@ -46,27 +52,28 @@ export default {
 
         const firmId = history.state.id;
 
+        const isLoading = ref(true)
+
         onMounted(async () => { 
         try {
+            isLoading.value = true
             const response = await fetchRecentsFirms(firmId);
 
             if (response?.data) {
-            // Données de base
+                reviews.value = response.data.reviews.list || [];
+                isLoading.value = false
+                // Statistiques
 
-            // Données des avis
-            reviews.value = response.data.reviews.list || [];
-            
-            // Statistiques
-
-            console.log('Données chargées:', { reviews: reviews.value });
+                console.log('Données chargées:', { reviews: reviews.value });
             }
         } catch (error) {
+            isLoading.value = false
             console.error("Erreur de chargement:", error);
         }
         });
 
         return {
-            reviews, firmId
+            reviews, firmId, isLoading
         }
     }
 }

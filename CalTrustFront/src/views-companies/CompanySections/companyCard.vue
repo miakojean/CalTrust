@@ -37,7 +37,6 @@
 <script>
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import fakeRating from '@/components/tools/fakeRating.vue';
 import cardMainButton from '@/components/button/cardMainButton.vue';
 import cardMoreButton from '@/components/button/cardMoreButton.vue';
 import ratingComponent from '@/components/tools/ratingComponent.vue';
@@ -75,7 +74,6 @@ export default {
     emits:['clicked-firms'],
 
     components: {
-        fakeRating, 
         cardMainButton, 
         cardMoreButton, 
         ratingComponent,

@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import fakeRating from '../tools/fakeRating.vue';
 import { computed, ref } from 'vue';
 import ratingComponent from '../tools/ratingComponent.vue';
 
@@ -82,7 +81,6 @@ export default {
     },
 
     components:{
-        fakeRating,
         ratingComponent
     },
 
