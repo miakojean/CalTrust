@@ -53,6 +53,7 @@
 import researchLoader from './researchLoader.vue';
 import api from '@/_services/_authservices';
 import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
     components: { researchLoader },
@@ -63,6 +64,7 @@ export default {
         const hasFocus = ref(false);
         const error = ref(null);
         const timeoutId = ref(null);
+        const router = useRouter()
 
         // Calculé pour une meilleure gestion du loader
         const showLoader = computed(() => {
@@ -115,6 +117,11 @@ export default {
             // Navigation ou emission d'événement
             console.log("Selected:", company);
             hasFocus.value = false;
+            router.push({
+                name:'entreprises-detail',
+                params: {firm:company.name},
+                state:{id:company.id}
+            })
         };
 
         return {

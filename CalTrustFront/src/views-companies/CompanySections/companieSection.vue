@@ -12,6 +12,7 @@
             v-for="(firm, index) in firms"
             :key="index"
             :firm="firm.name.company_name"
+            :rate="firm.average_rating"
             :category="firm.category_display"
             :idForPostingReview = "firm.firm_profile_id"
             :idForgettingFirm = firm.id

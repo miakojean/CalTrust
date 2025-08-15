@@ -11,7 +11,9 @@
             </div>
         </div>
         <div class="divider"></div>
-        <rating-component/>
+        <ratingTools
+            :rating="rate"
+        />
         <div class="btn__frame">
             <cardMainButton 
                 @click="openModal"
@@ -25,8 +27,8 @@
             v-model="showModal" 
             :title="`Poster un avis sur`"
             :firm = firm
-            :firmId = user
-            @submit="handleSubmit"
+            :firmId = idForgettingFirm
+            :postReviewId=idForPostingReview
         />
         
     </article>
@@ -40,6 +42,7 @@ import cardMainButton from '@/components/button/cardMainButton.vue';
 import cardMoreButton from '@/components/button/cardMoreButton.vue';
 import ratingComponent from '@/components/tools/ratingComponent.vue';
 import modalSection from '@/section/modalSection.vue';
+import ratingTools from '@/components/rating/ratingTools.vue';
 
 const defaultPic = new URL('@/assets/pictures/devnomicus.png', import.meta.url).href;
 
@@ -57,6 +60,9 @@ export default {
             type: String,
             default: defaultPic
         },
+        rate:{
+            type:Number
+        },
         idForPostingReview:{
             type:Number
         },
@@ -73,7 +79,8 @@ export default {
         cardMainButton, 
         cardMoreButton, 
         ratingComponent,
-        modalSection
+        modalSection,
+        ratingTools
     },
 
     setup(props, {emit}) {
@@ -129,6 +136,7 @@ export default {
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   width: 100%;
   max-width: 400px;
+  cursor: pointer;
 }
 
 .divider {

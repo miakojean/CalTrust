@@ -13,6 +13,7 @@
             :firm="firm.name.company_name"
             :category="firm.category_display"
             :user="firm.id"
+            @click="getFirmOnThisCategory(firm)"
         />
     </div>
     <moreButton
@@ -27,11 +28,11 @@ import testimonials from '@/components/cards/testimonials.vue';
 import companyCard from '@/views-companies/CompanySections/companyCard.vue';
 import cardLoading from '@/components/cards/cardLoading.vue';
 import moreButton from '@/components/button/moreButton.vue';
-import { useRoute } from 'vue-router';
 import { onMounted, ref, watch } from 'vue';
 import { fetchRecentsFirms } from '@/_services/_fetchreviews';
 import caroussel from '@/components/cards/caroussel.vue';
 import api from '@/_services/_authservices';
+import { useRouter, useRoute } from 'vue-router';
 
 export default {
     components:{
@@ -48,6 +49,7 @@ export default {
         const isLoading = ref(true);
         const categoryTitle = ref('');
         const route = useRoute();
+        const router = useRouter();
 
         const fetchFirmsByCategory = async (categoryCode) => {
             try {
@@ -63,6 +65,15 @@ export default {
                 isLoading.value = false;
             }
         };
+
+        const getFirmOnThisCategory = (firm) =>{
+            console.log(firm)
+            router.push({
+                name:'entreprises-detail',
+                params: {firm:firm.name.company_name},
+                state:{id:firm.id}
+            })
+        }
 
         // Gérer le chargement initial basé sur l'URL
         onMounted(() => {
@@ -85,9 +96,11 @@ export default {
 
         return {
             firms,
+            router,
             isLoading,
             categoryTitle,
-            handleCategorySelection
+            handleCategorySelection,
+            getFirmOnThisCategory
         };
     }
 };

@@ -65,7 +65,10 @@ export default {
       type: String,
       default:"Anonyme"
     },
-    firmId:{
+    firmId:{ // id for getting details about firm
+      type:Number
+    },
+    postReviewId:{
       type:Number
     }
   },
@@ -133,7 +136,7 @@ export default {
       message.value.errorMessage = "";
       
       try {
-        const response = await api.post(`/reviews/firms/${firmId.value}/`, {
+        const response = await api.post(`/reviews/firms/${props.postReviewId}/`, {
           rating: ratingValue.value,
           comment: comment.value
         });
@@ -167,7 +170,6 @@ export default {
             break;
           case 500:
             message.value.errorMessage = "Erreur serveur. Veuillez réessayer plus tard.";
-            router.push('/signin');
             break;
           default:
             message.value.errorMessage = error.response.data?.message || "Erreur lors de la soumission";
