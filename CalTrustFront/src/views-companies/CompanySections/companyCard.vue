@@ -98,7 +98,7 @@ export default {
             console.log('Modal ouverte',props.firm);
         };  
         
-        getFirmDetail = () => {
+        const getFirmDetail = () => {
             console.log('Formulaire soumis pour', props.firm, props.idForPostingReview);
             router.push({
                 name: 'entreprises-detail',
