@@ -11,17 +11,29 @@
         :label="i.label"
         :value="i.value"
     />
+
+    <profile__TextArea
+        v-if="isThereDescription === true"
+    />
+
+    <profile__Toggle
+        v-if="isThereToggle === true"
+    />
   </div>
 </template>
 
 <script>
 import stepper from '@/components/cards/stepper.vue';
 import Profile__family from './profile__family.vue';
+import profile__TextArea from './profile__TextArea.vue';
+import profile__Toggle from './profile__Toggle.vue';
 export default {
 
     components:{
         stepper,
-        Profile__family
+        Profile__family,
+        profile__TextArea,
+        profile__Toggle
     },
 
     props:{
@@ -41,6 +53,14 @@ export default {
                 { label: 'Email', value: "firm6@business.com" },
                 {label:'Téléphone', value:"0102030405"}
             ]
+        },
+        isThereDescription:{
+            type:Boolean,
+            default:true
+        },
+        isThereToggle:{
+            type:Boolean,
+            default:true
         }
     },
 

@@ -1,6 +1,9 @@
 <template>
   <section class="profile__section">
-    <profileInfoBlock/>
+    <profileInfoBlock
+      :isThereDescription="false"
+      :isThereToggle="false"
+    />
     <profileInfoBlock
       title="Informations supplémentaires"
       description="Ici vous retrouvez vos informations supplémentaires"
@@ -20,7 +23,6 @@ export default {
   setup(){
     const otherFields = ref([
       { label: 'Catégorie', value: "Services Financiers & Banques" },
-      { label: 'description', value: "" },
       { label: 'website', value: "www.firms.com" },
       {label:'Mise en ligne', value:"12/02/2025"}
     ])

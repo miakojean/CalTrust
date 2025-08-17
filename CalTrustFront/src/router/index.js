@@ -74,9 +74,34 @@ const router = createRouter({
     // About the firm and customer profile settings screens
     {
       path:'/profilecustomer',
-      name:"profilCustomer",
+      name:"profilecustomer",
       component: () => import('@/profil/profilCustomer.vue')
-    }
+    },
+    {
+      path:'/profilecustomer/security',
+      name:"profilecustomer-security",
+      component: () => import('@/profil/profilCustomer.vue')
+    },
+    {
+      path:'/profilecustomer/notifications',
+      name:"profilecustomer-notifications",
+      component: () => import('@/profil/profilCustomer.vue')
+    },
+    {
+      path:'/profilecustomer/reviews',
+      name:"profilecustomer-reviews",
+      component: () => import('@/profil/profilCustomer.vue')
+    },
+    {
+      path:'/profilecustomer/my-reviews',
+      name:"profilecustomer-myreviews",
+      component: () => import('@/profil/profilCustomer.vue')
+    },
+    {
+      path:'/profilecustomer/plan',
+      name:"profilecustomer-plan",
+      component: () => import('@/profil/profilCustomer.vue')
+    },
     
   ]
   })
