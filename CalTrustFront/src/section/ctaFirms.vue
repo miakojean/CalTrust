@@ -1,5 +1,5 @@
 <template>
-  <section class="main__section">
+  <section class="main__section cta__firms">
     <div class="main__container">
         <h2>
             Trouver une entreprise de confiance

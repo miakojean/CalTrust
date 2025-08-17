@@ -11,7 +11,7 @@
         <testimonialCardForFirm 
             v-for="(review, index) in reviews"
             :key="review.id || index"
-            :info="review.customer_name || 'Anonyme'"  
+            :info="review.user || 'Anonyme'"  
             :rating="review.rating"
             :message="review.comment"
             :date="review.local_date"

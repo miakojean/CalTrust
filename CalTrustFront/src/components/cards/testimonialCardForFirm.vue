@@ -6,14 +6,14 @@
         :max="5"
         size="small"
     />
-    
-    <div class="divider"></div>
 
     <div class="message">
         <p class="message__body">
             {{ message }}
         </p>
     </div>
+
+    <div class="divider"></div>
     
     <div class="profile">
         <img class="pp" :src="pic" alt="fake profile picture">

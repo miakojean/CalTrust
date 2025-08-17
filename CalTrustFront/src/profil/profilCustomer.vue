@@ -1,23 +1,34 @@
 <template>
-    <div class="profil">
-      <sencond-stepper title="Mon profil"/>
-        <h2>Bienvenue dans votre profil</h2>
-      <Transition>
-        <p v-if="message.error" style="color: red;">{{ message.error }}</p>
-      </Transition>
-      <Transition>
-        <p v-if="message.success" style="color: green;">{{ message.success }}</p>
-      </Transition>
+  <main>
+    <newNavbar/>
+    <div class="settings__view">
+      <settingsMenu/>
+      <profileSettings/>
     </div>
-    
-  </template>
-  
-  <script>
-  export default {
-  
+    <footerSection/>
+  </main>
+</template>
+
+<script>
+import newNavbar from '@/layout/newNavbar.vue';
+import settingsMenu from './profileComponents/settingsMenu.vue';
+import profileSettings from './profileComponents/profileSettings.vue';
+import footerSection from '@/layout/footerSection.vue';
+export default {
+
+  components:{
+    newNavbar,
+    settingsMenu,
+    profileSettings,
+    footerSection
   }
-  </script>
-  
-  <style>
-  
-  </style>
+
+}
+</script>
+
+<style scoped>
+.settings__view{
+  display:flex;
+  gap: 1rem;
+}
+</style>
