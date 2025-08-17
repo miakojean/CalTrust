@@ -70,11 +70,14 @@ const router = createRouter({
       name:"password-reseting",
       component: () => import('@/views-authentication/composant/passworReset.vue')
     },
+
+    // About the firm and customer profile settings screens
     {
-      path:'/profilCustomer',
+      path:'/profilecustomer',
       name:"profilCustomer",
       component: () => import('@/profil/profilCustomer.vue')
     }
+    
   ]
   })
 

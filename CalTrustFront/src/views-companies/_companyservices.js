@@ -1,10 +1,8 @@
 import api from "@/_services/_authservices";
 
 /* 
-
     Ici ce le service consacré à une entreprise spécifique, raison pour laquelle firm est passée en paramètre
     Tout y est, en ce qui concerne les calculs on va les gérer après !!!
-
 */
 
 const fetchRecentsFirms = async (firms) => {

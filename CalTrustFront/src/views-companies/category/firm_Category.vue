@@ -13,7 +13,7 @@
             :firm="firm.name.company_name"
             :category="firm.category_display"
             :user="firm.id"
-            @click="getFirmOnThisCategory(firm)"
+            @clicked-firms="getFirmOnThisCategory(firm)"
         />
     </div>
     <moreButton
