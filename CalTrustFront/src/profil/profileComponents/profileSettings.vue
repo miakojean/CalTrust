@@ -1,5 +1,7 @@
 <template>
-  <section class="main__section">
+  <section class="profile__section">
+    <profileInfoBlock/>
+    <profileInfoBlock/>
     <profileInfoBlock/>
   </section>
 </template>
@@ -13,6 +15,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.profile__section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
 </style>

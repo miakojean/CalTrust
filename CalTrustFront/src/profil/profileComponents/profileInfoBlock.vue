@@ -1,5 +1,5 @@
 <template>
-  <div class="main__container">
+  <div class="profile__container">
     <h4>Profile</h4>
     <p>This information will be displayed publicly so be careful what you share.</p>
     <stepper/>
@@ -25,8 +25,8 @@ export default {
     setup(){
         const profile = [
             {label:'Nom de famille', value:"MIAKO"},
-            {label:'Nom de famille', value:"MIAKO"},
-            {label:'Nom de famille', value:"MIAKO"},
+            {label:'Prenom', value:"Jean Yves Arnold"},
+            {label:'Email', value:"miakojeanyves@gmail.com"},
         ]
 
         return{profile}
@@ -35,6 +35,25 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.profile__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 0.5rem;
+    width: 100%;
+}
 
+.profile__container h4,p{
+    text-align: start;
+}
+
+h4{
+    font-size: 1.1rem;
+}
+
+p{
+    font-size: 0.9rem;
+    font-weight: 400;
+}
 </style>
