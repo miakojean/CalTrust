@@ -80,7 +80,7 @@ const router = createRouter({
     {
       path:'/profilecustomer/security',
       name:"profilecustomer-security",
-      component: () => import('@/profil/profilCustomer.vue')
+      component: () => import('@/profil/FirmView/profileSecurity.vue')
     },
     {
       path:'/profilecustomer/notifications',

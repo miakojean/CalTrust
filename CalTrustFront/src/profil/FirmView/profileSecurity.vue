@@ -6,7 +6,7 @@
         <settingsMenu/>
       </div>
       <div class="profile-settings-container">
-        <profileSettings/>
+        <profileSecuritySection/>
       </div>
     </div>
     <footerSection/>
@@ -15,15 +15,15 @@
 
 <script>
 import newNavbar from '@/layout/newNavbar.vue';
-import settingsMenu from './settingsMenu.vue';
-import profileSettings from './profileComponents/profileSettings.vue';
+import settingsMenu from '../settingsMenu.vue';
+import profileSecuritySection from '../profileSection/profileSecuritySection.vue';
 import footerSection from '@/layout/footerSection.vue';
 
 export default {
   components: {
     newNavbar,
     settingsMenu,
-    profileSettings,
+    profileSecuritySection,
     footerSection
   }
 }
