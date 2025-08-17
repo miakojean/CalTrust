@@ -1,17 +1,34 @@
 <template>
   <section class="profile__section">
     <profileInfoBlock/>
-    <profileInfoBlock/>
-    <profileInfoBlock/>
+    <profileInfoBlock
+      title="Informations supplémentaires"
+      description="Ici vous retrouvez vos informations supplémentaires"
+      :fields="otherFields"
+    />
   </section>
 </template>
 
 <script>
+import { ref } from 'vue';
 import profileInfoBlock from './profileInfoBlock.vue';
 export default {
-    components:{
-        profileInfoBlock,
+  components:{
+    profileInfoBlock,
+  },
+
+  setup(){
+    const otherFields = ref([
+      { label: 'Catégorie', value: "Services Financiers & Banques" },
+      { label: 'description', value: "" },
+      { label: 'website', value: "www.firms.com" },
+      {label:'Mise en ligne', value:"12/02/2025"}
+    ])
+
+    return{
+      otherFields,
     }
+  }
 }
 </script>
 

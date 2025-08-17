@@ -1,10 +1,12 @@
 <template>
   <div class="profile__container">
-    <h4>Profile</h4>
-    <p>This information will be displayed publicly so be careful what you share.</p>
-    <stepper/>
+    <h4>{{ title }}</h4>
+    <p>{{ description }}</p>
+
+    <div class="divider"></div>
+    
     <Profile__family
-        v-for="(i, index) in profile"
+        v-for="(i, index) in fields"
         :key="index"
         :label="i.label"
         :value="i.value"
@@ -22,14 +24,30 @@ export default {
         Profile__family
     },
 
-    setup(){
-        const profile = [
-            {label:'Nom de famille', value:"MIAKO"},
-            {label:'Prenom', value:"Jean Yves Arnold"},
-            {label:'Email', value:"miakojeanyves@gmail.com"},
-        ]
+    props:{
+        title:{
+            type:String,
+            default:'Informations de base'
+        },
+        description:{
+            type:String,
+            default:'Cette section présente les différentes information de base de votre entreprise '
+        },
+        fields: {
+            type: Array,
+            default: () => [
+                { label: 'Nom de l\'entreprise', value: "Caladrius" },
+                { label: 'Adresse', value: "303 Firewall Lane, Safe Harbor" },
+                { label: 'Email', value: "firm6@business.com" },
+                {label:'Téléphone', value:"0102030405"}
+            ]
+        }
+    },
 
-        return{profile}
+    setup(){
+        
+
+        return{}
     }
 
 }
@@ -49,11 +67,17 @@ export default {
 }
 
 h4{
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 p{
     font-size: 0.9rem;
     font-weight: 400;
+}
+
+.divider {
+  height: 2px;
+  background: #d8d8d8; /* Couleur grise légère */
+  margin: 1rem 0; /* Espacement vertical */
 }
 </style>
