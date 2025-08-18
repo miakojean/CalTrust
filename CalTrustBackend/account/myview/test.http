@@ -1,3 +1,17 @@
-### Récupérer les informations d'une entreprise par son ID
-GET http://localhost:8000/account/profile/1/
+GET http://localhost:8000/account/customer/profile/ 
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NTQ5MTUxLCJpYXQiOjE3NTU1NDE5NTIsImp0aSI6Ijc0ZWJjOGU0YjZjMTQ2YWE5NjU1MmJiODdhNDZiY2UwIiwidXNlcl9pZCI6IjEwIn0.3jFxZHLVdNTcX24uM_OX3uLJYJZunR26ub6Ok8OBp44
+
+### Get information about firm profile 
+GET http://localhost:8000/account/firm/profile/ 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NTQ5MTUxLCJpYXQiOjE3NTU1NDE5NTIsImp0aSI6Ijc0ZWJjOGU0YjZjMTQ2YWE5NjU1MmJiODdhNDZiY2UwIiwidXNlcl9pZCI6IjEwIn0.3jFxZHLVdNTcX24uM_OX3uLJYJZunR26ub6Ok8OBp44
+
+### Get informations with credentials
+POST http://127.0.0.1:8000/account/login/
+Content-Type: application/json
+
+{
+  "email": "cainvest@gmail.com",
+  "password": "supersecurepassword"
+}

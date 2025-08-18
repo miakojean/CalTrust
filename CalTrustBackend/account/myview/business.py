@@ -1,15 +1,37 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, serializers
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.shortcuts import get_object_or_404
+from account.models import FirmProfile
+from account.serializer import FirmProfileSerializer
+from companies.models import Company
+from companies.serializer import CompanyAsUser
 from django.contrib.auth.models import User
 
-class UserProfile(APIView):
+class FirmProfileView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def get(self, request):
+        # Vérifie que l'utilisateur a bien un profil entreprise
+        profile = get_object_or_404(FirmProfile, user=request.user)
+        serializer = FirmProfileSerializer(profile)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request):
+        profile = get_object_or_404(FirmProfile, user=request.user)
+        serializer = FirmProfileSerializer(profile, data=request.data, partial=True)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserProfile(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, user_id):
-
         try:
             user = User.objects.get(pk=user_id)
             
@@ -24,7 +46,6 @@ class UserProfile(APIView):
                 }
             }
 
-            # Check if the user has a customer profile
             if hasattr(user, 'account_customer_profile'):
                 profile = user.account_customer_profile
                 response_data["profile_type"] = "customer"
@@ -32,7 +53,6 @@ class UserProfile(APIView):
                     "phone": profile.phone,
                     "birth_date": str(profile.birth_date) if profile.birth_date else None
                 }
-            # Check if the user has a firm profile
             elif hasattr(user, 'firm_profile'):
                 profile = user.firm_profile
                 response_data["profile_type"] = "firm"

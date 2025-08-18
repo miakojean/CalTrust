@@ -2,6 +2,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import CustomerProfile, FirmProfile # Make sure to import FirmProfile
+from companies.models import Company
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 
@@ -144,3 +145,89 @@ class UserRegistrationSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         raise NotImplementedError("La mise à jour n'est pas implémentée pour ce sérialiseur")
+    
+# Ajoutez ceci à la fin du fichier serializer.py
+
+class CustomerProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username')
+    email = serializers.EmailField(source='user.email')
+    first_name = serializers.CharField(source='user.first_name')
+    last_name = serializers.CharField(source='user.last_name')
+
+    class Meta:
+        model = CustomerProfile
+        fields = ['username', 'email', 'first_name', 'last_name', 'phone', 'birth_date']
+        read_only_fields = ['username', 'email']
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user', {})
+        user = instance.user
+
+        # Mise à jour des champs utilisateur
+        for attr, value in user_data.items():
+            setattr(user, attr, value)
+        user.save()
+
+        # Mise à jour des champs du profil
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        return instance
+
+class CompanySerializer(serializers.ModelSerializer):
+    firm_profile_id = serializers.PrimaryKeyRelatedField(source='name.user', read_only=True)
+    category_display = serializers.CharField(source='get_category_display', read_only=True)
+    
+    # Modifiez cette partie pour gérer plusieurs reviews
+
+    class Meta:
+        model = Company
+        fields = [
+            'id',
+            'firm_profile_id',
+            'category',
+            'category_display',
+            'description',
+            'website',
+            'created_at',
+            'updated_at'
+        ]
+        read_only_fields = ['created_at', 'updated_at']
+
+class FirmProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username')
+    email = serializers.EmailField(source='user.email')
+    first_name = serializers.CharField(source='user.first_name')
+    last_name = serializers.CharField(source='user.last_name')
+    company = CompanySerializer(read_only = True)
+
+    class Meta:
+        model = FirmProfile
+        fields = ['username', 
+                  'email', 
+                  'first_name', 
+                  'last_name', 
+                  'company_name', 
+                  'address', 
+                  'is_verified', 
+                  'phone_number',
+                  'company'
+                  ]
+        read_only_fields = ['username', 'email', 'is_verified']
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user', {})
+        user = instance.user
+
+        # Mise à jour des champs utilisateur
+        for attr, value in user_data.items():
+            setattr(user, attr, value)
+        user.save()
+
+        # Mise à jour des champs du profil
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        return instance
