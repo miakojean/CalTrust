@@ -3,6 +3,7 @@
     <profileInfoBlock
       :isThereDescription="false"
       :isThereToggle="false"
+      :fields="baseFields"
     />
     <profileInfoBlock
       title="Informations supplémentaires"
@@ -24,25 +25,45 @@ export default {
   },
 
   setup(){
-    const otherFields = ref([
-      { label: 'Catégorie', value: "Services Financiers & Banques" },
-      { label: 'website', value: "www.firms.com" },
-      {label:'Mise en ligne', value:"12/02/2025"}
-    ])
+
+    const baseFields = ref([])
+
+    const otherFields = ref([])
 
     onMounted(async () => {
       try {
         const response = await fetchMyPersonalInfo()
+        console.log("Réponse complète de l'API:", response) // Affiche toute la réponse
+        
+        if (response) {
+          // Affiche les données si elles existent
+          console.log("Données de la réponse:", response.data || response)
+          
+          // Pour voir la structure complète de l'objet
+          console.log("Structure de la réponse:", JSON.stringify(response, null, 2))
 
-        if (response?.data){
-          console.log(response.data)
+          baseFields.value = [
+            { label: 'Nom de l\'entreprise', value: response.company_name },
+            { label: 'Adresse', value: response.address },
+            { label: 'Email', value: response.email },
+            {label:'Téléphone', value: response.phone_number}
+          ]
+
+          otherFields.value = ref[
+            { label: 'Catégorie', value: "" },
+            { label: 'website', value: "" },
+            {label:'Mise en ligne', value:""}
+          ]
         }
       } catch(error) {
-        console.error("Erreur de chargement:", error);
+        console.error("Erreur de chargement:", error)
+        // Affiche aussi les détails de l'erreur si disponible
+        console.error("Détails de l'erreur:", error.response?.data || error.message)
       }
     })
 
     return{
+      baseFields,
       otherFields,
     }
   }
