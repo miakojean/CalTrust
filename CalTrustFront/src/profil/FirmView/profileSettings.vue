@@ -14,8 +14,10 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import profileInfoBlock from '../profileComponents/profileInfoBlock.vue';
+import { fetchMyPersonalInfo } from '../_profileServices/callToApi';
+
 export default {
   components:{
     profileInfoBlock,
@@ -28,6 +30,18 @@ export default {
       {label:'Mise en ligne', value:"12/02/2025"}
     ])
 
+    onMounted(async () => {
+      try {
+        const response = await fetchMyPersonalInfo()
+
+        if (response?.data){
+          console.log(response.data)
+        }
+      } catch(error) {
+        console.error("Erreur de chargement:", error);
+      }
+    })
+
     return{
       otherFields,
     }
@@ -37,9 +51,9 @@ export default {
 
 <style scoped>
 .profile__section{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 </style>

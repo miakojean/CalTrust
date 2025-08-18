@@ -26,7 +26,7 @@
     </div>
 
     <div class="auth__btn" v-if="isLoggedIn === true">
-      <secondButton :label = "username"/>
+      <secondButton :label = "username" @click="router.push('/profilecustomer')"/>
       <mainButton label = "Deconnexion" @click="logout"/>
     </div>
   </nav>
