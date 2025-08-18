@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import inputfamily__2 from '@/components/tools/inputFamily__2.vue';
+import inputfamily__2 from '@/components/tools/input/inputFamily__2.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import stepper from '@/components/cards/stepper.vue';
 import api from '@/_services/_authservices'; // Your Axios instance

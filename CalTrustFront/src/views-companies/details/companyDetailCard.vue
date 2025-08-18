@@ -47,7 +47,7 @@
 <script>
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import infofamily from '@/components/tools/infoFamily.vue';
+import infofamily from '@/components/tools/input/infoFamily.vue';
 
 const defaultPic = new URL('@/assets/pictures/devnomicus.png', import.meta.url).href;
 

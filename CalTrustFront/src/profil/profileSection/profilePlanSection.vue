@@ -1,7 +1,7 @@
 <template>
   <section class="profile__section">
     <profileInfoBlock
-      title="Sécurité"
+      title="Mon plan de souscription"
       :fields="securityFields"
       :isThereDescription="false"
       :isThereToggle="false"

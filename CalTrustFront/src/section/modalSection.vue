@@ -46,7 +46,7 @@
 
 <script>
 import rating from '@/components/tools/rating.vue';
-import inputArea from '@/components/tools/inputArea.vue';
+import inputArea from '@/components/tools/input/inputArea.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import secondButton2 from '@/components/button/secondButton2.vue';
 import { useRouter } from 'vue-router';

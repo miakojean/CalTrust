@@ -10,6 +10,7 @@
           <i class="ri-settings-3-line icon"></i>
           <span>General</span>
         </li>
+        
         <li 
           class="menu-item"
           :class="{ active: isActive('/profilecustomer/security') }"
@@ -18,6 +19,7 @@
           <i class="ri-shield-keyhole-line icon"></i>
           <span>Sécurité</span>
         </li>
+        
         <li 
           class="menu-item"
           :class="{ active: isActive('/profilecustomer/notifications') }"
@@ -26,6 +28,7 @@
           <i class="ri-notification-3-line icon"></i>
           <span>Notifications</span>
         </li>
+        
         <li 
           class="menu-item"
           :class="{ active: isActive('/profilecustomer/reviews') }"
@@ -34,6 +37,7 @@
           <i class="ri-team-line icon"></i>
           <span>Mes avis</span>
         </li>
+        
         <li 
           class="menu-item"
           :class="{ active: isActive('/profilecustomer/plan') }"
@@ -42,6 +46,7 @@
           <i class="ri-stack-line icon"></i>
           <span>Mon plan</span>
         </li>
+        
         <li 
           class="menu-item"
           :class="{ active: isActive('/profilecustomer/billing') }"
@@ -50,6 +55,7 @@
           <i class="ri-bill-line icon"></i>
           <span>Billing</span>
         </li>
+
       </ul>
     </nav>
   </div>

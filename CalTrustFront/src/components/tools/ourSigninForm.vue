@@ -4,12 +4,14 @@
     <Transition>
       <p v-if="message.emptyfields">{{ message.emptyfields }}</p>
     </Transition>
+    
     <inputfamily__2
       label="username"
       type="text"
       placeholder="Entrer votre username"
       v-model="username"
     />
+    
     <inputfamily__2
       label="mot de passe"
       type="password"
@@ -37,7 +39,7 @@
 </template>
 
 <script>
-import inputfamily__2 from './inputFamily__2.vue';
+import inputfamily__2 from './input/inputFamily__2.vue';
 import mainButton from '../button/mainButton.vue';
 import stepper from '../cards/stepper.vue';
 import api from '@/_services/_authservices'; // Your Axios instance

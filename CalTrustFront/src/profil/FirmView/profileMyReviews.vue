@@ -6,7 +6,7 @@
         <settingsMenu/>
       </div>
       <div class="profile-settings-container">
-        <profileSettings/>
+        <profileMyReviews/>
       </div>
     </div>
     <footerSection/>
@@ -16,14 +16,14 @@
 <script>
 import newNavbar from '@/layout/newNavbar.vue';
 import settingsMenu from '../settingsMenu.vue';
-import profileSettings from '../firmComponent/profileSettings.vue';
+import profileMyReviews from '../profileSection/profileMyReviews.vue';
 import footerSection from '@/layout/footerSection.vue';
 
 export default {
   components: {
     newNavbar,
     settingsMenu,
-    profileSettings,
+    profileMyReviews,
     footerSection
   }
 }

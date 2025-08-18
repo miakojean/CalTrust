@@ -69,7 +69,7 @@
 import { ref } from 'vue';
 import checkBoxDbChoices from '@/components/tools/checkBoxDbChoices.vue';
 import moreButton from '@/components/button/moreButton.vue';
-import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
+import inputFamily__2 from '@/components/tools/input/inputFamily__2.vue';
 import prevButton from '@/components/button/prevButton.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import stepper from '@/components/cards/stepper.vue';
@@ -77,7 +77,7 @@ import api from '@/_services/_authservices';
 import footerSection from '@/layout/footerSection.vue';
 import newNavbar  from '@/layout/newNavbar.vue';
 import { useRouter } from 'vue-router';
-import selectFamily from '@/components/tools/selectFamily.vue';
+import selectFamily from '@/components/tools/input/selectFamily.vue';
 export default {
 components:{ 
     checkBoxDbChoices, 

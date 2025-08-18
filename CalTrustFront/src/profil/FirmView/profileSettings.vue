@@ -8,13 +8,14 @@
       title="Informations supplémentaires"
       description="Ici vous retrouvez vos informations supplémentaires"
       :fields="otherFields"
+      :uploadFile="false"
     />
   </section>
 </template>
 
 <script>
 import { ref } from 'vue';
-import profileInfoBlock from './profileInfoBlock.vue';
+import profileInfoBlock from '../profileComponents/profileInfoBlock.vue';
 export default {
   components:{
     profileInfoBlock,

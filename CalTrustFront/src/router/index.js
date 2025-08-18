@@ -85,22 +85,17 @@ const router = createRouter({
     {
       path:'/profilecustomer/notifications',
       name:"profilecustomer-notifications",
-      component: () => import('@/profil/profilCustomer.vue')
+      component: () => import('@/profil/FirmView/profileNotifications.vue')
     },
     {
       path:'/profilecustomer/reviews',
       name:"profilecustomer-reviews",
-      component: () => import('@/profil/profilCustomer.vue')
-    },
-    {
-      path:'/profilecustomer/my-reviews',
-      name:"profilecustomer-myreviews",
-      component: () => import('@/profil/profilCustomer.vue')
+      component: () => import('@/profil/FirmView/profileMyReviews.vue')
     },
     {
       path:'/profilecustomer/plan',
       name:"profilecustomer-plan",
-      component: () => import('@/profil/profilCustomer.vue')
+      component: () => import('@/profil/FirmView/profilePlan.vue')
     },
     
   ]

@@ -37,7 +37,7 @@
 
 <script>
 import footerCard from '@/components/cards/footerCard.vue';
-import inputfamily from '@/components/tools/inputfamily.vue';
+import inputfamily from '@/components/tools/input/inputfamily.vue';
 import mainButton_2 from '@/components/button/mainButton_2.vue';
 export default {
   components:{

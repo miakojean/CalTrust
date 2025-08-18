@@ -1,7 +1,7 @@
 <template>
   <section class="profile__section">
     <profileInfoBlock
-      title="Sécurité"
+      title="Avis sur mon entreprise"
       :fields="securityFields"
       :isThereDescription="false"
       :isThereToggle="false"

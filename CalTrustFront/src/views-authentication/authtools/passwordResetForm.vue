@@ -108,7 +108,7 @@
 <script>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import inputFamily__2 from '@/components/tools/inputFamily__2.vue';
+import inputFamily__2 from '@/components/tools/input/inputFamily__2.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import stepper from '@/components/cards/stepper.vue';
 import secondStepper from '@/components/cards/secondStepper.vue';

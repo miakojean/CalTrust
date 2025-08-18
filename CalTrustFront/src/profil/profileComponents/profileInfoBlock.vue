@@ -4,6 +4,12 @@
     <p>{{ description }}</p>
 
     <div class="divider"></div>
+
+    <profile__fileUpload
+        v-if="uploadFile === true"
+        accept="image/*,.pdf"
+        :maxSize="5 * 1024 * 1024" 
+    />
     
     <Profile__family
         v-for="(i, index) in fields"
@@ -27,13 +33,17 @@ import stepper from '@/components/cards/stepper.vue';
 import Profile__family from './profile__family.vue';
 import profile__TextArea from './profile__TextArea.vue';
 import profile__Toggle from './profile__Toggle.vue';
+import uploadFile from '@/components/tools/file/uploadFile.vue';
+import profile__fileUpload from './profile__fileUpload.vue';
 export default {
 
     components:{
         stepper,
         Profile__family,
         profile__TextArea,
-        profile__Toggle
+        profile__Toggle,
+        uploadFile,
+        profile__fileUpload
     },
 
     props:{
@@ -61,6 +71,10 @@ export default {
         isThereToggle:{
             type:Boolean,
             default:true
+        },
+        uploadFile:{
+            type:Boolean,
+            default: true
         }
     },
 

@@ -1,7 +1,8 @@
 <template>
   <section class="profile__section">
     <profileInfoBlock
-      title="Sécurité"
+      title="Notifications"
+      description=""
       :fields="securityFields"
       :isThereDescription="false"
       :isThereToggle="false"
