@@ -38,6 +38,8 @@ import profile__TextArea from './profile__TextArea.vue';
 import profile__Toggle from './profile__Toggle.vue';
 import uploadFile from '@/components/tools/file/uploadFile.vue';
 import profile__fileUpload from './profile__fileUpload.vue';
+import { updateCompanyInfo } from '../_profileServices/callToApi';
+
 export default {
 
     components:{
