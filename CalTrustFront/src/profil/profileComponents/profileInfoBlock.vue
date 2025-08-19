@@ -16,10 +16,13 @@
         :key="index"
         :label="i.label"
         :value="i.value"
+        :fieldName="i.label"
+        @update-field="handleUpdateField"
     />
 
     <profile__TextArea
         v-if="isThereDescription === true"
+        :value="DescriptionValue"
     />
 
     <profile__Toggle
@@ -51,7 +54,8 @@ export default {
             type:String,
             default:'Informations de base'
         },
-        description:{
+        description:{ 
+            /* This is description of the block */
             type:String,
             default:'Cette section présente les différentes information de base de votre entreprise '
         },
@@ -64,10 +68,17 @@ export default {
                 {label:'Téléphone', value:"0102030405"}
             ]
         },
+        
         isThereDescription:{
             type:Boolean,
             default:true
         },
+
+        DescriptionValue:{
+            /* This is description of the fields */
+            type:String
+        },
+
         isThereToggle:{
             type:Boolean,
             default:true
@@ -78,12 +89,55 @@ export default {
         }
     },
 
-    setup(){
+    setup(props, { emit }) {
+    
+    const handleUpdateField = async (updateData) => {
+      try {
+        console.log('Mise à jour:', updateData);
         
+        // Préparer les données pour l'API
+        const apiData = {};
+        
+        // Mapping des champs (ajuster selon votre API)
+        const fieldMapping = {
+          'Nom de l\'entreprise': 'company_name',
+          'Adresse': 'address',
+          'Email': 'email',
+          'Téléphone': 'phone_number',
+          'Website': 'website'
+          // Ajoutez d'autres mappings au besoin
+        };
+        
+        const apiFieldName = fieldMapping[updateData.field];
+        if (apiFieldName) {
+          apiData[apiFieldName] = updateData.value;
+          
+          // Appel API
+          const response = await updateCompanyInfo(apiData);
+          console.log('Mise à jour réussie:', response);
+          
+          // Émettre un événement pour informer le parent
+          emit('field-updated', {
+            field: updateData.field,
+            value: updateData.value,
+            success: true
+          });
+        }
+      } catch (error) {
+        console.error('Erreur mise à jour:', error);
+        emit('field-updated', {
+          field: updateData.field,
+          value: updateData.value,
+          success: false,
+          error: error.message
+        });
+      }
+    };
 
-        return{}
-    }
-
+    return {
+      handleUpdateField
+    };
+  }
 }
 </script>
 

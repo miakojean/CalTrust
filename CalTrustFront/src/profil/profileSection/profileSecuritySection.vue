@@ -29,7 +29,6 @@ export default {
   setup(){
     const securityFields = ref([
       { label: 'Mot de passe', value: "****************" },
-      { label: 'Authentification', value: "www.firms.com" },
     ])
 
     const administratifs = ref([

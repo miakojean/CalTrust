@@ -101,15 +101,14 @@ export default {
         });
 
         // Assuming Django returns a token in response.data.token or similar
-        const token = response.data;
-        if (token) {
+        const tokenData = response.data;
+        if (tokenData.access) {
           message.value.succesMessage = "Connexion établie avec succès !";
-          localStorage.setItem('userToken', token.access); // ou adapter selon la structure de réponse;
-          localStorage.setItem('userTokenRefresh', token.refresh)
-          localStorage.setItem('username', token.username)
-          router.push('/avis')
+          localStorage.setItem('userToken', tokenData.access);
+          localStorage.setItem('userTokenRefresh', tokenData.refresh);
+          localStorage.setItem('username', tokenData.username || email.value);
+          router.push('/avis');
         } else {
-          // If no token but success response (shouldn't happen with DRF TokenObtainPairView)
           message.value.errorMessages = "Connexion réussie mais pas de jeton reçu.";
         }
 

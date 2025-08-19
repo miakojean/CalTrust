@@ -4,38 +4,73 @@
       <div class="label__family">
         <label>{{ label }}</label>
         <p v-if="!isChanging">{{ value }}</p>
-        <input v-else type="text" :value="value" class="family-input">
+        <input 
+          v-else 
+          type="text" 
+          v-model="newValue"
+          @keyup.enter="saveChanges"
+          @keyup.escape="cancelChanges"
+          class="family-input"
+          ref="inputRef"
+        >
       </div>
-      <span class="update-btn" @click="modify">{{ isChanging ? 'Enregistrer' : 'Mettre à jour' }}</span>
+      <span class="update-btn" @click="handleModify">
+        {{ isChanging ? 'Enregistrer' : 'Mettre à jour' }}
+      </span>
     </div>
     <div class="divider"></div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, nextTick } from 'vue';
 
 export default {
   props: {
-    label: {
-      type: String,
-      default: 'Nom de famille'
-    },
-    value: {
-      type: String,
-      default: 'Tim Cook'
-    },
+    label: String,
+    value: String,
+    fieldName: String // Nouvelle prop pour identifier le champ
   },
-  setup() {
+  emits: ['update-field'],
+  setup(props, { emit }) {
     const isChanging = ref(false);
+    const newValue = ref(props.value);
+    const inputRef = ref(null);
     
-    const modify = () => {
-      isChanging.value = !isChanging.value;
+    const saveChanges = () => {
+      if (newValue.value !== props.value) {
+        // Émettre l'événement avec le nom du champ et la nouvelle valeur
+        emit('update-field', {
+          field: props.fieldName,
+          value: newValue.value
+        });
+      }
+      isChanging.value = false;
+    };
+    
+    const cancelChanges = () => {
+      newValue.value = props.value;
+      isChanging.value = false;
+    };
+    
+    const handleModify = () => {
+      if (isChanging.value) {
+        saveChanges();
+      } else {
+        isChanging.value = true;
+        nextTick(() => {
+          inputRef.value?.focus();
+        });
+      }
     };
 
     return {
       isChanging,
-      modify,
+      newValue,
+      inputRef,
+      handleModify,
+      saveChanges,
+      cancelChanges,
     };
   }
 };
