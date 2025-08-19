@@ -4,9 +4,13 @@
         <div class="label__description">
             <label>{{ label }}</label>
             <p v-if="!isChanging">{{ value }}</p>
+            <uploadPDF
+              v-if="isPDF === true"
+            />
             <uploadFile
                 accept="image/*,.pdf"
                 :maxSize="5 * 1024 * 1024" 
+                v-else-if="!isPDF"
             />
         </div>
         <span class="update-btn" @click="modify">{{ isChanging ? 'Enregistrer' : 'Mettre à jour' }}</span>
@@ -17,6 +21,7 @@
 
 <script>
 import UploadFile from '@/components/tools/file/uploadFile.vue';
+import uploadPDF from '@/components/tools/file/uploadPDF.vue';
 import { ref } from 'vue';
 
 export default {
@@ -29,10 +34,15 @@ export default {
         type: String,
         default: ''
         },
+        isPDF: {
+        type: Boolean,
+        default: true
+        }
     },
 
     components:{
-        UploadFile
+        UploadFile,
+        uploadPDF
     },
     setup() {
         const isChanging = ref(false);

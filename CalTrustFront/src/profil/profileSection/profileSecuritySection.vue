@@ -13,7 +13,9 @@
       :fields="administratifs"
       :isThereDescription="false"
       :isThereToggle="false"
-      :uploadFile="false"
+      :uploadFile="true"
+      uploadFileTitle="Registre de commerce"
+      :isPDF="true"
     />
   </section>
 </template>

@@ -5,6 +5,7 @@
       :isThereToggle="false"
       :fields="baseFields"
       @field-updated="handleFieldUpdated"
+      :isPDF="false"
     />
     <profileInfoBlock
       title="Informations supplémentaires"

@@ -9,6 +9,8 @@
         v-if="uploadFile === true"
         accept="image/*,.pdf"
         :maxSize="5 * 1024 * 1024" 
+        :label="uploadFileTitle"
+        :isPDF="isPDF"
     />
     
     <Profile__family
@@ -88,6 +90,14 @@ export default {
         uploadFile:{
             type:Boolean,
             default: true
+        },
+        uploadFileTitle:{
+          type: String,
+          default: 'Télécharger un fichier'
+        },
+        isPDF: {
+          type: Boolean,
+          default: false
         }
     },
 
