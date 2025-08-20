@@ -5,7 +5,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 ### Get information about firm profile 
 GET http://localhost:8000/account/firm/profile/ 
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NTQ5MTUxLCJpYXQiOjE3NTU1NDE5NTIsImp0aSI6Ijc0ZWJjOGU0YjZjMTQ2YWE5NjU1MmJiODdhNDZiY2UwIiwidXNlcl9pZCI6IjEwIn0.3jFxZHLVdNTcX24uM_OX3uLJYJZunR26ub6Ok8OBp44
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NTk4ODcwLCJpYXQiOjE3NTU1OTE2NzAsImp0aSI6IjU0YWU1MmE0ZDlmZjQ5Y2Q4YTdlMmY0MWE3MWY1NWZmIiwidXNlcl9pZCI6MTN9.MwowmVNYhLdxq4-RIjPwFHfHOdnSMloEiK3WYHcADeY
+
+### Edit information about firm profile 
+PUT http://localhost:8000/account/firm/profile/ 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NjA5MDk1LCJpYXQiOjE3NTU2MDE4OTUsImp0aSI6IjcyOGNjZWUyMDA5ZDQ3ZTFiMmZiMjM2ZjZmOWRhNzZlIiwidXNlcl9pZCI6MTN9.Icj8M9hRW9jbCQPgIhrVPvpo_kD29C9LFb0lDT45NZM
+
+{
+  "address": "Adjame paillet, rue de l'aménagement"
+}
 
 ### Get informations with credentials
 POST http://127.0.0.1:8000/account/login/
@@ -14,4 +23,18 @@ Content-Type: application/json
 {
   "email": "cainvest@gmail.com",
   "password": "supersecurepassword"
+}
+
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTY3ODA3MCwiaWF0IjoxNzU1NTkxNjcwLCJqdGkiOiI0MGExZGUwZjQwNzg0OTZkYTE5ZWFlOTkxNjI0ODllOSIsInVzZXJfaWQiOjEzfQ.Tx1bM194yYnJbprZoQdgKz5-yrAYnip6e7b9Cejz1xU",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NTk4ODcwLCJpYXQiOjE3NTU1OTE2NzAsImp0aSI6IjU0YWU1MmE0ZDlmZjQ5Y2Q4YTdlMmY0MWE3MWY1NWZmIiwidXNlcl9pZCI6MTN9.MwowmVNYhLdxq4-RIjPwFHfHOdnSMloEiK3WYHcADeY",
+  "username": "cainvest"
+}
+
+###
+POST http://127.0.0.1:8000/account/token/refresh/
+Content-Type: application/json
+
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTY3ODA3MCwiaWF0IjoxNzU1NTkxNjcwLCJqdGkiOiI0MGExZGUwZjQwNzg0OTZkYTE5ZWFlOTkxNjI0ODllOSIsInVzZXJfaWQiOjEzfQ.Tx1bM194yYnJbprZoQdgKz5-yrAYnip6e7b9Cejz1xU"
 }

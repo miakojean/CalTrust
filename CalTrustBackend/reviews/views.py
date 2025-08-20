@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from datetime import timezone
 from rest_framework.permissions import AllowAny
+from core.services import NotificationService
 
 class RecentReviewsAPIView(APIView):
     # Vue pour permettre aux visiteurs d'avoirs accès aux différents avis postés sur le site
@@ -74,7 +75,18 @@ class ReviewAPIView(APIView):
             # Création de l'avis
             serializer = ReviewSerializer(data=request.data)
             if serializer.is_valid():
-                serializer.save(firm=firm, customer=customer)
+                # Enregistrer l'avis
+                review = serializer.save(firm=firm, customer=customer)
+
+                # Créer une notification pour l'entreprise
+                NotificationService.create_notification(
+                    user=firm.user,  # L'utilisateur de l'entreprise
+                    notification_type='review_posted',
+                    message=f"Un nouvel avis a été posté sur votre entreprise {firm.name}.",
+                    data={"review_id": review.id, "customer_id": customer.id},
+                    target_url=f"/firm/{firm.id}/reviews/{review.id}" # Lien vers l'avis
+                )
+
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
