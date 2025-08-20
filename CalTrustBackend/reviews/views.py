@@ -82,9 +82,9 @@ class ReviewAPIView(APIView):
                 NotificationService.create_notification(
                     user=firm.user,  # L'utilisateur de l'entreprise
                     notification_type='review_posted',
-                    message=f"Un nouvel avis a été posté sur votre entreprise {firm.name}.",
-                    data={"review_id": review.id, "customer_id": customer.id},
-                    target_url=f"/firm/{firm.id}/reviews/{review.id}" # Lien vers l'avis
+                    message=f"Un nouvel avis a été posté sur votre entreprise {firm.company_name}.",
+                    data={"review_id": review.id, "customer_id": customer.user.id},
+                    target_url=f"/firm/{firm.pk}/reviews/{review.id}"
                 )
 
                 return Response(serializer.data, status=status.HTTP_201_CREATED)

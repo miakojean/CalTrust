@@ -8,10 +8,9 @@ class NotificationService:
     @staticmethod
     def create_notification(user, notification_type, message, data=None, target_url=None):
         """Crée une notification pour un utilisateur"""
-        # CORRECTION MAJEURE: Ajouter l'utilisateur à la notification
         notification = Notifications.objects.create(
-            user=user,  # <--- AJOUTÉ
-            notification_type=notification_type, # Nom du champ ajusté pour plus de clarté
+            user=user,
+            notifications_type=notification_type,  # Correction du nom du champ
             message=message,
             data=data or {},
             target_url=target_url

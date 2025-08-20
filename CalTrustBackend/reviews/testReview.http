@@ -18,22 +18,30 @@ Content-Type: application/json
   "birth_date": "1990-05-20"
 }
 
+###
 POST http://127.0.0.1:8000/account/login/
 Content-Type: application/json
 
 {
-  "email": "customer2@gmail.com",
-  "password": "securepassword123"
+  "email": "Attaangek@gmail.com",
+  "password": "Romaric1"
 }
 
 ###
-POST http://127.0.0.1:8000/reviews/firms/1/
+POST http://127.0.0.1:8000/reviews/firms/5/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1MTQ2NDA1LCJpYXQiOjE3NTUxMzkyMDUsImp0aSI6IjA3N2NjY2FmZTRiMzQxNDg5NDY5ODAwM2JjY2RjMmUzIiwidXNlcl9pZCI6MX0.FSl4W7c0VtcMbXL20iwPLM7QN2fBnERg7G61v8npXOk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NzMwODAyLCJpYXQiOjE3NTU3MjM2MDIsImp0aSI6IjExNzljNTFlN2Y5MzQ4YTM5ZmJkOGUzOWUwNmQzMGI0IiwidXNlcl9pZCI6IjMifQ.nsosMIRFMlPEcDt34CeNYcIHF8fds8UFc6-h2sIu6Gg
 
 {
   "rating": 4,
-  "comment": "Service Exelent, je recommande ils ont fait mon site en moins d'une semaine"
+  "comment": "On vient tester le système de notifications"
+}
+
+###
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTg5NjQwMiwiaWF0IjoxNzU1NzIzNjAyLCJqdGkiOiIxNGM1OGI5YjY5ZDI0ZGZmYjc0MmI4M2ZhMmI0ZjlmOSIsInVzZXJfaWQiOiIzIn0.dWimP8YBW_rzkTTJi703DCRl7NSGJebwDTiL9qop5OQ",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NzMwODAyLCJpYXQiOjE3NTU3MjM2MDIsImp0aSI6IjExNzljNTFlN2Y5MzQ4YTM5ZmJkOGUzOWUwNmQzMGI0IiwidXNlcl9pZCI6IjMifQ.nsosMIRFMlPEcDt34CeNYcIHF8fds8UFc6-h2sIu6Gg",
+  "username": "KARA_225"
 }
 
 GET http://127.0.0.1:8000/reviews/public/recent/

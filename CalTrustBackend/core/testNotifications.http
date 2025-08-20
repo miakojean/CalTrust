@@ -1,0 +1,73 @@
+### BASE URL
+@base_url = http://127.0.0.1:8000
+@content_type = application/json
+
+### 1. CONNEXION D'UNE ENTREPRISE (pour recevoir des notifications)
+# Remplacer {{firm_token}} par le token réel de l'entreprise
+POST {{base_url}}/account/login/
+Content-Type: {{content_type}}
+
+{
+  "email": "issifm@business.com",
+  "password": "supersecurepassword"
+}
+
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTkwMDA5MSwiaWF0IjoxNzU1NzI3MjkxLCJqdGkiOiI4YjUwZDhiNmU0MWY0YmUwYmE2NWFhYjhlNmZjOTA0ZSIsInVzZXJfaWQiOiI0In0.gezmwK3GttcyamivnolA9NWxXQfCSqKEbY-1qajwE84",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NzM0NDkxLCJpYXQiOjE3NTU3MjcyOTEsImp0aSI6Ijg4MTBiYzQ1NzQ4ZjQ1ZmNiY2FjZTU2NThjNzNmMWRlIiwidXNlcl9pZCI6IjQifQ.UIvq6YYMWkOKdVBA6KXxWkRpDRfL7i5yw-rncdg1kP4",
+  "username": "issif"
+}
+
+### 4. VISUALISER LES NOTIFICATIONS DE L'ENTREPRISE
+GET {{base_url}}/core/notifications/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NzM0NDkxLCJpYXQiOjE3NTU3MjcyOTEsImp0aSI6Ijg4MTBiYzQ1NzQ4ZjQ1ZmNiY2FjZTU2NThjNzNmMWRlIiwidXNlcl9pZCI6IjQifQ.UIvq6YYMWkOKdVBA6KXxWkRpDRfL7i5yw-rncdg1kP4
+Content-Type: {{content_type}}
+
+### 5. VISUALISER SEULEMENT LES NOTIFICATIONS NON LUES
+GET {{base_url}}/notifications/?read=false
+Authorization: Bearer 
+Content-Type: {{content_type}}
+
+### 6. VISUALISER SEULEMENT LES NOTIFICATIONS LUES
+GET {{base_url}}/notifications/?read=true
+Authorization: Bearer 
+Content-Type: {{content_type}}
+
+### 7. MARQUER UNE NOTIFICATION COMME LUE
+# Remplacer {notification_id} par l'ID réel d'une notification
+PATCH {{base_url}}/notifications/{notification_id}/
+Authorization: Bearer 
+Content-Type: {{content_type}}
+
+{
+  "is_read": true
+}
+
+### 8. MARQUER TOUTES LES NOTIFICATIONS COMME LUES
+POST {{base_url}}/notifications/actions/
+Authorization: Bearer 
+Content-Type: {{content_type}}
+
+{
+  "action": "mark_all_read"
+}
+
+### 9. SUPPRIMER LES NOTIFICATIONS LUES
+POST {{base_url}}/notifications/actions/
+Authorization: Bearer 
+Content-Type: {{content_type}}
+
+{
+  "action": "clear_all"
+}
+
+### 10. OBTENIR LE NOMBRE DE NOTIFICATIONS NON LUES
+GET {{base_url}}/notifications/unread-count/
+Authorization: Bearer 
+Content-Type: {{content_type}}
+
+### 11. VOIR UNE NOTIFICATION SPÉCIFIQUE
+# Remplacer {notification_id} par l'ID réel
+GET {{base_url}}/notifications/{notification_id}/
+Authorization: Bearer 
+Content-Type: {{content_type}}
