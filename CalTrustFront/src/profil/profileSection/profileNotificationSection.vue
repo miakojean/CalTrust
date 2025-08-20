@@ -1,30 +1,24 @@
 <template>
   <section class="profile__section">
-    <profileInfoBlock
+    
+    <profile__notifications
       title="Notifications"
-      description=""
-      :fields="securityFields"
-      :isThereDescription="false"
-      :isThereToggle="false"
-      :uploadFile="false"
+      description="Consultez les avis récents sur votre entreprise"
     />
-
-    <profileInfoBlock
-      title="Mes documents administratifs"
-      :fields="administratifs"
-      :isThereDescription="false"
-      :isThereToggle="false"
-      :uploadFile="false"
-    />
+    
+    
   </section>
 </template>
 
 <script>
 import { ref } from 'vue';
 import profileInfoBlock from '../profileComponents/profileInfoBlock.vue';
+import profileNotifications from '../FirmView/profileNotifications.vue';
+import profile__notifications from '../profileComponents/profile__notifications.vue';
 export default {
   components:{
     profileInfoBlock,
+    profile__notifications
   },
 
   setup(){

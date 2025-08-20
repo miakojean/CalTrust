@@ -8,14 +8,10 @@
       :uploadFile="false"
     />
 
-    <profileInfoBlock
+    <profile__BlockFile
       title="Mes documents administratifs"
-      :fields="administratifs"
-      :isThereDescription="false"
-      :isThereToggle="false"
-      :uploadFile="true"
-      uploadFileTitle="Registre de commerce"
-      :isPDF="true"
+      description="Cette section contient tous les documents administratifs"
+      
     />
   </section>
 </template>
@@ -23,9 +19,12 @@
 <script>
 import { ref } from 'vue';
 import profileInfoBlock from '../profileComponents/profileInfoBlock.vue';
+import profile__BlockFile from '../profileComponents/profile__BlockFile.vue';
+
 export default {
   components:{
     profileInfoBlock,
+    profile__BlockFile
   },
 
   setup(){

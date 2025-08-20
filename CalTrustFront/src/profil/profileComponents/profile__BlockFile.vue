@@ -1,44 +1,25 @@
 <template>
-  <div class="profile__container">
-    <h4>{{ title }}</h4>
-    <p>{{ description }}</p>
+    <div class="profile__container">
+        <h4>{{ title }}</h4>
+        <p>{{ description }}</p>
 
-    <div class="divider"></div>
+        <div class="divider"></div>
 
-    <profile__fileUpload
-      v-if="uploadFile === true"
-      accept="image/*,.pdf"
-      :maxSize="5 * 1024 * 1024" 
-      :label="uploadFileTitle"
-      :isPDF="isPDF"
-    />
-    
-    <Profile__family
-        v-for="(i, index) in fields"
-        :key="index"
-        :label="i.label"
-        :value="i.value"
-        :fieldName="i.label"
-        @update-field="handleUpdateField"
-    />
+        
+        <profile__fileUpload
+            v-for="(i, index) in fields"
+            :key="index"
+            accept="image/*,.pdf"
+            :maxSize="5 * 1024 * 1024" 
+            :label="i.label"
+            :isPDF="isPDF"
+        />
 
-    <profile__TextArea
-        v-if="isThereDescription === true"
-        :value="DescriptionValue"
-    />
-
-    <profile__Toggle
-        v-if="isThereToggle === true"
-    />
-  </div>
+    </div>
 </template>
 
 <script>
 import stepper from '@/components/cards/stepper.vue';
-import Profile__family from './profile__family.vue';
-import profile__TextArea from './profile__TextArea.vue';
-import profile__Toggle from './profile__Toggle.vue';
-import uploadFile from '@/components/tools/file/uploadFile.vue';
 import profile__fileUpload from './profile__fileUpload.vue';
 import { updateCompanyInfo } from '../_profileServices/callToApi';
 
@@ -46,10 +27,6 @@ export default {
 
     components:{
         stepper,
-        Profile__family,
-        profile__TextArea,
-        profile__Toggle,
-        uploadFile,
         profile__fileUpload
     },
 
@@ -66,16 +43,9 @@ export default {
         fields: {
             type: Array,
             default: () => [
-                { label: 'Nom de l\'entreprise', value: "Caladrius" },
-                { label: 'Adresse', value: "303 Firewall Lane, Safe Harbor" },
-                { label: 'Email', value: "firm6@business.com" },
-                {label:'Téléphone', value:"0102030405"}
+                { label: 'Registre de commerce', value: "Caladrius" },
+                { label: 'Registre fiscal', value: "Caladrius" },
             ]
-        },
-        
-        isThereDescription:{
-            type:Boolean,
-            default:true
         },
 
         DescriptionValue:{
@@ -83,21 +53,13 @@ export default {
             type:String
         },
 
-        isThereToggle:{
-            type:Boolean,
-            default:true
-        },
-        uploadFile:{
-            type:Boolean,
-            default: true
-        },
         uploadFileTitle:{
           type: String,
           default: 'Télécharger un fichier'
         },
         isPDF: {
           type: Boolean,
-          default: false
+          default: true
         }
     },
 
