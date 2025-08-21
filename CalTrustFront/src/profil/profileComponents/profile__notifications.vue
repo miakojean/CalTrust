@@ -4,10 +4,12 @@
     <p>{{ description }}</p>
 
     <div class="divider"></div>
-    <notification__card/>
-    <notification__card/>
-    <notification__card/>
-    <notification__card/>
+    <notification__card
+       v-for="(notif, index) in notifications"
+      :key = index
+      :time = notif.created_at
+      :message="notif.message"
+    />
     
     
   </div>
@@ -15,6 +17,8 @@
 
 <script>
 import notification__card from '@/components/cards/notification__card.vue';
+import {ref, onMounted} from 'vue'
+import { getMyNotifications } from '../_profileServices/callToApi';
 
 export default {
     components:{
@@ -36,13 +40,28 @@ export default {
 
     setup() {
     
-    
-    
+        const notifications = ref([])
 
-    return {
-      
-    };
-  }
+        const loadNotifcations = async () => {
+            try{
+                const response = await getMyNotifications();
+                console.log("Réponse API", response)
+                notifications.value = response.results
+            }   catch (error) {
+                console.log(error)
+            }
+        };
+    
+        onMounted(
+            () => {
+                loadNotifcations();
+            }
+        )
+
+        return {
+            notifications, loadNotifcations
+        };
+    }
 }
 </script>
 

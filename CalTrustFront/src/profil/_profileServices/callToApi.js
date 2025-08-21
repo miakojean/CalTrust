@@ -3,6 +3,8 @@ import api from "@/_services/_authservices";
   On va chercher à: {
     - Obtenir "Mes informations" une fois connecté
     - Modifier "Mes informations"
+    - Obtenir mes notifications
+    - Les marquer comme lues
   }
 */
 
@@ -48,4 +50,24 @@ const updateCompanyInfo = async (data) => {
   }
 };
 
-export { fetchMyPersonalInfo, updateCompanyInfo };
+const getMyNotifications = async() => {
+  try {
+    const token = localStorage.getItem('userToken');
+
+    if(!token) {
+      throw new Error('Token non trouvé');
+    }
+
+    const response = await api.get('/core/notifications/',{
+      headers:{'Authorization': `Bearer ${token}`}
+    })
+
+    return response.data
+  } catch (error) {
+    console.error("Erreur lors de la réccupération des notifications", error)
+    throw error;
+  }
+
+}
+
+export { fetchMyPersonalInfo, updateCompanyInfo, getMyNotifications };

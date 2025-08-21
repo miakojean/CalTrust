@@ -11,10 +11,9 @@
 </template>
 
 <script>
-import { ref } from 'vue';
 import profileInfoBlock from '../profileComponents/profileInfoBlock.vue';
-import profileNotifications from '../FirmView/profileNotifications.vue';
 import profile__notifications from '../profileComponents/profile__notifications.vue';
+
 export default {
   components:{
     profileInfoBlock,
@@ -22,18 +21,10 @@ export default {
   },
 
   setup(){
-    const securityFields = ref([
-      { label: 'Mot de passe', value: "****************" },
-      { label: 'Authentification', value: "www.firms.com" },
-    ])
-
-    const administratifs = ref([
-        {label:'Registre de commerce', value:""},
-        {label:'Registre fiscal', value:""},
-    ])
+    
 
     return{
-      securityFields, administratifs
+      
     }
   }
 }
