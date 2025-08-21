@@ -6,10 +6,15 @@ User = get_user_model()
 class NotificationService:
 
     @staticmethod
-    def create_notification(user, notification_type, message, data=None, target_url=None):
+    def create_notification(firm,
+                            customer, 
+                            notification_type, 
+                            message, data=None, 
+                            target_url=None):
         """Crée une notification pour un utilisateur"""
         notification = Notifications.objects.create(
-            user=user,
+            firm = firm,
+            customer = customer,
             notifications_type=notification_type,  # Correction du nom du champ
             message=message,
             data=data or {},
