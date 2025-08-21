@@ -1,7 +1,6 @@
 <template>
     
     <div class="notification__container">
-        <img class="pp" :src="pic" alt="fake profile picture">
         <div class="notification__information">
             <div class="notification__header">
                 <span>{{ info }} </span>
@@ -9,8 +8,15 @@
             </div>
 
             <div class="open__notifications">
-                <span>Ouvrir</span>
+                <span>1</span>
             </div>
+        </div>
+
+        <div class="notif__message">
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Eos soluta eveniet minus.
+            </p>
         </div>
     </div>
     
@@ -47,6 +53,7 @@ export default {
 .notification__container{
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: start;
     align-items: center;
     gap: 1rem;
@@ -94,12 +101,14 @@ export default {
     width: 100%;
 }
 
-.notification__body{
+.notif__message{
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
 }
 
-.notification__body p{
+.notif__message p{
     font-size: 0.9rem;
+    text-align: left;
+    width: 100%;
 }
 </style>
