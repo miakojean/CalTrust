@@ -6,6 +6,7 @@ Content-Type: application/json
   "password": "securepassword123"
 }
 
+###
 POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
@@ -23,20 +24,26 @@ POST http://127.0.0.1:8000/account/login/
 Content-Type: application/json
 
 {
-  "email": "Attaangek@gmail.com",
-  "password": "Romaric1"
+  "email": "sinistre12@gmail.com",
+  "password": "securepassword123"
 }
 
 ###
-POST http://127.0.0.1:8000/reviews/firms/5/
+POST http://127.0.0.1:8000/reviews/firms/4/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NzMwODAyLCJpYXQiOjE3NTU3MjM2MDIsImp0aSI6IjExNzljNTFlN2Y5MzQ4YTM5ZmJkOGUzOWUwNmQzMGI0IiwidXNlcl9pZCI6IjMifQ.nsosMIRFMlPEcDt34CeNYcIHF8fds8UFc6-h2sIu6Gg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1ODI4NTE3LCJpYXQiOjE3NTU4MjEzMTcsImp0aSI6ImY2MDg4MzllYjk4ZDQ4MWRiMDNmOWRkYzdhOTQyNmU3IiwidXNlcl9pZCI6MX0.XY9OOazqRDJeaS1kLLquFGZhOYWw9AIoeNNCO8qcV0Y
 
 {
   "rating": 4,
   "comment": "On vient tester le système de notifications"
 }
 
+###
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTk5NDExNywiaWF0IjoxNzU1ODIxMzE3LCJqdGkiOiIyYmE0NTA0NTZkNTk0NmUwODdjY2ZlNjk3ZGVkN2UxMCIsInVzZXJfaWQiOjF9.piTt9A9p-7keRRh2l2k5Td5ZrTsvsWkfKdlyNBUEB34",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1ODI4NTE3LCJpYXQiOjE3NTU4MjEzMTcsImp0aSI6ImY2MDg4MzllYjk4ZDQ4MWRiMDNmOWRkYzdhOTQyNmU3IiwidXNlcl9pZCI6MX0.XY9OOazqRDJeaS1kLLquFGZhOYWw9AIoeNNCO8qcV0Y",
+  "username": "owner"
+}
 ###
 {
   "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTg5NjQwMiwiaWF0IjoxNzU1NzIzNjAyLCJqdGkiOiIxNGM1OGI5YjY5ZDI0ZGZmYjc0MmI4M2ZhMmI0ZjlmOSIsInVzZXJfaWQiOiIzIn0.dWimP8YBW_rzkTTJi703DCRl7NSGJebwDTiL9qop5OQ",
@@ -47,7 +54,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 GET http://127.0.0.1:8000/reviews/public/recent/
 Content-Type: application/json
 
-GET http://127.0.0.1:8000/reviews/4/
+### Get a specific reviews
+GET http://127.0.0.1:8000/reviews/5/
 Content-Type: application/json
 
 ### Get specific reviews about that firm

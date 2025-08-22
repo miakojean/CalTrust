@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from .models import Notifications
+from .models import Notification
 
 User = get_user_model()
 
@@ -8,13 +8,15 @@ class NotificationService:
     @staticmethod
     def create_notification(firm,
                             customer, 
-                            notification_type, 
+                            notification_type,
+                            review, 
                             message, data=None, 
                             target_url=None):
         """Crée une notification pour un utilisateur"""
-        notification = Notifications.objects.create(
+        notification = Notification.objects.create(
             firm = firm,
             customer = customer,
+            review = review,
             notifications_type=notification_type,  # Correction du nom du champ
             message=message,
             data=data or {},
@@ -23,29 +25,29 @@ class NotificationService:
         return notification
     
     @staticmethod
-    def mark_as_read(notification_id, user):
+    def mark_as_read(notification_id, firm):
         """Marque une notification comme lue"""
         try:
-            notification = Notifications.objects.get(id=notification_id, user=user)
+            notification = Notification.objects.get(id=notification_id, firm = firm)
             notification.is_read = True
             notification.save()
             return True
-        except Notifications.DoesNotExist:
+        except Notification.DoesNotExist:
             return False
     
     @staticmethod
-    def mark_all_as_read(user):
+    def mark_all_as_read(firm):
         """Marque toutes les notifications non lues d'un utilisateur comme lues"""
-        Notifications.objects.filter(user=user, is_read=False).update(is_read=True)
+        Notification.objects.filter(firm = firm, is_read=False).update(is_read=True)
 
     @staticmethod
-    def get_unread_count(user):
+    def get_unread_count(firm):
         """Retourne le nombre de notifications non lues pour un utilisateur"""
         # CORRECTION: Utiliser Notifications au lieu de Notification
-        return Notifications.objects.filter(user=user, is_read=False).count()
+        return Notification.objects.filter(firm = firm, is_read=False).count()
     
     @staticmethod
-    def get_user_notifications(user, limit=20):
+    def get_user_notifications(firm, limit=20):
         """Retourne les notifications d'un utilisateur"""
         # CORRECTION: Utiliser Notifications au lieu de Notification
-        return Notifications.objects.filter(user=user).order_by('-created_at')[:limit]
+        return Notification.objects.filter(firm = firm).order_by('-created_at')[:limit]

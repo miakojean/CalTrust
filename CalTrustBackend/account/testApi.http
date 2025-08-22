@@ -1,3 +1,4 @@
+### Create OWNER Account
 POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
@@ -10,6 +11,7 @@ Content-Type: application/json
   "birth_date": "1990-05-20"
 }
 
+### Create KARA Account
 POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
@@ -22,6 +24,7 @@ Content-Type: application/json
   "birth_date": "2000-05-20"
 }
 
+### Create issif Account
 POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
@@ -31,9 +34,11 @@ Content-Type: application/json
   "password": "supersecurepassword",
   "user_type": "firm",
   "company_name": "issif Tech Solutions Inc.",
-  "address": "123 Tech Park, Innovation City"
+  "address": "123 Tech Park, Innovation City",
+  "phone_number": "0145896230"
 }
 
+### Create cainvest Account
 POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
@@ -47,6 +52,7 @@ Content-Type: application/json
   "phone_number": "0102030405"
 }
 
+### Create Ismo Account
 POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
@@ -58,9 +64,11 @@ Content-Type: application/json
   "company_name": "Ismo shop",
   "company_category": "industrie",
   "siret": "12347678932589",
-  "address": "225 Cocody, Innovation City"
+  "address": "225 Cocody, Innovation City",
+  "phone_number": "0102030405"
 }
 
+### Create Ismo Account
 POST http://127.0.0.1:8000/account/password-reseting/
 Content-Type: application/json
 

@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from django.core.paginator import Paginator, EmptyPage
-from .models import Notifications
+from .models import Notification
 from .serializer import NotificationsSerializer
 from .services import NotificationService
 
@@ -21,9 +21,10 @@ class NotificationView(APIView):
     
     def get(self, request, *args, **kwargs):
         try:
+            firm_profile = request.user.firm_profile
             # Récupération avec ordering explicite
-            notifications = Notifications.objects.filter(
-                user=request.user
+            notifications = Notification.objects.filter(
+                firm=firm_profile  # ← CORRECTION ICI
             ).order_by('-created_at', '-id')
             
             # Filtrage par statut de lecture
@@ -65,14 +66,14 @@ class NotificationDetailView(APIView):
     
     def get(self, request, notification_id, *args, **kwargs):
         try:
-            notification = Notifications.objects.get(
+            notification = Notification.objects.get(
                 id=notification_id, 
                 user=request.user
             )
             serializer = NotificationsSerializer(notification)
             return Response(serializer.data)
             
-        except Notifications.DoesNotExist:
+        except Notification.DoesNotExist:
             return Response(
                 {'error': 'Notification non trouvée'},
                 status=status.HTTP_404_NOT_FOUND
@@ -115,7 +116,7 @@ class NotificationBulkActionView(APIView):
         
         elif action == 'clear_all':
             # Attention: suppression définitive
-            Notifications.objects.filter(user=request.user, is_read=True).delete()
+            Notification.objects.filter(user=request.user, is_read=True).delete()
             return Response({'status': 'Notifications lues supprimées'})
         
         return Response(

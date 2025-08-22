@@ -1,11 +1,10 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 from account.models import FirmProfile, CustomerProfile
 from reviews.models import Review, ReviewResponse
 # Create your models here.
 
-class Notifications(models.Model):
+class Notification(models.Model):
 
     NOTIFICATIONS_TYPES  =(
         ('review_posted', 'Avis posté'),
@@ -18,7 +17,13 @@ class Notifications(models.Model):
     firm = models.ForeignKey(FirmProfile, on_delete = models.CASCADE, related_name = 'notifcations')
     customer = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE, related_name='notifications')
     review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='notifcations')
-    review_response = models.ForeignKey(ReviewResponse, on_delete=models.CASCADE, related_name='notifcations')
+    review_response = models.ForeignKey(
+                        ReviewResponse, 
+                        on_delete=models.CASCADE, 
+                        related_name='notifications', 
+                        blank=True,
+                        null=True  # Ajoutez cette ligne
+    )    
     notifications_type = models.CharField(max_length=50, choices=NOTIFICATIONS_TYPES)
     message = models.TextField()
     data = models.JSONField(default=dict, blank=True) #Stockage de données sup Ex:image;

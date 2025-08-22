@@ -1,21 +1,20 @@
 from rest_framework import serializers
-from .models import Notifications
-from account.models import FirmProfile, CustomerProfile
-from reviews.models import Review
+from .models import Notification
 
 class NotificationsSerializer(serializers.ModelSerializer):
 
-    firm_name = serializers.CharField(source = 'firm.user.company_name')
-    customer = serializers.CharField(source = 'customer.user.username')
-    review = serializers.CharField(source = 'review')
+    rating = serializers.SerializerMethodField()
+    customer_username = serializers.SerializerMethodField()
 
     class Meta:
-        model = Notifications
+        model = Notification
         fields = [
             'id',
-            'firm_name',
+            'firm',
             'customer',
+            'customer_username',
             'review',
+            'rating',
             'notifications_type',
             'message',
             'data',
@@ -23,3 +22,11 @@ class NotificationsSerializer(serializers.ModelSerializer):
             'created_at',
             'target_url'
         ]
+
+    def get_rating(self, obj):
+        # Récupérer la note depuis l'avis lié
+        return obj.review.rating if obj.review else None
+
+    def get_customer_username(self, obj):
+        # Récupérer le nom d'utilisateur depuis le profil client
+        return obj.customer.user.username if obj.customer and obj.customer.user else None

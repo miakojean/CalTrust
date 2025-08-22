@@ -80,7 +80,9 @@ class ReviewAPIView(APIView):
 
                 # Créer une notification pour l'entreprise
                 NotificationService.create_notification(
-                    user=firm.user,  # L'utilisateur de l'entreprise
+                    firm=firm,  # L'utilisateur de l'entreprise
+                    customer = customer, # L'utilisateur qui a posté l'avis,
+                    review = review, # L'avis pour lequel on envoie la notification
                     notification_type='review_posted',
                     message=f"Un nouvel avis a été posté sur votre entreprise {firm.company_name}.",
                     data={"review_id": review.id, "customer_id": customer.user.id},
