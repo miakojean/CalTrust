@@ -22,7 +22,7 @@
             </p>
 
             <ratingTools
-                :rating=3
+                :rating=rating
             />
         </div>
     </div>
@@ -59,6 +59,10 @@ export default {
         isRead:{
             type:Boolean,
             default: false
+        },
+        rating:{
+            type:Number,
+
         }
     },
 

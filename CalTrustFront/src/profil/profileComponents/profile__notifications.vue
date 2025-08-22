@@ -4,12 +4,20 @@
     <p>{{ description }}</p>
 
     <div class="divider"></div>
-    <notification__card
-       v-for="(notif, index) in notifications"
-      :key = index
-      :time = notif.created_at
-      :message="notif.message"
-    />
+    <div class="">
+        <notification__card
+            v-for="(notif, index) in notifications"
+            :key = index
+            :time = notif.created_at
+            :message="notif.message"
+            :rating="notif.rating"
+            @click="()=>{ isModalOpen = true }"
+        />
+        <notifications__modal
+            v-model="isModalOpen"
+            title="Notifications"
+        />
+    </div>
     
     
   </div>
@@ -17,12 +25,13 @@
 
 <script>
 import notification__card from '@/components/cards/notification__card.vue';
+import notifications__modal from './notifications__modal.vue';
 import {ref, onMounted} from 'vue'
 import { getMyNotifications } from '../_profileServices/callToApi';
 
 export default {
     components:{
-        notification__card
+        notification__card, notifications__modal
     },
 
     props:{
@@ -58,8 +67,10 @@ export default {
             }
         )
 
+        const isModalOpen = ref(true)
+
         return {
-            notifications, loadNotifcations
+            notifications, loadNotifcations, isModalOpen
         };
     }
 }
