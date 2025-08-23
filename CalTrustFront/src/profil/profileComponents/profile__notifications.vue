@@ -7,12 +7,13 @@
     <div class="notif__frame">
         <notification__card
             v-for="(notif, index) in notifications"
-            :key = index
+            :key="index"
             :username="notif.customer_username"
             :message="notif.message"
-            :time = "notif.created_at"
-            :isRead = "notif.is_read"
+            :time="notif.created_at"
+            :isRead="notif.is_read"
             :rating="notif.rating"
+            :notificationId="notif.id"
         />
     </div>
     

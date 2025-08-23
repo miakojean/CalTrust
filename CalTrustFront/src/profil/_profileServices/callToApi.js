@@ -70,7 +70,7 @@ const getMyNotifications = async() => {
 
 }
 
-const markNotificationsAsRead = async(notification) => {
+const markNotificationsAsRead = async(notificationId) => {
   try{
     const token = localStorage.getItem('userToken');
 
@@ -78,14 +78,20 @@ const markNotificationsAsRead = async(notification) => {
       throw new Error('Token non trouvé');
     }
 
-    const response = await api.patch(`/core/notifications/${notification}`,{
-      headers:{'Authorization': `Bearer ${token}`}
-    })
+    // Correction : ajout du body et de la méthode PATCH correcte
+    const response = await api.patch(`/core/notifications/${notificationId}/`, {
+      is_read: true
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
 
-    return response.data
+    return response.data;
   } catch (error) {
-    console.log("Erreur lors de la réccupération des notifications", error)
-    throw error
+    console.log("Erreur lors du marquage de la notification comme lue", error);
+    throw error;
   }
 }
 

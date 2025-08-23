@@ -11,8 +11,8 @@
                 <div class="open__notifications">
                     <span 
                         class="notification-dot"
-                        :class="{ 'notification__container--read': isRead }"
-                        v-if="isRead === false"
+                        :class="{ 'notification__container--read': isRead || hasBeenRead }"
+                        v-if="!isRead && !hasBeenRead"
                     ></span>
                 </div>
             </div>
@@ -35,6 +35,7 @@
             :firmId="123"
             :postReviewId="456"
             :username="username"
+            @opened="markAsRead"
         />
     </div>
     
@@ -43,10 +44,11 @@
 <script>
 
 const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import ratingTools from '../rating/ratingTools.vue';
 import notifications__modal from '@/profil/profileComponents/notifications__modal.vue';
 import { markNotificationsAsRead } from '@/profil/_profileServices/callToApi';
+
 export default {
     props:{
         pic:{
@@ -75,7 +77,10 @@ export default {
         },
         rating:{
             type:Number,
-
+        },
+        notificationId: { // Ajout d'une prop pour l'ID de la notification
+            type: Number,
+            required: true
         }
     },
 
@@ -83,15 +88,33 @@ export default {
         ratingTools, notifications__modal
     },
 
-    setup() {
-
-        const isModalOpen = ref(false)
+    setup(props) {
+        const isModalOpen = ref(false);
+        const hasBeenRead = ref(false); // État local pour suivre si la notification a été marquée comme lue
 
         const openModal = () => {
-            isModalOpen.value = true
-        }
+            isModalOpen.value = true;
+        };
 
-        return {isModalOpen, openModal}
+        const markAsRead = async () => {
+            // Si déjà marquée comme lue (localement ou via props), on ne fait rien
+            if (props.isRead || hasBeenRead.value) return;
+            
+            try {
+                await markNotificationsAsRead(props.notificationId);
+                hasBeenRead.value = true; // Marquer localement comme lu
+                console.log("Notification marquée comme lue avec succès");
+            } catch (error) {
+                console.error("Erreur lors du marquage comme lu:", error);
+            }
+        };
+
+        return {
+            isModalOpen, 
+            openModal,
+            hasBeenRead,
+            markAsRead
+        };
     }
 }
 </script>

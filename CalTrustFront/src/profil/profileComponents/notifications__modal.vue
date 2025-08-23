@@ -74,7 +74,7 @@ export default {
       type:Number
     }
   },
-  emits: ['update:modelValue', 'submit'],
+  emits: ['update:modelValue', 'submit', 'opened'],
   
   setup(props, { emit }) {
 
@@ -85,8 +85,13 @@ export default {
       isOpen.value = newVal;
     })
 
+    // Dans la fonction setup() de notifications__modal.vue
     watch(isOpen, (newVal) => {
       toggleBodyScroll(newVal);
+      if (newVal) {
+        // Émettre un événement lorsque la modale s'ouvre
+        emit('opened');
+      }
       if (!newVal) {
         // Réinitialise les messages et valeurs quand la modal se ferme
         message.value = { errorMessage: "", successMessage: "" };
