@@ -24,14 +24,14 @@ POST http://127.0.0.1:8000/account/login/
 Content-Type: application/json
 
 {
-  "email": "sinistre12@gmail.com",
+  "email": "jean.dupont@email.com",
   "password": "securepassword123"
 }
 
 ###
-POST http://127.0.0.1:8000/reviews/firms/4/
+POST http://127.0.0.1:8000/reviews/firms/3/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1ODI4NTE3LCJpYXQiOjE3NTU4MjEzMTcsImp0aSI6ImY2MDg4MzllYjk4ZDQ4MWRiMDNmOWRkYzdhOTQyNmU3IiwidXNlcl9pZCI6MX0.XY9OOazqRDJeaS1kLLquFGZhOYWw9AIoeNNCO8qcV0Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTU5MzMyLCJpYXQiOjE3NTU5NTIxMzIsImp0aSI6ImQ0YThiNDMwMzg3ZTRjYTFiYTdjMzg0MjhkOTllYWU2IiwidXNlcl9pZCI6N30.FJ1HV-bl_XadgVBWx-pXdww089JpX5mxV7d4t653UT4
 
 {
   "rating": 4,
@@ -40,9 +40,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 {
-  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTk5NDExNywiaWF0IjoxNzU1ODIxMzE3LCJqdGkiOiIyYmE0NTA0NTZkNTk0NmUwODdjY2ZlNjk3ZGVkN2UxMCIsInVzZXJfaWQiOjF9.piTt9A9p-7keRRh2l2k5Td5ZrTsvsWkfKdlyNBUEB34",
-  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1ODI4NTE3LCJpYXQiOjE3NTU4MjEzMTcsImp0aSI6ImY2MDg4MzllYjk4ZDQ4MWRiMDNmOWRkYzdhOTQyNmU3IiwidXNlcl9pZCI6MX0.XY9OOazqRDJeaS1kLLquFGZhOYWw9AIoeNNCO8qcV0Y",
-  "username": "owner"
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NjEyNDkzMiwiaWF0IjoxNzU1OTUyMTMyLCJqdGkiOiI1Nzc1OGEwNzg0NDU0YWVjYmZiYTQ4ZmI0MjFlOGJjMSIsInVzZXJfaWQiOjd9.fYBYXY1r2Nadvg_zZ49fJ6xH_XZq8zt1sC-6qV1nUyI",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTU5MzMyLCJpYXQiOjE3NTU5NTIxMzIsImp0aSI6ImQ0YThiNDMwMzg3ZTRjYTFiYTdjMzg0MjhkOTllYWU2IiwidXNlcl9pZCI6N30.FJ1HV-bl_XadgVBWx-pXdww089JpX5mxV7d4t653UT4",
+  "username": "jean.dupont"
 }
 ###
 {

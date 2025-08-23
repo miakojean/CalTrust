@@ -7,20 +7,20 @@
 POST {{base_url}}/account/login/
 Content-Type: {{content_type}}
 
-{
+{ 
   "email": "issifm@business.com",
   "password": "supersecurepassword"
 }
 
 {
-  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTk5NjY1NywiaWF0IjoxNzU1ODIzODU3LCJqdGkiOiJlZmExODgyOTFiMmY0YjhlYTE0ZDYxNWVmYzM0MDU1ZCIsInVzZXJfaWQiOjN9.sUebbWKFbtougGbWDzJAbEnTx-A0F3IIZlHXi3rLOxw",
-  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1ODMxMDU3LCJpYXQiOjE3NTU4MjM4NTcsImp0aSI6ImVhZDcxNDk0YzVlMzQzY2M4NTQyYTgxMWU1ZjJiNzI1IiwidXNlcl9pZCI6M30.NIPaEt3MbSgCH5Bd3_8xvo42p1SvPUF5VeJPfy6zdcg",
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NjE0NTkwOSwiaWF0IjoxNzU1OTczMTA5LCJqdGkiOiJjMTMyNDM1ZDNkOWI0NTM4OTZmMmMyOGI3OWI2Y2I2ZCIsInVzZXJfaWQiOjN9.CmsrTQ6neRvN2or4g_XrPMH8r2bycCT5O1f3zgbZ4rE",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTgwMzA5LCJpYXQiOjE3NTU5NzMxMDksImp0aSI6IjYwNjNiZDg2N2FjZDQwOGNiOGZkOWYwMTdkZjk4YjFiIiwidXNlcl9pZCI6M30.q0YfzjooRceyMWkSJv4N75ObDB-esxEvzcHcj5pdoGE",
   "username": "issif"
 }
 
 ### 4. VISUALISER LES NOTIFICATIONS DE L'ENTREPRISE
 GET {{base_url}}/core/notifications/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1ODMxMDU3LCJpYXQiOjE3NTU4MjM4NTcsImp0aSI6ImVhZDcxNDk0YzVlMzQzY2M4NTQyYTgxMWU1ZjJiNzI1IiwidXNlcl9pZCI6M30.NIPaEt3MbSgCH5Bd3_8xvo42p1SvPUF5VeJPfy6zdcg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTA3ODk0LCJpYXQiOjE3NTU5MDA2OTQsImp0aSI6IjM0OTQ1YzZkM2FmYzQ5MzNiYzQ4M2ExN2FiNzU3NGNhIiwidXNlcl9pZCI6M30.X2oHXroN4mILeHLJaa7IUvOef9PiTbTMtcQZdrq2xpY
 Content-Type: {{content_type}}
 
 ### 5. VISUALISER SEULEMENT LES NOTIFICATIONS NON LUES
@@ -35,8 +35,8 @@ Content-Type: {{content_type}}
 
 ### 7. MARQUER UNE NOTIFICATION COMME LUE
 # Remplacer {notification_id} par l'ID réel d'une notification
-PATCH {{base_url}}/notifications/{notification_id}/
-Authorization: Bearer 
+PATCH {{base_url}}/core/notifications/1/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTgwMzA5LCJpYXQiOjE3NTU5NzMxMDksImp0aSI6IjYwNjNiZDg2N2FjZDQwOGNiOGZkOWYwMTdkZjk4YjFiIiwidXNlcl9pZCI6M30.q0YfzjooRceyMWkSJv4N75ObDB-esxEvzcHcj5pdoGE 
 Content-Type: {{content_type}}
 
 {

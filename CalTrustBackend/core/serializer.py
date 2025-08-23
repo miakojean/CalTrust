@@ -5,6 +5,7 @@ class NotificationsSerializer(serializers.ModelSerializer):
 
     rating = serializers.SerializerMethodField()
     customer_username = serializers.SerializerMethodField()
+    comment = serializers.SerializerMethodField()
 
     class Meta:
         model = Notification
@@ -14,6 +15,7 @@ class NotificationsSerializer(serializers.ModelSerializer):
             'customer',
             'customer_username',
             'review',
+            'comment',
             'rating',
             'notifications_type',
             'message',
@@ -24,9 +26,10 @@ class NotificationsSerializer(serializers.ModelSerializer):
         ]
 
     def get_rating(self, obj):
-        # Récupérer la note depuis l'avis lié
         return obj.review.rating if obj.review else None
 
+    def get_comment(self, obj):  # Corrigé le nom de la méthode
+        return obj.review.comment if obj.review else None
+
     def get_customer_username(self, obj):
-        # Récupérer le nom d'utilisateur depuis le profil client
         return obj.customer.user.username if obj.customer and obj.customer.user else None

@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from django.core.paginator import Paginator, EmptyPage
+from account.models import FirmProfile, CustomerProfile
 from .models import Notification
 from .serializer import NotificationsSerializer
 from .services import NotificationService
@@ -66,9 +67,19 @@ class NotificationDetailView(APIView):
     
     def get(self, request, notification_id, *args, **kwargs):
         try:
+            # Vérifiez d'abord que l'utilisateur a un profil d'entreprise
+            try:
+                firm_profile = request.user.firm_profile
+            except FirmProfile.DoesNotExist:
+                return Response(
+                    {'error': 'Profil entreprise non trouvé pour cet utilisateur'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+            
+            # Correction: utiliser firm au lieu de user
             notification = Notification.objects.get(
                 id=notification_id, 
-                user=request.user
+                firm=firm_profile
             )
             serializer = NotificationsSerializer(notification)
             return Response(serializer.data)
@@ -87,7 +98,17 @@ class NotificationDetailView(APIView):
     def patch(self, request, notification_id, *args, **kwargs):
         """Marquer une notification comme lue"""
         try:
-            success = NotificationService.mark_as_read(notification_id, request.user)
+            # Vérifiez d'abord que l'utilisateur a un profil d'entreprise
+            try:
+                firm_profile = request.user.firm_profile
+            except FirmProfile.DoesNotExist:
+                return Response(
+                    {'error': 'Profil entreprise non trouvé pour cet utilisateur'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+            
+            # Utilisez le service avec le firm_profile
+            success = NotificationService.mark_as_read(notification_id, firm_profile)
             if success:
                 return Response({'status': 'Notification marquée comme lue'})
             else:
@@ -101,7 +122,6 @@ class NotificationDetailView(APIView):
                 {'error': 'Erreur lors de la mise à jour', 'details': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-
 class NotificationBulkActionView(APIView):
     """Vue pour les actions groupées sur les notifications"""
     
