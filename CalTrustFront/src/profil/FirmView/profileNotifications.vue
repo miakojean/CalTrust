@@ -15,8 +15,8 @@
 
 <script>
 import newNavbar from '@/layout/newNavbar.vue';
-import settingsMenu from '../settingsMenu.vue';
-import profileNotificationSection from '../profileSection/profileNotificationSection.vue';
+import settingsMenu from '@/profil/settingsMenu.vue';
+import profileNotificationSection from '@/profil/profileSection/profileNotificationSection.vue';
 import footerSection from '@/layout/footerSection.vue';
 
 export default {

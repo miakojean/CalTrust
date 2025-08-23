@@ -4,34 +4,29 @@
     <p>{{ description }}</p>
 
     <div class="divider"></div>
-    <div class="">
+    <div class="notif__frame">
         <notification__card
             v-for="(notif, index) in notifications"
             :key = index
-            :time = notif.created_at
+            :username="notif.customer_username"
             :message="notif.message"
+            :time = "notif.created_at"
+            :isRead = "notif.is_read"
             :rating="notif.rating"
-            @click="()=>{ isModalOpen = true }"
-        />
-        <notifications__modal
-            v-model="isModalOpen"
-            title="Notifications"
         />
     </div>
-    
     
   </div>
 </template>
 
 <script>
 import notification__card from '@/components/cards/notification__card.vue';
-import notifications__modal from './notifications__modal.vue';
 import {ref, onMounted} from 'vue'
 import { getMyNotifications } from '../_profileServices/callToApi';
 
 export default {
     components:{
-        notification__card, notifications__modal
+        notification__card,
     },
 
     props:{
@@ -67,10 +62,17 @@ export default {
             }
         )
 
-        const isModalOpen = ref(true)
+        const selectedNotif = ref(null); // <-- Ajoute cette ligne
+        
+        //Cette fonction va aussi marquer la notification comme lu!!!
+        function getNotif(notif){
+            selectedNotif.value = notif;
+            console.log(notif)
+        }
 
         return {
-            notifications, loadNotifcations, isModalOpen
+            notifications, loadNotifcations,
+            selectedNotif, getNotif
         };
     }
 }
@@ -102,5 +104,12 @@ p{
   height: 2px;
   background: #d8d8d8; /* Couleur grise légère */
   margin: 1rem 0; /* Espacement vertical */
+}
+
+.notif__frame{
+    display: flex;
+    flex-direction: column;
+    gap:0.5rem;
+    justify-content: start;
 }
 </style>

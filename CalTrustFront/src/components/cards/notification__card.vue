@@ -1,30 +1,41 @@
 <template>
     
     <div class="notification__container">
-        <div class="notification__information">
-            <div class="notification__header">
-                <span>{{ info }} </span>
-                <span class="time">{{ time }}</span>
+        <div @click="openModal" class="notification__content">
+            <div class="notification__information">
+                <div class="notification__header">
+                    <span>{{ info }} </span>
+                    <span class="time">{{ time }}</span>
+                </div>
+
+                <div class="open__notifications">
+                    <span 
+                        class="notification-dot"
+                        :class="{ 'notification__container--read': isRead }"
+                        v-if="isRead === false"
+                    ></span>
+                </div>
             </div>
 
-            <div class="open__notifications">
-                <span 
-                    class="notification-dot"
-                    :class="{ 'notification__container--read': isRead }"
-                    v-if="isRead === false"
-                ></span>
+            <div class="notif__message">
+                <p>
+                    {{ message }}
+                </p>
+
+                <ratingTools
+                    :rating=rating
+                />
             </div>
         </div>
 
-        <div class="notif__message">
-            <p>
-                {{ message }}
-            </p>
-
-            <ratingTools
-                :rating=rating
-            />
-        </div>
+        <notifications__modal
+            v-model="isModalOpen"
+            :title="'Répondre à l\'avis de'"
+            :firm="'Entreprise'"
+            :firmId="123"
+            :postReviewId="456"
+            :username="username"
+        />
     </div>
     
 </template>
@@ -32,8 +43,10 @@
 <script>
 
 const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
+import { ref } from 'vue';
 import ratingTools from '../rating/ratingTools.vue';
-
+import notifications__modal from '@/profil/profileComponents/notifications__modal.vue';
+import { markNotificationsAsRead } from '@/profil/_profileServices/callToApi';
 export default {
     props:{
         pic:{
@@ -67,14 +80,18 @@ export default {
     },
 
     components:{
-        ratingTools
+        ratingTools, notifications__modal
     },
 
     setup() {
 
-        
+        const isModalOpen = ref(false)
 
-        return 
+        const openModal = () => {
+            isModalOpen.value = true
+        }
+
+        return {isModalOpen, openModal}
     }
 }
 </script>
@@ -83,6 +100,10 @@ export default {
 
 .notification__container {
     width: 100%;
+    position: relative; /* Important pour le positionnement de la modale */
+}
+
+.notification__content {
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -90,25 +111,17 @@ export default {
     background: #f6f8fa;
     padding: 0.5rem;
     border-radius: 0.2rem;
-    transition: transform 0.3s ease, background 0.3s ease; /* Ajout d'une transition pour le transform */
+    transition: transform 0.3s ease, background 0.3s ease;
+    cursor: pointer;
 }
 
-.notification__container:hover {
+.notification__content:hover {
     background: #e4e4e4;
-    cursor: pointer;
-    transform: translateY(-2px); /* Ce mouvement sera maintenant animé */
+    transform: translateY(-2px);
 }
 
 .notification__container--read {
-    background: #e9ecef; /* Une couleur de fond plus claire ou plus neutre */
-    /* Vous pouvez également ajuster d'autres styles ici si nécessaire */
-}
-
-/* Modifiez l'état de survol pour ne pas écraser le style de fond */
-.notification__container:hover {
-    background: #e4e4e4;
-    cursor: pointer;
-    transform: translateY(-2px);
+    background: #e9ecef;
 }
 
 .notification__header{

@@ -70,4 +70,23 @@ const getMyNotifications = async() => {
 
 }
 
-export { fetchMyPersonalInfo, updateCompanyInfo, getMyNotifications };
+const markNotificationsAsRead = async(notification) => {
+  try{
+    const token = localStorage.getItem('userToken');
+
+    if(!token) {
+      throw new Error('Token non trouvé');
+    }
+
+    const response = await api.patch(`/core/notifications/${notification}`,{
+      headers:{'Authorization': `Bearer ${token}`}
+    })
+
+    return response.data
+  } catch (error) {
+    console.log("Erreur lors de la réccupération des notifications", error)
+    throw error
+  }
+}
+
+export { fetchMyPersonalInfo, updateCompanyInfo, getMyNotifications, markNotificationsAsRead };

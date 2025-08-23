@@ -14,21 +14,21 @@
     />
     
     <Profile__family
-        v-for="(i, index) in fields"
-        :key="index"
-        :label="i.label"
-        :value="i.value"
-        :fieldName="i.label"
-        @update-field="handleUpdateField"
+      v-for="(i, index) in fields"
+      :key="index"
+      :label="i.label"
+      :value="i.value"
+      :fieldName="i.label"
+      @update-field="handleUpdateField"
     />
 
     <profile__TextArea
-        v-if="isThereDescription === true"
-        :value="DescriptionValue"
+      v-if="isThereDescription === true"
+      :value="DescriptionValue"
     />
 
     <profile__Toggle
-        v-if="isThereToggle === true"
+      v-if="isThereToggle === true"
     />
   </div>
 </template>

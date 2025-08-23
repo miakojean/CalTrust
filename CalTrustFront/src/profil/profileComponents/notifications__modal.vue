@@ -3,40 +3,36 @@
   <div v-if="isOpen" class="modal-overlay" @click.self="close">
     
     <div class="modal-content">
-        <div class="modal-header">
-            <h4>{{ title }} <span> {{ firm }}</span></h4>
-            <button @click="close" class="close-btn">&times;</button>
-        </div>
-        
-        <div class="modal-body">
-            <p 
-                v-if="message.errorMessage"
-                class="errorMessage"
-            >
-            {{ message.errorMessage }}
-            </p>
-            <p 
-                v-if="message.successMessage"
-                class="succesMessage"
-            >
-            {{ message.successMessage }}
-            </p>
-            <inputArea
-                label="Repondre à l'avis"
-                v-model="comment"
-            />
-        </div>
-        
-        
-        <div class="modal-footer">
+      
+      <div class="modal-header">
+        <h4>{{ title }} <span>{{ username }}</span></h4>
+        <button @click="close" class="close-btn">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <p v-if="message.errorMessage" class="errorMessage">
+          {{ message.errorMessage }}
+        </p>
+        <p v-if="message.successMessage" class="succesMessage">
+          {{ message.successMessage }}
+        </p>
+
+        <notifCard
+          :message="propsmessage"
+          :username="username"
+        />
+        <inputArea label="Repondre à l'avis" v-model="comment"/>
+      </div>
+          
+      <div class="modal-footer">
         <secondButton2 
-            label="annuler"
-            @click="close"
+          label="annuler"
+          @click="close"
         />
         <mainButton 
-            label = "envoyer"
-            :isLoading = isloading
-            @click="submitForm"
+          label = "envoyer"
+          :isLoading = isloading
+          @click="submitForm"
         />
       </div>
     </div>
@@ -50,21 +46,26 @@ import rating from '@/components/tools/rating.vue';
 import inputArea from '@/components/tools/input/inputArea.vue';
 import mainButton from '@/components/button/mainButton.vue';
 import secondButton2 from '@/components/button/secondButton2.vue';
+import notifCard from '@/components/notifications/notifCard.vue';
 import { useRouter } from 'vue-router';
 import api from '@/_services/_authservices';
 import { ref, watch } from 'vue';
 
 export default {
-  components: {rating, inputArea , mainButton, secondButton2},
+  components: {rating, inputArea , mainButton, secondButton2, notifCard},
   props: {
     modelValue: Boolean,
     title: {
       type: String,
       default: 'Titre de la modale'
     },
-    firm:{
+    username:{
       type: String,
       default:"Anonyme"
+    },
+    propsmessage:{
+      type:String,
+      default:"On vient just tester le système de notifications"
     },
     firmId:{ // id for getting details about firm
       type:Number
@@ -152,40 +153,40 @@ export default {
       }
     }
 
-    // Gestion centralisée des erreurs
     function handleSubmissionError(error) {
-      if (error.response) {
-        switch (error.response.status) {
-          case 400:
-            message.value.errorMessage = "Vous avez déjà posté un avis sur cet entreprise";
-            toggleBodyScroll(false);
-            break;
-          case 401:
-            message.value.errorMessage = "Session expirée. Veuillez vous reconnecter.";
-            toggleBodyScroll(false);
-            router.push('/signin');
-            break;
-          case 403:
-            message.value.errorMessage = "Permission refusée.";
-            router.push('/signin');
-            break;
-          case 500:
-            message.value.errorMessage = "Erreur serveur. Veuillez réessayer plus tard.";
-            break;
-          default:
-            message.value.errorMessage = error.response.data?.message || "Erreur lors de la soumission";
-        }
-      } else {
-        message.value.errorMessage = "Problème de connexion. Vérifiez votre réseau.";
-      }
-      
-      console.error("Erreur:", {
-        message: error.message,
-        response: error.response?.data,
-        config: error.config
-      });
+    if (error.response) {
+    switch (error.response.status) {
+        case 400:
+        message.value.errorMessage = "Vous avez déjà posté un avis sur cet entreprise";
+        toggleBodyScroll(false);
+        break;
+        case 401:
+        message.value.errorMessage = "Session expirée. Veuillez vous reconnecter.";
+        toggleBodyScroll(false);
+        router.push('/signin');
+        break;
+        case 403:
+        message.value.errorMessage = "Permission refusée.";
+        router.push('/signin');
+        break;
+        case 500:
+        message.value.errorMessage = "Erreur serveur. Veuillez réessayer plus tard.";
+        break;
+        default:
+        message.value.errorMessage = error.response.data?.message || "Erreur lors de la soumission";
     }
-
+    } else {
+    message.value.errorMessage = "Problème de connexion. Vérifiez votre réseau.";
+    }
+    
+    console.error("Erreur:", {
+    message: error.message,
+    response: error.response?.data,
+    config: error.config
+    });
+}
+    
+    // Gestion centralisée des erreurs
     return {
       isOpen, close, ratingValue, submit, comment,
       isloading, message, submitForm,
