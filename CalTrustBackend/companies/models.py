@@ -4,6 +4,10 @@ from django.utils.translation import gettext_lazy as _
 from account.models import FirmProfile
 from django.db.models import Q 
 from django.db.models import Count, Case, When, FloatField
+from django.core.validators import FileExtensionValidator
+import os
+from django.conf import settings
+
 
 class Company(models.Model):
     """
@@ -40,6 +44,34 @@ class Company(models.Model):
                                 verbose_name=_("Site Web"),)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date de création"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Date de mise à jour"))
+    
+    # --- Documents administratifs PDF ---
+    document_1 = models.FileField(
+        upload_to='company_documents/%Y/%m/%d/',
+        blank=True,
+        null=True,
+        verbose_name=_("Document administratif 1"),
+        help_text=_("Téléchargez un document PDF (max. 10MB)"),
+        validators=[FileExtensionValidator(allowed_extensions=['pdf'])],
+        max_length=500
+    )
+    
+    document_2 = models.FileField(
+        upload_to='company_documents/%Y/%m/%d/',
+        blank=True,
+        null=True,
+        verbose_name=_("Document administratif 2"),
+        help_text=_("Téléchargez un document PDF (max. 10MB)"),
+        validators=[FileExtensionValidator(allowed_extensions=['pdf'])],
+        max_length=500
+    )
+    
+    # Statut de vérification des documents
+    documents_verified = models.BooleanField(
+        default=False,
+        verbose_name=_("Documents vérifiés"),
+        help_text=_("Indique si les documents administratifs ont été vérifiés par l'administration")
+    )
 
     # --- Propriétés pour calculer les statistiques des avis ---
 
@@ -107,6 +139,53 @@ class Company(models.Model):
             }
         }
 
+    def save(self, *args, **kwargs):
+        """Override save pour gérer la suppression des anciens fichiers"""
+        # Récupérer l'ancienne instance pour comparer les fichiers
+        if self.pk:
+            old_instance = Company.objects.get(pk=self.pk)
+            
+            # Vérifier si document_1 a changé et supprimer l'ancien
+            if old_instance.document_1 and old_instance.document_1 != self.document_1:
+                if os.path.isfile(old_instance.document_1.path):
+                    os.remove(old_instance.document_1.path)
+            
+            # Vérifier si document_2 a changé et supprimer l'ancien
+            if old_instance.document_2 and old_instance.document_2 != self.document_2:
+                if os.path.isfile(old_instance.document_2.path):
+                    os.remove(old_instance.document_2.path)
+        
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        """Override delete pour supprimer les fichiers associés"""
+        # Supprimer document_1
+        if self.document_1:
+            if os.path.isfile(self.document_1.path):
+                os.remove(self.document_1.path)
+        
+        # Supprimer document_2
+        if self.document_2:
+            if os.path.isfile(self.document_2.path):
+                os.remove(self.document_2.path)
+                
+        super().delete(*args, **kwargs)
+
+    @property
+    def has_documents(self):
+        """Vérifie si l'entreprise a au moins un document"""
+        return bool(self.document_1 or self.document_2)
+
+    @property
+    def documents_status(self):
+        """Retourne le statut des documents"""
+        if self.documents_verified:
+            return "verified"
+        elif self.has_documents:
+            return "pending"
+        else:
+            return "missing"
+
     @classmethod
     def search(cls, **filters):
         """
@@ -147,6 +226,7 @@ class Company(models.Model):
         """Formatte les choix de catégorie pour l'API"""
         return [{'value': choice[0], 'label': str(choice[1])} 
                 for choice in cls.CategoryChoices.choices]
+    
     def __str__(self):
         return f'{self.name}'
 
@@ -154,4 +234,3 @@ class Company(models.Model):
         verbose_name = _("Entreprise")
         verbose_name_plural = _("Entreprises")
         ordering = ['name']
-
