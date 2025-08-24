@@ -122,6 +122,7 @@ class NotificationDetailView(APIView):
                 {'error': 'Erreur lors de la mise à jour', 'details': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
 class NotificationBulkActionView(APIView):
     """Vue pour les actions groupées sur les notifications"""
     
@@ -129,16 +130,25 @@ class NotificationBulkActionView(APIView):
     
     def post(self, request, *args, **kwargs):
         action = request.data.get('action')
-        
+
+        # Vérifiez d'abord que l'utilisateur a un profil d'entreprise
+        try:
+            firm_profile = request.user.firm_profile
+        except FirmProfile.DoesNotExist:
+            return Response(
+                {'error': 'Profil entreprise non trouvé pour cet utilisateur'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+            
         if action == 'mark_all_read':
-            NotificationService.mark_all_as_read(request.user)
+            NotificationService.mark_all_as_read(firm_profile)
             return Response({'status': 'Toutes les notifications marquées comme lues'})
         
         elif action == 'clear_all':
             # Attention: suppression définitive
-            Notification.objects.filter(user=request.user, is_read=True).delete()
+            Notification.objects.filter(firm=firm_profile, is_read=True).delete()
             return Response({'status': 'Notifications lues supprimées'})
-        
+
         return Response(
             {'error': 'Action non supportée'},
             status=status.HTTP_400_BAD_REQUEST

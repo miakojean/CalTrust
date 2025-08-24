@@ -21,14 +21,14 @@ POST http://127.0.0.1:8000/account/login/
 Content-Type: application/json
 
 {
-  "email": "cainvest@gmail.com",
-  "password": "supersecurepassword"
+  "email": "marie.martin@email.com",
+  "password": "securepassword123"
 }
 
 {
-  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTY3ODA3MCwiaWF0IjoxNzU1NTkxNjcwLCJqdGkiOiI0MGExZGUwZjQwNzg0OTZkYTE5ZWFlOTkxNjI0ODllOSIsInVzZXJfaWQiOjEzfQ.Tx1bM194yYnJbprZoQdgKz5-yrAYnip6e7b9Cejz1xU",
-  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NTk4ODcwLCJpYXQiOjE3NTU1OTE2NzAsImp0aSI6IjU0YWU1MmE0ZDlmZjQ5Y2Q4YTdlMmY0MWE3MWY1NWZmIiwidXNlcl9pZCI6MTN9.MwowmVNYhLdxq4-RIjPwFHfHOdnSMloEiK3WYHcADeY",
-  "username": "cainvest"
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NjE1NjY1NSwiaWF0IjoxNzU1OTgzODU1LCJqdGkiOiI5NTIzMjY4ODllNGY0ZTQ1ODg1NmIyMWU2NjEyZThjNyIsInVzZXJfaWQiOjh9.i5nvmBJfgvysOVOPqdxJ54DYd-wVoQ0IAV13N93xViU",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTkxMDU1LCJpYXQiOjE3NTU5ODM4NTUsImp0aSI6IjIxNzE1ZDQzYWEzNjRkZTFiZDJjMjhkYTNjNDFhMGQyIiwidXNlcl9pZCI6OH0.B31uU5f7qrmRGtJNgYvIrEx4ap-8LcPr1nLOMMYq3o0",
+  "username": "marie.martin"
 }
 
 ###
