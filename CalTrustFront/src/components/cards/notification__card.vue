@@ -5,7 +5,7 @@
             <div class="notification__information">
                 <div class="notification__header">
                     <span>{{ info }} </span>
-                    <span class="time">{{ time }}</span>
+                    <span class="time">{{ formattedTime }}</span>
                 </div>
 
                 <div class="open__notifications">
@@ -45,7 +45,7 @@
 <script>
 
 const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import ratingTools from '../rating/ratingTools.vue';
 import notifications__modal from '@/profil/profileComponents/notifications__modal.vue';
 import { markNotificationsAsRead } from '@/profil/_profileServices/callToApi';
@@ -103,6 +103,22 @@ export default {
             isModalOpen.value = true;
         };
 
+        // Formater la date pour l'affichage
+        const formattedTime = computed(() => {
+            try {
+                const date = new Date(props.time);
+                return date.toLocaleDateString('fr-FR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } catch (error) {
+                return props.time; // Retourner la valeur originale en cas d'erreur
+            }
+        });
+
         const markAsRead = async () => {
             if (props.isRead || hasBeenRead.value) return;
             
@@ -121,6 +137,7 @@ export default {
             isModalOpen, 
             openModal,
             hasBeenRead,
+            formattedTime,
             markAsRead // Exposition de la méthode
         };
     }
