@@ -133,7 +133,7 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "firm1",
+  "username": "TechSolutions",
   "email": "firm1@business.com",
   "password": "supersecurepassword",
   "user_type": "firm",
@@ -147,7 +147,7 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "firm2",
+  "username": "DigitalInnovations",
   "email": "firm2@business.com",
   "password": "supersecurepassword",
   "user_type": "firm",
@@ -161,7 +161,7 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "firm3",
+  "username": "WebMasters",
   "email": "firm3@business.com",
   "password": "supersecurepassword",
   "user_type": "firm",
@@ -175,7 +175,7 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "firm4",
+  "username": "DataAnalytics",
   "email": "firm4@business.com",
   "password": "supersecurepassword",
   "user_type": "firm",
@@ -189,7 +189,7 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "firm5",
+  "username": "AIPioneers",
   "email": "firm5@business.com",
   "password": "supersecurepassword",
   "user_type": "firm",
@@ -203,7 +203,7 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "firm6",
+  "username": "CyberSecurity",
   "email": "firm6@business.com",
   "password": "supersecurepassword",
   "user_type": "firm",
@@ -217,7 +217,7 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "firm7",
+  "username": "CloudSystems",
   "email": "firm7@business.com",
   "password": "supersecurepassword",
   "user_type": "firm",
@@ -231,7 +231,7 @@ POST http://127.0.0.1:8000/account/
 Content-Type: application/json
 
 {
-  "username": "firm8",
+  "username": "MobileApps",
   "email": "firm8@business.com",
   "password": "supersecurepassword",
   "user_type": "firm",
