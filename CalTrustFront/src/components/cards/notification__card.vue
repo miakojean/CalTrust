@@ -32,6 +32,7 @@
             v-model="isModalOpen"
             :title="'Répondre à l\'avis de'"
             :firm="'Entreprise'"
+            :notifComment="comment"
             :firmId="123"
             :postReviewId="456"
             :username="username"
@@ -63,6 +64,10 @@ export default {
             type:String,
             default: "Le roi des pirates"
         },
+        comment:{
+            type:String,
+            default:"On vient just tester le système de notifications"
+        },
         message:{
             type:String,
             default:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos soluta eveniet minus."
@@ -78,7 +83,7 @@ export default {
         rating:{
             type:Number,
         },
-        notificationId: { // Ajout d'une prop pour l'ID de la notification
+        notificationId: {
             type: Number,
             required: true
         }
@@ -88,32 +93,35 @@ export default {
         ratingTools, notifications__modal
     },
 
-    setup(props) {
+    emits: ['marked-as-read'],
+
+    setup(props, { emit }) {
         const isModalOpen = ref(false);
-        const hasBeenRead = ref(false); // État local pour suivre si la notification a été marquée comme lue
+        const hasBeenRead = ref(false);
 
         const openModal = () => {
             isModalOpen.value = true;
         };
 
         const markAsRead = async () => {
-            // Si déjà marquée comme lue (localement ou via props), on ne fait rien
             if (props.isRead || hasBeenRead.value) return;
             
             try {
                 await markNotificationsAsRead(props.notificationId);
-                hasBeenRead.value = true; // Marquer localement comme lu
+                hasBeenRead.value = true;
+                emit('marked-as-read', props.notificationId); // Émettre l'événement
                 console.log("Notification marquée comme lue avec succès");
             } catch (error) {
                 console.error("Erreur lors du marquage comme lu:", error);
             }
         };
 
+        // Exposer la méthode pour qu'elle puisse être appelée depuis le parent
         return {
             isModalOpen, 
             openModal,
             hasBeenRead,
-            markAsRead
+            markAsRead // Exposition de la méthode
         };
     }
 }

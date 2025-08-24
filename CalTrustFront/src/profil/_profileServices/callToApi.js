@@ -95,4 +95,29 @@ const markNotificationsAsRead = async(notificationId) => {
   }
 }
 
-export { fetchMyPersonalInfo, updateCompanyInfo, getMyNotifications, markNotificationsAsRead };
+const markAllNotificationsAsRead = async() =>{
+  try {
+    const token = localStorage.getItem('userToken');
+
+    if(!token) {
+      throw new Error('Token non trouvé');
+    }
+
+    const response = await api.post('/core/notifications/actions/', {
+      action: "mark_all_read"
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors du marquage de toutes les notifications comme lues", error);
+    throw error;
+  }
+}
+
+export { fetchMyPersonalInfo, updateCompanyInfo, 
+  getMyNotifications, markNotificationsAsRead, markAllNotificationsAsRead };

@@ -18,7 +18,7 @@
         </p>
 
         <notifCard
-          :message="propsmessage"
+          :message="notifComment"
           :username="username"
         />
         <inputArea label="Repondre à l'avis" v-model="comment"/>
@@ -63,7 +63,7 @@ export default {
       type: String,
       default:"Anonyme"
     },
-    propsmessage:{
+    notifComment:{
       type:String,
       default:"On vient just tester le système de notifications"
     },
