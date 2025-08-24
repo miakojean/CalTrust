@@ -31,11 +31,11 @@ Content-Type: application/json
 ###
 POST http://127.0.0.1:8000/reviews/firms/3/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTU5MzMyLCJpYXQiOjE3NTU5NTIxMzIsImp0aSI6ImQ0YThiNDMwMzg3ZTRjYTFiYTdjMzg0MjhkOTllYWU2IiwidXNlcl9pZCI6N30.FJ1HV-bl_XadgVBWx-pXdww089JpX5mxV7d4t653UT4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTkxMDU1LCJpYXQiOjE3NTU5ODM4NTUsImp0aSI6IjIxNzE1ZDQzYWEzNjRkZTFiZDJjMjhkYTNjNDFhMGQyIiwidXNlcl9pZCI6OH0.B31uU5f7qrmRGtJNgYvIrEx4ap-8LcPr1nLOMMYq3o0
 
 {
-  "rating": 4,
-  "comment": "On vient tester le système de notifications"
+  "rating": 2,
+  "comment": "On vient tester le système de notifications avec Rokib"
 }
 
 ###
