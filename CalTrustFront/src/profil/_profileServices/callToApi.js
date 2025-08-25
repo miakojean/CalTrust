@@ -29,6 +29,7 @@ const fetchMyPersonalInfo = async () => {
   }
 };
 
+// We have two profiles that we have to manage: User and Firm
 const updateCompanyInfo = async (data) => {
   try {
     const token = localStorage.getItem('userToken');
@@ -49,6 +50,24 @@ const updateCompanyInfo = async (data) => {
     throw error;
   }
 };
+
+const updateOtherCompanyField = async (data) => {
+  
+  const token = localStorage.getItem('userToken');
+  try {
+    console.log("Données envoyées pour la mise à jour:", data);
+    const result = await api.put('/companies/my-company/', data, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    console.log("Réponse de l'API après mise à jour:", result);
+    return result.data;
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour:", error);
+    throw error;
+  }
+}
 
 const getMyNotifications = async() => {
   try {
@@ -119,5 +138,9 @@ const markAllNotificationsAsRead = async() =>{
   }
 }
 
-export { fetchMyPersonalInfo, updateCompanyInfo, 
-  getMyNotifications, markNotificationsAsRead, markAllNotificationsAsRead };
+export { fetchMyPersonalInfo, 
+  updateCompanyInfo, 
+  getMyNotifications,
+  updateOtherCompanyField, 
+  markNotificationsAsRead, 
+  markAllNotificationsAsRead };

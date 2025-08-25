@@ -12,6 +12,7 @@
           @keyup.escape="cancelChanges"
           class="family-input"
           ref="inputRef"
+          :placeholder="placeholder"
         >
       </div>
       <span class="update-btn" @click="handleModify">
@@ -29,7 +30,11 @@ export default {
   props: {
     label: String,
     value: String,
-    fieldName: String // Nouvelle prop pour identifier le champ
+    fieldName: String, // Nouvelle prop pour identifier le champ
+    placeholder:{
+      type:String,
+      default:'Non renseigné'
+    }
   },
   emits: ['update-field'],
   setup(props, { emit }) {

@@ -7,7 +7,7 @@
       @field-updated="handleFieldUpdated"
       :isPDF="false"
     />
-    <profileInfoBlock
+    <profileBlockCompany
       title="Informations supplémentaires"
       description="Ici vous retrouvez vos informations supplémentaires"
       :fields="otherFields"
@@ -21,11 +21,13 @@
 <script>
 import { ref, onMounted } from 'vue';
 import profileInfoBlock from '../profileComponents/profileInfoBlock.vue';
-import { fetchMyPersonalInfo } from '../_profileServices/callToApi';
+import profileBlockCompany from '../profileComponents/profileBlockCompany.vue';
+import { fetchMyPersonalInfo} from '../_profileServices/callToApi';
 
 export default {
   components: {
     profileInfoBlock,
+    profileBlockCompany
   },
   setup() {
     const baseFields = ref([]);
@@ -47,7 +49,7 @@ export default {
 
           otherFields.value = [
             { label: 'Catégorie', value: response.company?.category_display || "Non renseigné" },
-            { label: 'Website', value: response.company?.website || "Non renseigné" },
+            { label: 'Website', value: response.company?.website || "Non renseigné", },
             { 
               label: 'Mise en ligne', 
               value: response.company?.created_at 
@@ -63,15 +65,22 @@ export default {
       }
     };
 
-    const handleFieldUpdated = (result) => {
-      if (result.success) {
-        console.log('Champ mis à jour avec succès');
-        // Recharger les données si nécessaire
-        // loadData();
-      } else {
-        console.error('Échec de la mise à jour:', result.error);
+    // For firm profile which is based on User model
+    const handleFieldUpdated = async() => {
+      try {
+        await loadData(); // Recharger les données après la mise à jour
+      } catch (error) {
+        console.error("Erreur lors de la mise à jour:", error);
       }
     };
+
+    const handleOhterFieldUpdate = async() => {
+      try {
+        await loadData(); // Recharger les données après la mise à jour
+      } catch (error) {
+        console.error("Erreur lors de la mise à jour:", error);
+      }
+    }
 
     onMounted(() => {
       loadData();
