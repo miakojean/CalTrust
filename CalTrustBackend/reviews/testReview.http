@@ -20,15 +20,6 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:8000/account/login/
-Content-Type: application/json
-
-{
-  "email": "jean.dupont@email.com",
-  "password": "securepassword123"
-}
-
-###
 POST http://127.0.0.1:8000/reviews/firms/3/
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTkxMDU1LCJpYXQiOjE3NTU5ODM4NTUsImp0aSI6IjIxNzE1ZDQzYWEzNjRkZTFiZDJjMjhkYTNjNDFhMGQyIiwidXNlcl9pZCI6OH0.B31uU5f7qrmRGtJNgYvIrEx4ap-8LcPr1nLOMMYq3o0
@@ -40,32 +31,54 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 {
-  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NjEyNDkzMiwiaWF0IjoxNzU1OTUyMTMyLCJqdGkiOiI1Nzc1OGEwNzg0NDU0YWVjYmZiYTQ4ZmI0MjFlOGJjMSIsInVzZXJfaWQiOjd9.fYBYXY1r2Nadvg_zZ49fJ6xH_XZq8zt1sC-6qV1nUyI",
-  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTU5MzMyLCJpYXQiOjE3NTU5NTIxMzIsImp0aSI6ImQ0YThiNDMwMzg3ZTRjYTFiYTdjMzg0MjhkOTllYWU2IiwidXNlcl9pZCI6N30.FJ1HV-bl_XadgVBWx-pXdww089JpX5mxV7d4t653UT4",
-  "username": "jean.dupont"
-}
-###
-{
-  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTg5NjQwMiwiaWF0IjoxNzU1NzIzNjAyLCJqdGkiOiIxNGM1OGI5YjY5ZDI0ZGZmYjc0MmI4M2ZhMmI0ZjlmOSIsInVzZXJfaWQiOiIzIn0.dWimP8YBW_rzkTTJi703DCRl7NSGJebwDTiL9qop5OQ",
-  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NzMwODAyLCJpYXQiOjE3NTU3MjM2MDIsImp0aSI6IjExNzljNTFlN2Y5MzQ4YTM5ZmJkOGUzOWUwNmQzMGI0IiwidXNlcl9pZCI6IjMifQ.nsosMIRFMlPEcDt34CeNYcIHF8fds8UFc6-h2sIu6Gg",
-  "username": "KARA_225"
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NjMxNzIxMCwiaWF0IjoxNzU2MTQ0NDEwLCJqdGkiOiIzZjQ2NjY3OWI1ZmQ0MDBmOWYwMmQ0ZGVlMTQzZmQ4ZCIsInVzZXJfaWQiOiIxOSJ9.fV-CBri_sFQK32HKSwdLk_1lJwszXgouv1NhHzNhwDo",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MTUxNjEwLCJpYXQiOjE3NTYxNDQ0MTAsImp0aSI6ImFhZTQwMDJlZWJiNTRlYjZiYmJkYzYzMjJmY2QyZmRmIiwidXNlcl9pZCI6IjE5In0.xMt1az4QFOWbUbcF0amHuDJr0gSm2PW1Gd8KtZTOe_0",
+  "username": "MobileApps"
 }
 
 GET http://127.0.0.1:8000/reviews/public/recent/
 Content-Type: application/json
 
 ### Get a specific reviews
-GET http://127.0.0.1:8000/reviews/5/
+GET http://127.0.0.1:8000/reviews/2/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MTU3MDA5LCJpYXQiOjE3NTYxNDk4MDksImp0aSI6IjhjYmM2MmU4YWU5YzQyYWZiNWRmMzFlZWMwNzE2YzhiIiwidXNlcl9pZCI6IjIifQ.z9pf8Nl35Dh2SYDEoh5CNHxaA1BDCZ2gO6RdJglDfYE
+
+### Get reviews about my own firm
+GET http://127.0.0.1:8000/reviews/firms
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MTUxNjEwLCJpYXQiOjE3NTYxNDQ0MTAsImp0aSI6ImFhZTQwMDJlZWJiNTRlYjZiYmJkYzYzMjJmY2QyZmRmIiwidXNlcl9pZCI6IjE5In0.xMt1az4QFOWbUbcF0amHuDJr0gSm2PW1Gd8KtZTOe_0
 
 ### Get specific reviews about that firm
 GET http://127.0.0.1:8000/reviews/firm/2/review/
 Content-Type: application/json
 
+### Respond to review
 POST http://127.0.0.1:8000/reviews/2/respond/
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzNTM2OTAyLCJpYXQiOjE3NTM1MzMzMDIsImp0aSI6IjAxOWM4MzU1NTMyNzQ2OTdhOGZiZmE2NzYyYTllNWY4IiwidXNlcl9pZCI6IjIifQ.Salp6_Fc1yEZd9LXajM-5wUd_k9VG96n9v5SSiVUFOg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MTUxNjEwLCJpYXQiOjE3NTYxNDQ0MTAsImp0aSI6ImFhZTQwMDJlZWJiNTRlYjZiYmJkYzYzMjJmY2QyZmRmIiwidXNlcl9pZCI6IjE5In0.xMt1az4QFOWbUbcF0amHuDJr0gSm2PW1Gd8KtZTOe_0
 Content-Type: application/json
 
 {
-  "response_text": "Merci pour votre retour, nous allons améliorer notre service."
+  "response_text": "On vient tester le système de reponse concernant les avis"
+}
+
+### Like a review
+POST http://127.0.0.1:8000/account/login/
+Content-Type: application/json
+
+{
+  "email": "jean.dupont@email.com",
+  "password": "securepassword123"
+}
+
+### Like a review
+POST http://127.0.0.1:8000/reviews/1/useful/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MTU3MDA5LCJpYXQiOjE3NTYxNDk4MDksImp0aSI6IjhjYmM2MmU4YWU5YzQyYWZiNWRmMzFlZWMwNzE2YzhiIiwidXNlcl9pZCI6IjIifQ.z9pf8Nl35Dh2SYDEoh5CNHxaA1BDCZ2gO6RdJglDfYE
+
+###
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NjMyMjYwOSwiaWF0IjoxNzU2MTQ5ODA5LCJqdGkiOiI4NzkyMjlhZmVjYWQ0YmE4YjY3YzE0MGNlOGQyNjc1NyIsInVzZXJfaWQiOiIyIn0.Biuyj2XeMQQFKqO-sZKRs-bbrjbsMDnYM3qCftsd_WQ",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MTU3MDA5LCJpYXQiOjE3NTYxNDk4MDksImp0aSI6IjhjYmM2MmU4YWU5YzQyYWZiNWRmMzFlZWMwNzE2YzhiIiwidXNlcl9pZCI6IjIifQ.z9pf8Nl35Dh2SYDEoh5CNHxaA1BDCZ2gO6RdJglDfYE",
+  "username": "jean.dupont"
 }

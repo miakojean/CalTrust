@@ -2,14 +2,19 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.permissions import IsAuthenticated
-from .models import Review, ReviewResponse 
+from .models import Review 
 from .serializers import *
 from account.models import CustomerProfile, FirmProfile
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-from datetime import timezone
 from rest_framework.permissions import AllowAny
 from core.services import NotificationService
+from rest_framework.pagination import PageNumberPagination
+from core.models import Notification
+
+class FirmReviewsPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
 
 class RecentReviewsAPIView(APIView):
     # Vue pour permettre aux visiteurs d'avoirs accès aux différents avis postés sur le site
@@ -41,15 +46,15 @@ class ReviewAPIView(APIView):
         """
         if review_id:  # Détail d'un avis
             review = get_object_or_404(Review, id=review_id)
-            serializer = ReviewSerializer(review)
+            serializer = ReviewSerializer(review, context={'request': request})  # Ajout du contexte
             return Response(serializer.data)
 
         if firm_id:  # Liste des avis pour une entreprise
             firm = get_object_or_404(FirmProfile, id=firm_id)
             reviews = Review.objects.filter(firm=firm).order_by('-created_at')
-            serializer = ReviewSerializer(reviews, many=True)
+            serializer = ReviewSerializer(reviews, many=True, context={'request': request})  # Ajout du contexte
             return Response({
-                'firm_name': firm.name,
+                'firm_name': firm.company_name,  # Correction: company_name au lieu de name
                 'average_rating': firm.average_rating(),
                 'reviews': serializer.data
             })
@@ -61,6 +66,13 @@ class ReviewAPIView(APIView):
     
     def post(self, request, firm_id):
         try:
+            # Vérifier que l'utilisateur est authentifié
+            if not request.user.is_authenticated:
+                return Response(
+                    {"error": "Authentification requise pour poster un avis"},
+                    status=status.HTTP_401_UNAUTHORIZED
+                )
+            
             # Récupération des objets avec gestion d'erreur
             firm = get_object_or_404(FirmProfile, pk=firm_id)
             customer = get_object_or_404(CustomerProfile, user=request.user)
@@ -73,7 +85,7 @@ class ReviewAPIView(APIView):
                 )
             
             # Création de l'avis
-            serializer = ReviewSerializer(data=request.data)
+            serializer = ReviewSerializer(data=request.data, context={'request': request})  # Ajout du contexte
             if serializer.is_valid():
                 # Enregistrer l'avis
                 review = serializer.save(firm=firm, customer=customer)
@@ -81,8 +93,8 @@ class ReviewAPIView(APIView):
                 # Créer une notification pour l'entreprise
                 NotificationService.create_notification(
                     firm=firm,  # L'utilisateur de l'entreprise
-                    customer = customer, # L'utilisateur qui a posté l'avis,
-                    review = review, # L'avis pour lequel on envoie la notification
+                    customer=customer, # L'utilisateur qui a posté l'avis,
+                    review=review, # L'avis pour lequel on envoie la notification
                     notification_type='review_posted',
                     message=f"Un nouvel avis a été posté sur votre entreprise {firm.company_name}.",
                     data={"review_id": review.id, "customer_id": customer.user.id},
@@ -103,6 +115,13 @@ class ReviewAPIView(APIView):
         """
         Met à jour un avis existant (seulement par l'auteur)
         """
+        # Vérifier que l'utilisateur est authentifié
+        if not request.user.is_authenticated:
+            return Response(
+                {"error": "Authentification requise pour modifier un avis"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+        
         review = get_object_or_404(Review, id=review_id)
         customer = get_object_or_404(CustomerProfile, user=request.user)
 
@@ -112,7 +131,7 @@ class ReviewAPIView(APIView):
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        serializer = ReviewSerializer(review, data=request.data, partial=True)
+        serializer = ReviewSerializer(review, data=request.data, partial=True, context={'request': request})  # Ajout du contexte
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -123,6 +142,13 @@ class ReviewAPIView(APIView):
         """
         Supprime un avis (seulement par l'auteur ou admin)
         """
+        # Vérifier que l'utilisateur est authentifié
+        if not request.user.is_authenticated:
+            return Response(
+                {"error": "Authentification requise pour supprimer un avis"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+        
         review = get_object_or_404(Review, id=review_id)
         customer = get_object_or_404(CustomerProfile, user=request.user)
 
@@ -136,8 +162,8 @@ class ReviewAPIView(APIView):
         return Response(
             {"success": "Avis supprimé"}, 
             status=status.HTTP_204_NO_CONTENT
-        )
-    
+        )    
+
 class FirmReviewsAPIView(APIView):
     permission_classes = [AllowAny]
 
@@ -193,7 +219,38 @@ class ReviewSearchView(APIView):
         
         serializer = ReviewSerializer(results, many=True)
         return Response(serializer.data)
+
+class GetMyOwnFirmReviews(APIView):
+    permission_classes = [IsAuthenticated]
+    pagination_class = FirmReviewsPagination
     
+    def get(self, request):
+        try:
+            firm_profile = request.user.firm_profile
+            reviews = Review.objects.filter(firm=firm_profile)\
+                                   .select_related('customer__user')\
+                                   .order_by('-created_at')
+            
+            # Pagination
+            paginator = self.pagination_class()
+            page = paginator.paginate_queryset(reviews, request)
+            
+            serializer = ReviewSerializer(page, many=True)
+            
+            return paginator.get_paginated_response({
+                'status': 'success',
+                'data': serializer.data
+            })
+
+        except AttributeError:
+            return Response(
+                {
+                    'status': 'error',
+                    'message': "Profil entreprise non trouvé pour cet utilisateur."
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
 class RespondToReviewAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -212,7 +269,7 @@ class RespondToReviewAPIView(APIView):
         # Préparer les données
         data = {
             "review": review.id,
-            "firm": firm_profile.id,
+            "firm": firm_profile,
             "response_text": request.data.get("response_text")
         }
 
@@ -221,3 +278,26 @@ class RespondToReviewAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ToggleUsefulReviewAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, review_id):
+        """Ajouter ou retirer un vote utile"""
+        review = get_object_or_404(Review, id=review_id)
+        
+        # Vérifier que l'utilisateur ne vote pas pour son propre avis
+        if review.customer.user == request.user:
+            return Response({
+                'status': 'error',
+                'message': "Vous ne pouvez pas voter pour votre propre avis."
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        action, useful_count = review.toggle_useful_vote(request.user)
+        
+        return Response({
+            'status': 'success',
+            'action': action,
+            'useful_count': useful_count,
+            'has_voted': action == "added"
+        }, status=status.HTTP_200_OK)
