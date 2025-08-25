@@ -8,7 +8,7 @@
           v-else 
           type="text" 
           v-model="newValue"
-          @keyup.enter="saveChanges"
+          @keyup.enter="saveChanges" 
           @keyup.escape="cancelChanges"
           class="family-input"
           ref="inputRef"

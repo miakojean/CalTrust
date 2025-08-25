@@ -2,18 +2,29 @@
   <div class="profile__description-wrapper">
     <div class="profile__description">
       <div class="label__description">
-        <label>{{ label }}</label>
+        <label :for="fieldId">{{ label }}</label>
         <p v-if="!isChanging">{{ value }}</p>
-        <textarea v-else :value="value" class="description-textarea" rows="4"></textarea>
+        <textarea
+          v-else
+          ref="textareaRef"
+          class="description-textarea"
+          rows="4"
+          v-model="newValue"
+          :id="fieldId"
+          @keyup.enter="saveChanges"
+          @keyup.escape="cancelChanges"
+        ></textarea>
       </div>
-      <span class="update-btn" @click="modify">{{ isChanging ? 'Enregistrer' : 'Mettre à jour' }}</span>
+      <span class="update-btn" @click="handleModify">
+        {{ isChanging ? 'Enregistrer' : 'Mettre à jour' }}
+      </span>
     </div>
     <div class="divider"></div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed, nextTick } from 'vue';
 
 export default {
   props: {
@@ -25,17 +36,60 @@ export default {
       type: String,
       default: ''
     },
+    fieldName: {
+      type: String,
+      default: ''
+    }
   },
-  setup() {
+
+  emits: ['update-field'],
+
+  setup(props, { emit }) {
     const isChanging = ref(false);
-    
-    const modify = () => {
-      isChanging.value = !isChanging.value;
+    const newValue = ref(props.value);
+    const textareaRef = ref(null);
+
+    const fieldId = computed(() =>
+      props.fieldName ? `field-${props.fieldName}` : `field-${props.label.replace(/\s+/g, '-').toLowerCase()}`
+    );
+
+    const saveChanges = () => {
+      if (newValue.value !== props.value) {
+        emit('update-field', {
+          field: props.fieldName || props.label,
+          value: newValue.value
+        });
+      }
+      isChanging.value = false;
+    };
+
+    const cancelChanges = () => {
+      newValue.value = props.value;
+      isChanging.value = false;
+    };
+
+    const handleModify = () => {
+      if (isChanging.value) {
+        saveChanges();
+      } else {
+        isChanging.value = true;
+        // La nouvelle ligne ajoutée pour le focus
+        nextTick(() => {
+          if (textareaRef.value) {
+            textareaRef.value.focus();
+          }
+        });
+      }
     };
 
     return {
       isChanging,
-      modify,
+      newValue,
+      handleModify,
+      saveChanges,
+      cancelChanges,
+      fieldId,
+      textareaRef
     };
   }
 };

@@ -25,6 +25,8 @@
     <profile__TextArea
       v-if="isThereDescription === true"
       :value="DescriptionValue"
+      :fieldName="'description'"
+      @update-field="handleUpdateField"
     />
 
     <profile__Toggle
@@ -44,90 +46,90 @@ import { updateOtherCompanyField } from '../_profileServices/callToApi';
 
 export default {
 
-    components:{
-        stepper,
-        Profile__family,
-        profile__TextArea,
-        profile__Toggle,
-        uploadFile,
-        profile__fileUpload
+  components:{
+    stepper,
+    Profile__family,
+    profile__TextArea,
+    profile__Toggle,
+    uploadFile,
+    profile__fileUpload
+  },
+
+  props:{
+    title:{
+      type:String,
+      default:'Informations de base'
     },
-
-    props:{
-        title:{
-            type:String,
-            default:'Informations de base'
-        },
-        description:{ 
-            /* This is description of the block */
-            type:String,
-            default:'Cette section présente les différentes information de base de votre entreprise '
-        },
-        fields: {
-            type: Array,
-            default: () => [
-                { label: 'Nom de l\'entreprise', value: "Caladrius" },
-                { label: 'Adresse', value: "303 Firewall Lane, Safe Harbor" },
-                { label: 'Email', value: "firm6@business.com" },
-                {label:'Téléphone', value:"0102030405"}
-            ]
-        },
-        
-        isThereDescription:{
-            type:Boolean,
-            default:true
-        },
-
-        DescriptionValue:{
-            /* This is description of the fields */
-            type:String
-        },
-
-        isThereToggle:{
-            type:Boolean,
-            default:true
-        },
-        uploadFile:{
-            type:Boolean,
-            default: true
-        },
-        uploadFileTitle:{
-          type: String,
-          default: 'Télécharger un fichier'
-        },
-        isPDF: {
-          type: Boolean,
-          default: false
-        }
+    description:{ 
+      /* This is description of the block */
+      type:String,
+      default:'Cette section présente les différentes information de base de votre entreprise '
     },
-
-    setup(props, { emit }) {
+    fields: {
+      type: Array,
+      default: () => [
+        { label: 'Nom de l\'entreprise', value: "Caladrius" },
+        { label: 'Adresse', value: "303 Firewall Lane, Safe Harbor" },
+        { label: 'Email', value: "firm6@business.com" },
+        {label:'Téléphone', value:"0102030405"}
+      ]
+    },
     
+    isThereDescription:{
+      type:Boolean,
+      default:true
+    },
+
+    DescriptionValue:{
+      /* This is description of the fields */
+      type:String
+    },
+
+    isThereToggle:{
+      type:Boolean,
+      default:true
+    },
+    uploadFile:{
+      type:Boolean,
+      default: true
+    },
+    uploadFileTitle:{
+      type: String,
+      default: 'Télécharger un fichier'
+    },
+    isPDF: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  setup(props, { emit }) {
     const handleUpdateField = async (updateData) => {
       try {
         console.log('Mise à jour:', updateData);
-        
+
         // Préparer les données pour l'API
         const apiData = {};
-        
-        // Mapping des champs (ajuster selon votre API)
+
+        // Mapping des champs
         const fieldMapping = {
           'Nom de l\'entreprise': 'company_name',
           'Adresse': 'address',
           'Email': 'email',
           'Téléphone': 'phone_number',
-          'Website': 'website'
-          // Ajoutez d'autres mappings au besoin
+          'Website': 'website',
+          // Changement ici : le `fieldName` 'description' correspond à la clé 'description' de l'API
+          'description': 'description' 
         };
-        
+
         const apiFieldName = fieldMapping[updateData.field];
         if (apiFieldName) {
           apiData[apiFieldName] = updateData.value;
-          
+
           // Appel API
           const response = await updateOtherCompanyField(apiData);
           console.log('Mise à jour réussie:', response);
-          
+
           // Émettre un événement pour informer le parent
           emit('field-updated', {
             field: updateData.field,
