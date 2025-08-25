@@ -6,7 +6,7 @@ from reviews.models import Review, ReviewResponse
 
 class Notification(models.Model):
 
-    NOTIFICATIONS_TYPES  =(
+    NOTIFICATIONS_TYPES = (
         ('review_posted', 'Avis posté'),
         ('review_approved', 'Avis approuvé'),
         ('review_rejected', 'Avis rejeté'),

@@ -91,8 +91,7 @@ class FirmProfile(models.Model):
         # Redimensionner les images si elles existent
         if self.company_logo:
             self.resize_image(self.company_logo.path, (300, 300))
-        if self.cover_photo:
-            self.resize_image(self.cover_photo.path, (1200, 400))
+        
 
     @staticmethod
     def resize_image(image_path, size):
@@ -116,11 +115,6 @@ class FirmProfile(models.Model):
         if self.company_logo:
             if os.path.isfile(self.company_logo.path):
                 os.remove(self.company_logo.path)
-        
-        # Supprimer la photo de couverture
-        if self.cover_photo:
-            if os.path.isfile(self.cover_photo.path):
-                os.remove(self.cover_photo.path)
                 
         super().delete(*args, **kwargs)
 
