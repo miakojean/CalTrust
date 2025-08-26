@@ -37,6 +37,7 @@
             :postReviewId="reviewsId"
             :username="username"
             @opened="markAsRead"
+            :rating="rating"
         />
     </div>
     
