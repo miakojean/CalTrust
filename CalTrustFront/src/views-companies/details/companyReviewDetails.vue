@@ -17,7 +17,7 @@
             :date="review.local_date"
             :avatar="review.user_initial"
             :company="review.establishment"
-            @click="moveToDetails(review)"
+            @review-details="moveToDetails(review)"
         />
       
       <!-- State de chargement/erreur -->
@@ -67,21 +67,21 @@ export default {
 
 
         onMounted(async () => { 
-        try {
-            isLoading.value = true
-            const response = await fetchRecentsFirms(firmId);
+            try {
+                isLoading.value = true
+                const response = await fetchRecentsFirms(firmId);
 
-            if (response?.data) {
-                reviews.value = response.data.reviews.list || [];
+                if (response?.data) {
+                    reviews.value = response.data.reviews.list || [];
+                    isLoading.value = false
+                    // Statistiques
+
+                    console.log('Données chargées:', { reviews: reviews.value });
+                }
+            } catch (error) {
                 isLoading.value = false
-                // Statistiques
-
-                console.log('Données chargées:', { reviews: reviews.value });
+                console.error("Erreur de chargement:", error);
             }
-        } catch (error) {
-            isLoading.value = false
-            console.error("Erreur de chargement:", error);
-        }
         });
 
         return {

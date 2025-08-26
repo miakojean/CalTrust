@@ -8,23 +8,23 @@
             <cardLoading v-for="n in 4" :key="n" />
         </template>
 
-      <template v-else-if="reviews.length > 0">
-        <testimonials
-          v-for="(review, index) in reviews"
-          :key="review.id || index"
-          :info="review.user || 'Anonyme'"
-          :rating="review.rating"
-          :message="review.comment"
-          :date="review.local_date"
-          :avatar="review.user_initial"
-          :company="review.establishment"
-          @click="moveToDetails(review)"
-        />
-      </template>
+        <template v-else-if="reviews.length > 0">
+            <testimonials
+            v-for="(review, index) in reviews"
+            :key="review.id || index"
+            :info="review.user || 'Anonyme'"
+            :rating="review.rating"
+            :message="review.comment"
+            :date="review.local_date"
+            :avatar="review.user_initial"
+            :company="review.establishment"
+            @review-details="moveToDetails(review)"
+            />
+        </template>
 
-      <div v-else class="no-data__container">
-        <p>Aucun avis récent n'est disponible pour le moment.</p>
-      </div>
+        <div v-else class="no-data__container">
+            <p>Aucun avis récent n'est disponible pour le moment.</p>
+        </div>
 
     </div>
   </section>
@@ -54,8 +54,7 @@ export default {
 
         const moveToDetails = (review) => {
             router.push(
-                { name: 'avis-detail', 
-                params: { reviewId: review.id },
+                { name: 'avis-detail',
                 state: {reviewId: review.id}
             }); // Navigation avec le paramètre reviewId
         };

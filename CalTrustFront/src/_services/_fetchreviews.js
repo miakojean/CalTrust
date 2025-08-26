@@ -1,4 +1,8 @@
 import api from "./_authservices";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 
 const fetchRecentsReviews = async () => {
     try {
@@ -43,6 +47,31 @@ const fetchSpecificReview = async (reviewId) => {
     }
 }
 
+// Liker un avis.
+
+const likeReview = async(reviewId) => {
+    const token = localStorage.getItem('userToken');
+
+    if(!token){
+        throw new Error('Token non trouvé');
+    }
+
+    try{
+        const response = await api.post(`/reviews/${firmId}/useful`,{
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }}
+        );
+
+        return response.data;
+    }
+    catch(error){
+        console.error("Erreur lors du like de l'avis:", error);
+        throw new Error(`Impossible de liker l'avis: ${error.message}`);
+    }
+}
+
 const fetchRecentsFirms = async () => {
     try {
         const response = await api.get('/companies/', {
@@ -81,4 +110,9 @@ async function postAReviews(){
     }
 }
 
-export {fetchRecentsReviews, fetchRecentsFirms, fetchSpecificReview, postAReviews};
+export {fetchRecentsReviews, 
+    fetchRecentsFirms, 
+    fetchSpecificReview, 
+    postAReviews,
+    likeReview,
+};

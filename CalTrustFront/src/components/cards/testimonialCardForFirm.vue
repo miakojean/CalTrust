@@ -7,7 +7,7 @@
         size="small"
     />
 
-    <div class="message">
+    <div class="message" @click="reviewDetail()">
         <p class="message__body">
             {{ message }}
         </p>
@@ -45,6 +45,7 @@
 <script>
 import { computed, ref } from 'vue';
 import ratingComponent from '../tools/ratingComponent.vue';
+import { likeReview } from '@/_services/_fetchreviews';
 
 const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
 
@@ -77,14 +78,20 @@ export default {
             validator: (value) => {
                 return value >= 0 && value <= 5;  // Validation entre 0 et 5
             }
+        },
+        isUseFull:{
+            type: Boolean,
+            default:false
         }
     },
+
+    emits:['review-details'],
 
     components:{
         ratingComponent
     },
 
-    setup(props) {
+    setup(props, {emit}) {
         const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
         const profilePic = computed(() => props.pic || defaultPic);
 
@@ -98,114 +105,16 @@ export default {
             }
         }
 
-        return { profilePic, isUseful, iLikeIt };
+        const reviewDetail = () => {
+            emit('review-details')
+        }
+
+        return { profilePic, isUseful, iLikeIt, reviewDetail };
     }
 
 }
 </script>
 
 <style scoped>
-.testimonial-card {
-  display: flex;
-  flex-direction: column;
-  align-items: normal;
-  gap: 0.5rem;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 400px;
 
-}
-
-.divider {
-  height: 2px;
-  background: var(--primary-color); /* Couleur grise légère */
-  margin: 12px 0; /* Espacement vertical */
-}
-
-.divider__two {
-  height: 1px;
-  background: #d8d8d8; /* Couleur grise légère */
-  margin: 0.5rem 0; /* Espacement vertical */
-}
-
-.profile{
-    width: 100%;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    gap: 1rem;
-}
-
-.pp{
-    height: 60px;
-    width: 60px;
-    border-radius: 50%;
-}
-
-.profile__info{
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    justify-content: start;
-}
-
-.profile__info span{
-    font-weight: 500;
-    font-size: 1rem;
-    color: var(--primary-color);
-}
-
-.pp__firm{
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    background: #d87422;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.pp__firm span{
-    color: white;
-    font-weight: 600;
-}
-
-.utility{
-    display: flex;
-    justify-content: start;
-    gap: 0.5em;
-}
-
-.utility i {
-    cursor: pointer;
-
-}
-
-.utility i:hover {
-    cursor: pointer;
-    
-}
-
-.is_right{
-    font-size: 0.8rem;
-    width: 100%;
-    text-align: start;
-}
-
-@media (min-width: 766px) {
-    .message__body{
-        font-size: 0.8rem;
-        text-align: start;
-    }
-}
-
-@media (min-width: 1260px) {
-    .message__body{
-        font-size: 0.8rem;
-        text-align: start;
-    }
-}
 </style>
