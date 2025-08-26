@@ -49,6 +49,7 @@ import secondButton2 from '@/components/button/secondButton2.vue';
 import notifCard from '@/components/notifications/notifCard.vue';
 import { useRouter } from 'vue-router';
 import api from '@/_services/_authservices';
+import { respondToReview } from '../_profileServices/callToApi';
 import { ref, watch } from 'vue';
 
 export default {
@@ -66,9 +67,6 @@ export default {
     notifComment:{
       type:String,
       default:"On vient just tester le système de notifications"
-    },
-    firmId:{ // id for getting details about firm
-      type:Number
     },
     postReviewId:{
       type:Number
@@ -128,31 +126,37 @@ export default {
     const comment = ref('');
     
     const token = ref('')
-    const firmId = ref(props.firmId)
     
     async function submitForm() {
       isloading.value = true;
       
       // Validation
       if (comment.value.trim() === '') {
-        message.value.errorMessage = "Le commentaire ne peut être vide.";
+        message.value.errorMessage = "La réponse ne peut être vide.";
         isloading.value = false;
         return;
       }
       
       message.value.errorMessage = "";
+      message.value.successMessage = "";
       
       try {
-        const response = await api.post(`/reviews/firms/${props.postReviewId}/`, {
-          rating: ratingValue.value,
-          comment: comment.value
-        });
+        // Ajout de await pour capturer les erreurs
+        await respondToReview(props.postReviewId, comment.value);
         
-        message.value.successMessage = "Avis posté avec succès ! Merci pour votre temps";
+        message.value.successMessage = "Réponse envoyée avec succès!";
         
         setTimeout(() => close(), 3000);
       } catch (error) {
-        handleSubmissionError(error);
+        // Utilisation directe du message d'erreur de l'API
+        message.value.errorMessage = error.message || "Erreur lors de l'envoi de la réponse";
+        
+        // Gestion spécifique des erreurs d'authentification
+        if (error.message.includes('401') || error.message.includes('Non autorisé')) {
+          setTimeout(() => {
+            router.push('/signin');
+          }, 2000);
+        }
       } finally {
         isloading.value = false;
       }

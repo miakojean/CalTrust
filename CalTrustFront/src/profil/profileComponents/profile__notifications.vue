@@ -22,6 +22,7 @@
             :rating="notif.rating"
             :notificationId="notif.id"
             :ref="setNotificationRef"
+            :reviewsId="notif.review"
             @marked-as-read="handleNotificationRead"
         />
     </div>

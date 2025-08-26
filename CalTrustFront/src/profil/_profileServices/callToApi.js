@@ -138,9 +138,62 @@ const markAllNotificationsAsRead = async() =>{
   }
 }
 
+const respondToReview = async (reviewId, comment) => {
+  try {
+    const token = localStorage.getItem('userToken');
+
+    if (!token) {
+      throw new Error('Token non trouvé');
+    }
+
+    // CORRECTION : Structure correcte de la requête POST
+    const response = await api.post(`/reviews/${reviewId}/respond/`, 
+      { response_text: comment }, // Données dans le corps
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la réponse à l'avis:", error);
+    
+    // Amélioration de la gestion d'erreurs
+    if (error.response) {
+      // Erreur avec réponse du serveur
+      const status = error.response.status;
+      const data = error.response.data;
+      
+      console.error(`Status: ${status}`, `Détails:`, data);
+      
+      // Vous pouvez personnaliser le message d'erreur selon le status
+      const errorMessages = {
+        400: "Vous avez déjà répondu à cet avis ou les données sont invalides.",
+        401: "Non autorisé. Token invalide ou expiré.",
+        403: "Accès refusé. Vous n'avez pas les permissions nécessaires.",
+        404: "Avis non trouvé.",
+        500: "Erreur interne du serveur."
+      };
+      
+      throw new Error(errorMessages[status] || `Erreur ${status}: ${data.message || 'Erreur inconnue'}`);
+    } else if (error.request) {
+      // Erreur de réseau
+      throw new Error("Problème de connexion au serveur. Vérifiez votre connexion internet.");
+    } else {
+      // Autre erreur
+      throw new Error("Erreur inattendue: " + error.message);
+    }
+  }
+};
+
 export { fetchMyPersonalInfo, 
   updateCompanyInfo, 
   getMyNotifications,
   updateOtherCompanyField, 
   markNotificationsAsRead, 
-  markAllNotificationsAsRead };
+  markAllNotificationsAsRead,
+  respondToReview
+};

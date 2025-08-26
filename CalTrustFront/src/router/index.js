@@ -37,10 +37,18 @@ const router = createRouter({
       props: true // permet d’injecter le paramètre comme prop
     },
 
+    /* About reviews */
     {
       path:'/avis',
       name: 'avis',
       component: () => import('../views/Reviews.vue')
+    },
+
+    {
+      path:'/avis/details',
+      name: 'avis-detail',
+      component: () => import('../views-reviews/reviewsdetails.vue'),
+      props: true
     },
     
     /* About authentication */

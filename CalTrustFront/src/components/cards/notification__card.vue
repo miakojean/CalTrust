@@ -34,7 +34,7 @@
             :firm="'Entreprise'"
             :notifComment="comment"
             :firmId="123"
-            :postReviewId="456"
+            :postReviewId="reviewsId"
             :username="username"
             @opened="markAsRead"
         />
@@ -86,6 +86,10 @@ export default {
         notificationId: {
             type: Number,
             required: true
+        },
+        reviewsId:{
+            type:Number,
+            required:true
         }
     },
 
