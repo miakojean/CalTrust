@@ -18,6 +18,31 @@ const fetchRecentsReviews = async () => {
     }
 }
 
+// Récupérer un avis spécific via son ID
+
+const fetchSpecificReview = async (reviewId) => {
+    
+    const token = localStorage.getItem('userToken');
+    
+    if(!token){
+        throw new Error('Token non trouvé');
+    }
+
+    try {
+        const response = await api.get(`reviews/${reviewId}/`, {
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }}
+        );
+        console.log("Détails de l'avis récupérés:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erreur lors de la récupération de l'avis spécifique:", error);
+        throw new Error(`Impossible de charger l'avis: ${error.message}`);
+    }
+}
+
 const fetchRecentsFirms = async () => {
     try {
         const response = await api.get('/companies/', {
@@ -56,4 +81,4 @@ async function postAReviews(){
     }
 }
 
-export {fetchRecentsReviews, fetchRecentsFirms};
+export {fetchRecentsReviews, fetchRecentsFirms, fetchSpecificReview, postAReviews};

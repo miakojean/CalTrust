@@ -18,6 +18,7 @@
           :date="review.local_date"
           :avatar="review.user_initial"
           :company="review.establishment"
+          @click="moveToDetails(review)"
         />
       </template>
 
@@ -35,6 +36,7 @@ import testimonials from '@/components/cards/testimonials.vue';
 import cardLoading from '@/components/cards/cardLoading.vue';
 import { onMounted, ref } from 'vue';
 import { fetchRecentsReviews } from '@/_services/_fetchreviews';
+import { useRouter } from 'vue-router';
 
 export default {
     components: {
@@ -47,6 +49,16 @@ export default {
         const reviews = ref([]); // Il est plus sûr d'initialiser avec un tableau vide
         const isLoading = ref(true);
         const error = ref(null); // Ajout d'une variable pour gérer les erreurs
+
+        const router = useRouter();
+
+        const moveToDetails = (review) => {
+            router.push(
+                { name: 'avis-detail', 
+                params: { reviewId: review.id },
+                state: {reviewId: review.id}
+            }); // Navigation avec le paramètre reviewId
+        };
 
         onMounted(async () => {
             try {
@@ -74,7 +86,9 @@ export default {
         });
 
         return {
-            isLoading, 
+            router,
+            moveToDetails,
+            isLoading,
             reviews,
             error // Rendre la variable d'erreur disponible dans le template
         }
