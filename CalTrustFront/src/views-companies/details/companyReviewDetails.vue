@@ -17,6 +17,7 @@
             :date="review.local_date"
             :avatar="review.user_initial"
             :company="review.establishment"
+            @click="moveToDetails(review)"
         />
       
       <!-- State de chargement/erreur -->
@@ -33,7 +34,7 @@ import { fetchRecentsFirms } from '../_companyservices';
 import cardLoading from '@/components/cards/cardLoading.vue';
 import SecondStepper from '@/components/cards/secondStepper.vue';
 import testimonialCardForFirm from '@/components/cards/testimonialCardForFirm.vue';
-
+import { useRouter } from 'vue-router';
 export default {
     components: {
         SecondStepper,
@@ -54,6 +55,17 @@ export default {
 
         const isLoading = ref(true)
 
+        const router = useRouter();
+
+        const moveToDetails = (review) => {
+            router.push(
+                { name: 'avis-detail', 
+                params: { reviewId: review.id },
+                state: {reviewId: review.id}
+            }); // Navigation avec le paramètre reviewId
+        };
+
+
         onMounted(async () => { 
         try {
             isLoading.value = true
@@ -73,7 +85,7 @@ export default {
         });
 
         return {
-            reviews, firmId, isLoading
+            reviews, firmId, isLoading, moveToDetails, router
         }
     }
 }
