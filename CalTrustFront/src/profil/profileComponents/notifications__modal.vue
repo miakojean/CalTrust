@@ -20,6 +20,7 @@
         <notifCard
           :message="notifComment"
           :username="username"
+          :rating="rating"
         />
         <inputArea label="Repondre à l'avis" v-model="comment"/>
       </div>
@@ -70,6 +71,10 @@ export default {
     },
     postReviewId:{
       type:Number
+    },
+    rating:{
+      type:Number,
+      default:4
     }
   },
   emits: ['update:modelValue', 'submit', 'opened'],
