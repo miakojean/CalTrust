@@ -11,7 +11,8 @@
       :maxSize="5 * 1024 * 1024" 
       :label="uploadFileTitle"
       :isPDF="isPDF"
-    />
+      @update-field="handleUpdateField"
+    />  
     
     <Profile__family
       v-for="(i, index) in fields"
@@ -41,6 +42,7 @@ import profile__Toggle from './profile__Toggle.vue';
 import uploadFile from '@/components/tools/file/uploadFile.vue';
 import profile__fileUpload from './profile__fileUpload.vue';
 import { updateCompanyInfo } from '../_profileServices/callToApi';
+import { updateFirmProfile } from '../_profileServices/updateFirmInfo';
 
 export default {
 
@@ -116,7 +118,7 @@ export default {
           'Adresse': 'address',
           'Email': 'email',
           'Téléphone': 'phone_number',
-          'Website': 'website'
+          'Photo de profile': 'company_logo'
           // Ajoutez d'autres mappings au besoin
         };
         
@@ -125,7 +127,7 @@ export default {
           apiData[apiFieldName] = updateData.value;
           
           // Appel API
-          const response = await updateCompanyInfo(apiData);
+          const response = await updateFirmProfile(apiData);
           console.log('Mise à jour réussie:', response);
           
           // Émettre un événement pour informer le parent

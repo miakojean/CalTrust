@@ -1,19 +1,19 @@
 <template>
     <div class="profile__description-wrapper">
         <div class="profile__description">
-        <div class="label__description">
-            <label>{{ label }}</label>
-            <p v-if="!isChanging">{{ value }}</p>
-            <uploadPDF
-              v-if="isPDF === true"
-            />
-            <uploadFile
-                accept="image/*,.pdf"
-                :maxSize="5 * 1024 * 1024" 
-                v-else-if="!isPDF"
-            />
-        </div>
-        <span class="update-btn" @click="modify">{{ isChanging ? 'Enregistrer' : 'Mettre à jour' }}</span>
+            <div class="label__description">
+                <label>{{ label }}</label>
+                <p v-if="!isChanging">{{ value }}</p>
+                <uploadPDF
+                  v-if="isPDF === true"
+                />
+                <uploadFile
+                  accept="image/*,.pdf"
+                  :maxSize="5 * 1024 * 1024" 
+                  v-else-if="!isPDF"
+                />
+            </div>
+            <span class="update-btn" @click="modify">{{ isChanging ? 'Enregistrer' : 'Mettre à jour' }}</span>
         </div>
         <div class="divider"></div>
     </div>
@@ -25,38 +25,45 @@ import uploadPDF from '@/components/tools/file/uploadPDF.vue';
 import { ref } from 'vue';
 
 export default {
-    props: {
-        label: {
-        type: String,
-        default: 'Votre photo de profile'
-        },
-        value: {
-        type: String,
-        default: ''
-        },
-        isPDF: {
-        type: Boolean,
-        default: true
-        }
+  props: {
+    label: {
+      type: String,
+      default: 'Votre photo de profile'
     },
-
-    components:{
-        UploadFile,
-        uploadPDF
+    value: {
+      type: String,
+      default: ''
     },
-    setup() {
-        const isChanging = ref(false);
-        
-        const modify = () => {
-        isChanging.value = !isChanging.value;
-        };
-
-        return {
-        isChanging,
-        modify,
-        };
+    isPDF: {
+      type: Boolean,
+      default: true
     }
-};
+  }, // ← Fermeture correcte de l'objet props
+
+  components: {
+    UploadFile,
+    uploadPDF
+  },
+
+  emits: ['update-field'],
+  
+  setup(props, { emit }) {
+    
+    const isChanging = ref(false);
+
+    const modify = () => {
+      isChanging.value = !isChanging.value;
+      if (!isChanging.value) {
+        emit('update-field', { fieldName: props.label, newValue: props.value });
+      }
+    };
+
+    return {
+      isChanging,
+      modify,
+    };
+  }
+}; // ← Fermeture correcte de l'export
 </script>
 
 <style scoped>
