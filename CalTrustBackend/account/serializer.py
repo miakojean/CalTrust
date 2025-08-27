@@ -153,11 +153,18 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source='user.email')
     first_name = serializers.CharField(source='user.first_name')
     last_name = serializers.CharField(source='user.last_name')
+    profile_picture = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomerProfile
-        fields = ['username', 'email', 'first_name', 'last_name', 'phone', 'birth_date']
+        fields = ['username', 'email', 'first_name', 'last_name', 'phone', 'birth_date', 'profile_picture']
         read_only_fields = ['username', 'email']
+
+    def get_profile_picture(self, obj):
+        if obj.profile_picture:
+            # Retourne l'URL complète de l'image
+            return self.context['request'].build_absolute_uri(obj.profile_picture.url)
+        return None
 
     def update(self, instance, validated_data):
         user_data = validated_data.pop('user', {})
@@ -201,20 +208,28 @@ class FirmProfileSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source='user.first_name')
     last_name = serializers.CharField(source='user.last_name')
     company = CompanySerializer(read_only = True)
+    company_logo = serializers.ImageField(required=False, allow_null=True, )
 
     class Meta:
         model = FirmProfile
         fields = ['username', 
-                  'email', 
-                  'first_name', 
-                  'last_name', 
-                  'company_name', 
-                  'address', 
-                  'is_verified', 
-                  'phone_number',
-                  'company'
-                  ]
+            'email', 
+            'first_name', 
+            'last_name', 
+            'company_name', 
+            'address', 
+            'is_verified', 
+            'phone_number',
+            'company',
+            'company_logo'
+        ]
         read_only_fields = ['username', 'email', 'is_verified']
+
+    def get_company_logo(self, obj):
+        if obj.company_logo:
+            # Retourne l'URL complète du logo
+            return self.context['request'].build_absolute_uri(obj.company_logo.url)
+        return None
 
     def update(self, instance, validated_data):
         user_data = validated_data.pop('user', {})

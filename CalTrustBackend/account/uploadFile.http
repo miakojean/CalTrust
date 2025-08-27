@@ -1,0 +1,96 @@
+### Base URL
+@baseUrl = http://localhost:8000/api
+@token = votre_token_ici
+
+### 1. LOGIN - Obtenir un token
+POST {{baseUrl}}/auth/login/
+Content-Type: application/json
+
+{
+  "username": "votre_username",
+  "password": "votre_password"
+}
+
+> {%
+    client.global.set("token", response.body.access);
+    client.log("Token: " + response.body.access);
+%}
+
+### 2. GET PROFILE - Récupérer les infos du profil
+GET {{baseUrl}}/account/firm/profile/
+Authorization: Bearer {{token}}
+
+### 3. UPDATE PROFILE (JSON) - Mettre à jour les infos texte
+PUT {{baseUrl}}/account/firm/profile/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "company_name": "Ma Nouvelle Entreprise",
+  "address": "123 Nouvelle Adresse",
+  "phone_number": "+33123456789",
+  "first_name": "Nouveau",
+  "last_name": "Nom"
+}
+
+### 4. UPLOAD LOGO (Multipart) - Tester l'upload du logo
+PUT {{baseUrl}}/account/firm/profile/
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="company_logo"; filename="logo.png"
+Content-Type: image/png
+
+< ./chemin/vers/votre/logo.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### 5. UPLOAD LOGO Alternative - Avec chemin absolu
+PUT {{baseUrl}}/account/firm/profile/
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="company_logo"; filename="test-logo.jpg"
+Content-Type: image/jpeg
+
+< C:/Users/VotreNom/Images/test-logo.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### 6. TEST WITH CURL COMMAND (Alternative)
+# Dans votre terminal :
+# curl -X PUT "http://localhost:8000/api/account/firm/profile/" \
+#   -H "Authorization: Bearer {{token}}" \
+#   -F "company_logo=@./chemin/vers/logo.png"
+
+### 7. TEST ERREUR - Sans fichier
+PUT {{baseUrl}}/account/firm/profile/
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="company_name"
+
+Entreprise Test
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### 8. DELETE LOGO - Supprimer le logo
+PUT {{baseUrl}}/account/firm/profile/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "company_logo": null
+}
+
+### 9. TEST ENDPOINT DÉDIÉ (si vous créez un endpoint spécial logo)
+PUT {{baseUrl}}/account/firm/logo/
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="company_logo"; filename="logo-test.png"
+Content-Type: image/png
+
+< ./test-logo.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
