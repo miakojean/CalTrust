@@ -17,7 +17,6 @@ const updateFirmProfile = async (data) => {
         const response = await api.put('/account/firm/profile/', data, {
             headers: { 
                 'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
             }}
         );
         

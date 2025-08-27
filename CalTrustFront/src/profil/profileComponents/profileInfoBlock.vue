@@ -5,15 +5,15 @@
 
     <div class="divider"></div>
 
-    <profile__fileUpload
+    <uploadFile
       v-if="uploadFile === true"
       accept="image/*,.pdf"
-      :maxSize="5 * 1024 * 1024" 
+      :maxSize="5 * 1024 * 1024"
       :label="uploadFileTitle"
       :isPDF="isPDF"
       @update-field="handleUpdateField"
-    />  
-    
+    />
+
     <Profile__family
       v-for="(i, index) in fields"
       :key="index"
@@ -41,8 +41,8 @@ import profile__TextArea from './profile__TextArea.vue';
 import profile__Toggle from './profile__Toggle.vue';
 import uploadFile from '@/components/tools/file/uploadFile.vue';
 import profile__fileUpload from './profile__fileUpload.vue';
-import { updateCompanyInfo } from '../_profileServices/callToApi';
 import { updateFirmProfile } from '../_profileServices/updateFirmInfo';
+import { ref } from 'vue';
 
 export default {
 
@@ -104,6 +104,8 @@ export default {
     },
 
     setup(props, { emit }) {
+
+    const image = ref(null);
     
     const handleUpdateField = async (updateData) => {
       try {
@@ -149,7 +151,7 @@ export default {
     };
 
     return {
-      handleUpdateField
+      handleUpdateField, image
     };
   }
 }
