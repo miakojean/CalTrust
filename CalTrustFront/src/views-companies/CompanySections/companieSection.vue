@@ -16,6 +16,7 @@
             :category="firm.category_display"
             :idForPostingReview = "firm.firm_profile_id"
             :idForgettingFirm = firm.id
+            :initialName="getInitials(firm.name.company_name)"
         />
         <!-- Ici le firm.firm_profile_id est pour la soumission -->
     </div>
@@ -46,7 +47,23 @@ export default {
     setup(){
 
         const firms = ref([]);
+        
         const isLoading = ref(true);
+
+        const firmInitials = ref('')
+        
+        function getInitials(name) {
+            if (typeof name !== 'string') return '';
+
+            const words = name.trim().split(/\s+/); // Sépare les mots par les espaces
+            const firstTwoWords = words.slice(0, 2); // Garde les deux premiers mots
+
+            const initials = firstTwoWords
+                .map(word => word.charAt(0).toUpperCase()) // Prend la première lettre
+                .join('');
+
+            return initials;
+        }
 
         onMounted( async ( ) => { 
             try {
@@ -54,8 +71,8 @@ export default {
                 const response = await fetchRecentsFirms();
                 if (response) {
                     firms.value = response.data; // Stockez les données
-                    isLoading.value = false
-                    console.log('Entreprises récentes chargées:', firms.value);
+                    isLoading.value = false;
+                    console.log('Entreprises récentes chargées:', firms.value, firmInitials.value);
                 }
             } catch (error) {
                 isLoading.value = false
@@ -74,7 +91,8 @@ export default {
             firms,
             isLoading,
             voirFirm, 
-            myFirmId
+            myFirmId,
+            getInitials
         }
     }
 }

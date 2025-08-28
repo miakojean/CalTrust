@@ -2,7 +2,9 @@
     <article class="testimonial-card">
         <div class="profile">
             <div class="pp">
-                <span>CA</span>
+                <span>
+                    {{ initialName }}
+                </span>
             </div>
             <div class="profile__info">
                 <span>{{ firm }}</span>
@@ -47,26 +49,37 @@ const defaultPic = new URL('@/assets/pictures/devnomicus.png', import.meta.url).
 
 export default {
     props:{
+        
         firm:{
             type: String,
             default:"Caladrius"
         },
+        
         category:{
             type: String,
             default: 'fintech'
         },
+        
         pic:{
             type: String,
             default: defaultPic
         },
+        
         rate:{
             type:Number
         },
+        
         idForPostingReview:{
             type:Number
         },
+        
         idForgettingFirm:{
             type:Number
+        },
+        
+        initialName:{
+            type:String,
+            default:'CT'
         }
 
     },
@@ -82,7 +95,24 @@ export default {
     },
 
     setup(props, {emit}) {
+        
         const showModal = ref(false);
+
+        const makeInitials = (name) => {
+            if(!name || typeof name !== String)
+            return "CT";
+
+            // Nettoyer les espaces superflus
+            const words = name.trim().split(/\s+/);
+
+            if (words.length === 1) {
+                console.log(words)
+                return words[0].charAt(0).toUpperCase();
+            } else {
+                console.log(words)
+                return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
+            }
+        }
         
         const router = useRouter()
         
@@ -117,6 +147,7 @@ export default {
             showModal,
             openModal,
             getFirmDetail,
+            makeInitials
         };
     }
 

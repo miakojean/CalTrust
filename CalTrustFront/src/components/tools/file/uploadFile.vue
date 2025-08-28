@@ -109,5 +109,13 @@ export default {
 </script>
 
 <style scoped>
+.preview-image{
+  transition: 0.7s ease-in-out;
+}
 
+.preview-image:hover {
+  transition: 0.5s ease-in-out;
+  filter:blur(1px);
+  cursor: pointer;
+}
 </style>

@@ -132,7 +132,7 @@ span{
   color: var(--primary-color);
   cursor: pointer;
   margin-left: 1rem;
-  min-width: 60px;
+  min-width: 100px;
   text-align: right;
 }
 
