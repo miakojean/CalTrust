@@ -5,7 +5,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 ### Get information about firm profile 
 GET http://localhost:8000/account/firm/profile/ 
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NTk4ODcwLCJpYXQiOjE3NTU1OTE2NzAsImp0aSI6IjU0YWU1MmE0ZDlmZjQ5Y2Q4YTdlMmY0MWE3MWY1NWZmIiwidXNlcl9pZCI6MTN9.MwowmVNYhLdxq4-RIjPwFHfHOdnSMloEiK3WYHcADeY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2NDMzODM4LCJpYXQiOjE3NTYzNDc0MzksImp0aSI6ImE1ZTFmZjU0MDhkNjQ0YzZiNGNhNGFkNjQ2N2UyZjJkIiwidXNlcl9pZCI6IjE5In0.ZXxGOUj3RSHoa45uYKaNei4aFAxeJs_NqbYR2VdiXF4
 
 ### Edit information about firm profile 
 PUT http://localhost:8000/account/firm/profile/ 

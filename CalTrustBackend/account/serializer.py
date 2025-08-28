@@ -225,12 +225,6 @@ class FirmProfileSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['username', 'email', 'is_verified']
 
-    def get_company_logo(self, obj):
-        if obj.company_logo:
-            # Retourne l'URL complète du logo
-            return self.context['request'].build_absolute_uri(obj.company_logo.url)
-        return None
-
     def update(self, instance, validated_data):
         user_data = validated_data.pop('user', {})
         user = instance.user

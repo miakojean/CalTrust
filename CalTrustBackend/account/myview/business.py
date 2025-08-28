@@ -13,9 +13,9 @@ class FirmProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        # Vérifie que l'utilisateur a bien un profil entreprise
         profile = get_object_or_404(FirmProfile, user=request.user)
-        serializer = FirmProfileSerializer(profile)
+        # On passe le contexte de la requête au serializer
+        serializer = FirmProfileSerializer(profile, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request):
