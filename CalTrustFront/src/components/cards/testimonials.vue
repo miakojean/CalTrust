@@ -2,7 +2,7 @@
   <article class="testimonial-card">
     <div class="profile">
         <div class="pp__firm">
-            <span>CA</span>
+            <span>{{ firmInitials }}</span>
         </div>
         <div class="profile__info">
             <span>{{ company }}</span>
@@ -85,6 +85,10 @@ export default {
             validator: (value) => {
                 return value >= 0 && value <= 5;  // Validation entre 0 et 5
             }
+        },
+        firmInitials:{
+            type: String,
+            default: 'CT'
         }
     },
 

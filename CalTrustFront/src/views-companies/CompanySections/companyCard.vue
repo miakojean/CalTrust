@@ -213,7 +213,7 @@ export default {
     display: flex;
     justify-content: start;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
 }
 
 @media (min-width: 766px) {

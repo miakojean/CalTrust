@@ -19,6 +19,7 @@
             :avatar="review.user_initial"
             :company="review.establishment"
             @review-details="moveToDetails(review)"
+            :firmInitials = "getInitials(review.establishment)"
             />
         </template>
 
@@ -51,6 +52,19 @@ export default {
         const error = ref(null); // Ajout d'une variable pour gérer les erreurs
 
         const router = useRouter();
+
+        function getInitials(name) {
+            if (typeof name !== 'string') return '';
+
+            const words = name.trim().split(/\s+/); // Sépare les mots par les espaces
+            const firstTwoWords = words.slice(0, 2); // Garde les deux premiers mots
+
+            const initials = firstTwoWords
+                .map(word => word.charAt(0).toUpperCase()) // Prend la première lettre
+                .join('');
+
+            return initials;
+        }
 
         const moveToDetails = (review) => {
             router.push(
@@ -86,6 +100,7 @@ export default {
 
         return {
             router,
+            getInitials,
             moveToDetails,
             isLoading,
             reviews,
