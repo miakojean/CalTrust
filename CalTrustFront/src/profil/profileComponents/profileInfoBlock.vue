@@ -12,6 +12,7 @@
       :label="uploadFileTitle"
       :isPDF="isPDF"
       @update-field="handleUpdateField"
+      :initialImageUrl = "InitialProfileImage"
     />
 
     <Profile__family
@@ -56,51 +57,59 @@ export default {
     },
 
     props:{
-        title:{
-            type:String,
-            default:'Informations de base'
-        },
-        description:{ 
-            /* This is description of the block */
-            type:String,
-            default:'Cette section présente les différentes information de base de votre entreprise '
-        },
-        fields: {
-            type: Array,
-            default: () => [
-                { label: 'Nom de l\'entreprise', value: "Caladrius" },
-                { label: 'Adresse', value: "303 Firewall Lane, Safe Harbor" },
-                { label: 'Email', value: "firm6@business.com" },
-                {label:'Téléphone', value:"0102030405"}
-            ]
-        },
-        
-        isThereDescription:{
-            type:Boolean,
-            default:true
-        },
+      title:{
+          type:String,
+          default:'Informations de base'
+      },
+      description:{ 
+          /* This is description of the block */
+          type:String,
+          default:'Cette section présente les différentes information de base de votre entreprise '
+      },
+      fields: {
+          type: Array,
+          default: () => [
+              { label: 'Nom de l\'entreprise', value: "Caladrius" },
+              { label: 'Adresse', value: "303 Firewall Lane, Safe Harbor" },
+              { label: 'Email', value: "firm6@business.com" },
+              {label:'Téléphone', value:"0102030405"}
+          ]
+      },
+      
+      isThereDescription:{
+          type:Boolean,
+          default:true
+      },
 
-        DescriptionValue:{
-            /* This is description of the fields */
-            type:String
-        },
+      DescriptionValue:{
+          /* This is description of the fields */
+          type:String
+      },
 
-        isThereToggle:{
-            type:Boolean,
-            default:true
-        },
-        uploadFile:{
-            type:Boolean,
-            default: true
-        },
-        uploadFileTitle:{
-          type: String,
-          default: 'Télécharger un fichier'
-        },
-        isPDF: {
-          type: Boolean,
-          default: false
-        }
+      isThereToggle:{
+        type:Boolean,
+        default:true
+      },
+      
+      uploadFile:{
+        type:Boolean,
+        default: true
+      },
+      
+      uploadFileTitle:{
+        type: String,
+        default: 'Télécharger un fichier'
+      },
+      
+      isPDF: {
+        type: Boolean,
+        default: false
+      },
+
+      InitialProfileImage: {
+        type: String,
+        default: null
+      }
     },
 
     setup(props, { emit }) {

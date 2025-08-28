@@ -5,6 +5,7 @@
       :isThereToggle="false"
       :fields="baseFields"
       @field-updated="handleFieldUpdated"
+      :InitialProfileImage="myProfilePicture"
       :isPDF="false"
     />
     <profileBlockCompany
@@ -33,6 +34,7 @@ export default {
     const baseFields = ref([]);
     const otherFields = ref([]);
     const description = ref('');
+    const myProfilePicture = ref(null);
 
     const loadData = async () => {
       try {
@@ -59,6 +61,7 @@ export default {
           ];
 
           description.value = response.company?.description || "Non renseigné";
+          myProfilePicture.value = response.company_logo || null;
         }
       } catch(error) {
         console.error("Erreur:", error);
@@ -91,7 +94,8 @@ export default {
       otherFields,
       description,
       handleFieldUpdated,
-      loadData
+      loadData,
+      myProfilePicture
     };
   }
 }

@@ -10,6 +10,7 @@
 @import './components/_form.css';
 @import './components/_modal.css';
 @import './components/_researchBox.css';
+@import './components/_fileUpload.css';
 
 #app {
   width: calc(100% - 2rem); /* 1rem de marge à gauche + 1rem à droite = 2rem */
