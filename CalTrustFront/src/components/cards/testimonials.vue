@@ -22,15 +22,18 @@
             {{ message }}
         </p>
     </div>
-    
-    <div class="profile">
-        <img class="pp" :src="pic" alt="fake profile picture">
-        <div class="profile__info">
-            <span>{{ info }}</span>
-            <p class="message__body">@{{username}}</p>
+
+    <div class="pp__wrapper">
+        <img v-if="hasValidPic" class="pp" :src="pic" alt="profile picture">
+        <div v-else class="cc__firm">
+            <span>{{ customerInitial }}</span>
+        </div>
+        <div class="profile__info"> 
+            <span>{{ info }}</span> 
+            <p class="message__body">{{ date }}</p> 
         </div>
     </div>
-    
+
     <div class="divider__two"></div>
 
     <div class="utility">
@@ -52,8 +55,7 @@
 
 <script>
 import { computed, ref } from 'vue';
-import ratingTools from '../rating/ratingTools.vue';
-
+import ratingTools from '@/components/rating/ratingTools.vue';
 const defaultPic = new URL('@/assets/Pictures/fakepropfilepic.jpg', import.meta.url).href;
 
 export default {
@@ -71,7 +73,7 @@ export default {
             type: String,
             default:"John Doe"
         },
-        username:{
+        date:{
             type: String,
             default: 'unknown'
         },
@@ -89,13 +91,17 @@ export default {
         firmInitials:{
             type: String,
             default: 'CT'
+        },
+        customerInitial:{
+            type: String,
+            default: 'JD'
         }
     },
 
     emits:['review-details', 'i-like-it'],
 
     components:{
-        ratingTools
+        ratingTools,
     },
 
     setup(props, {emit}) {
@@ -112,11 +118,16 @@ export default {
             }
         }
 
+        const hasValidPic = computed(() => {
+            return props.pic && props.pic !== defaultPic;
+        });
+
+
         const reviewDetail = () => {
             emit('review-details')
         }
 
-        return { profilePic, isUseful, iLikeIt, reviewDetail };
+        return { profilePic, isUseful, hasValidPic, iLikeIt, reviewDetail };
     }
 
 }
@@ -131,5 +142,12 @@ export default {
 .message__body:hover{
     text-decoration:underline;
     cursor: pointer;
+}
+
+.pp__wrapper{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
 }
 </style>

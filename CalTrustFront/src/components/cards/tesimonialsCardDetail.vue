@@ -15,12 +15,15 @@
 
     <div class="divider"></div>
     
-    <div class="profile">
-      <img class="pp" :src="pic" alt="fake profile picture">
-      <div class="profile__info">
-        <span>{{username}}</span>
-        <span class="date__info"> avis publié le 26/08/2025 à 15h52</span>
-      </div>
+    <div class="pp__wrapper">
+        <img v-if="hasValidPic" class="pp" :src="pic" alt="profile picture">
+        <div v-else class="cc__firm">
+            <span>{{ customerInitial }}</span>
+        </div>
+        <div class="profile__info"> 
+            <span>{{ username }}</span> 
+            <p class="message__body">{{ date }}</p> 
+        </div>
     </div>
 
     <answerCards />
@@ -63,6 +66,14 @@ export default {
             validator: (value) => {
                 return value >= 0 && value <= 5;  // Validation entre 0 et 5
             }
+        },
+        date:{
+            type: String,
+            default: 'unknown'
+        },
+        customerInitial:{
+            type: String,
+            default: 'U'
         }
     },
 
@@ -146,6 +157,13 @@ export default {
   font-size: 0.9rem;
   font-weight: 400;
   color: #6c757d;
+}
+
+.pp__wrapper{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 @media (min-width: 766px) {

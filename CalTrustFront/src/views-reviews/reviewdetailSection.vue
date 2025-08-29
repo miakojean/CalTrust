@@ -5,6 +5,8 @@
         :username = review.customer_name
         :message = review.comment
         :rating = review.rating
+        :date="review.created_at"
+        :customerInitial = "getInitials(review.customer_name)"
     />      
   </div>
 </template>
@@ -13,7 +15,7 @@
 import testimonialCardForFirm from '@/components/cards/testimonialCardForFirm.vue';
 import notifCard from '@/components/notifications/notifCard.vue';
 import tesimonialsCardDetail from '@/components/cards/tesimonialsCardDetail.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { fetchSpecificReview } from '@/_services/_fetchreviews';
 
 export default {
@@ -28,6 +30,19 @@ export default {
         const reviewId = history.state.reviewId;
 
         const review = ref({});
+
+        function getInitials(name) {
+            if (typeof name !== 'string') return '';
+
+            const words = name.trim().split(/\s+/); // Sépare les mots par les espaces
+            const firstTwoWords = words.slice(0, 2); // Garde les deux premiers mots
+
+            const initials = firstTwoWords
+                .map(word => word.charAt(0).toUpperCase()) // Prend la première lettre
+                .join('');
+
+            return initials;
+        }
 
         const loadReviewDetails = async (reviewId) => {
             try {
@@ -47,7 +62,8 @@ export default {
         return {
             review,
             reviewId,
-            loadReviewDetails
+            loadReviewDetails,
+            getInitials
         }
     }
 }

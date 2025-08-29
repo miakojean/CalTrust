@@ -20,6 +20,7 @@
             :company="review.establishment"
             @review-details="moveToDetails(review)"
             :firmInitials = "getInitials(review.establishment)"
+            :customerInitial = "getInitials(review.user)"
             />
         </template>
 
@@ -80,6 +81,7 @@ export default {
                 
                 if (apiData.status === 'success') {
                     reviews.value = apiData.data;
+                    console.log("Données des avis:", reviews.value);
                     isLoading.value = false
                 } 
                 else if (Array.isArray(apiData)) {
